@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -24,13 +24,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build video hero asset
+      - name: Validate static site
         shell: bash
         run: |
-          mkdir -p assets
-          base64 --decode .video/vortex.part.00 > assets/vortex-hero.mp4
-          test -s assets/vortex-hero.mp4
-          printf 'Video asset: %s bytes\n' "$(wc -c < assets/vortex-hero.mp4)"
+          test -s index.html
+          test -s styles.css
+          test -s hero.js
+          test -s assets/hero-desktop-v8.webp
+          test -s assets/hero-mobile-v8.webp
+          test "$(cat CNAME)" = "theexitmission.com"
+          ! grep -Rni --include='*.html' 'chaos into control' .
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -40,6 +43,6 @@ jobs:
         with:
           path: .
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
