@@ -23,12 +23,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build video hero asset
+        shell: bash
+        run: |
+          mkdir -p assets
+          base64 --decode .video/vortex.part.00 > assets/vortex-hero.mp4
+          test -s assets/vortex-hero.mp4
+          printf 'Video asset: %s bytes\n' "$(wc -c < assets/vortex-hero.mp4)"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
