@@ -9,7 +9,7 @@ Static, responsive site for **Exit Framework — Chaos to Control**.
 - Recovery-first framework, philosophy, applications and ecosystem copy
 - Three open-access field notes
 - One canonical GitHub Pages workflow
-- Custom domain: `theexitmission.com`
+- Custom domain: `chaosexit.com`
 
 ## Local preview
 
