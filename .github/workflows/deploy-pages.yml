@@ -12,7 +12,10 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Do not cancel a deployment after deploy-pages has handed it to Pages.
+  # Cancelling at that point can leave Pages holding an in-progress deployment,
+  # which blocks every subsequent deployment for the same site.
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -46,3 +49,5 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 900000
