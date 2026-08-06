@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#08111b">
+  <meta name="theme-color" content="#06101a">
   <meta name="description" content="Exit Framework is a practical operating system for moving from chaos to control, proof and autonomy.">
   <meta property="og:title" content="Exit Framework — Chaos to Control">
   <meta property="og:description" content="Stabilize the base. Build structure. Create proof. Expand freedom.">
@@ -14,133 +14,91 @@
   <link rel="preload" as="image" href="assets/hero-mobile-v8.webp" media="(max-width: 860px)">
   <title>Exit Framework — Chaos to Control</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="v11.css">
+  <link rel="stylesheet" href="v12.css?v=12">
 </head>
-<body>
+<body class="home-v12">
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header site-header-v11">
+  <header class="site-header site-header-v12">
     <div class="shell header-row">
       <a class="brand" href="index.html" aria-label="Exit Framework home">
         <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25"></circle><path d="M32 7 48 19 55 38 43 55 21 55 9 38 16 19Z"></path><path d="M32 7v48M9 38h46M16 19l27 36M48 19 21 55"></path></svg>
         <span class="brand-copy">Exit<br>Framework</span>
       </a>
       <nav class="nav" aria-label="Primary navigation">
-        <a href="framework.html">Framework</a>
-        <a href="articles.html">Articles</a>
-        <a href="applications.html">Applications</a>
-        <a href="membership.html">Membership</a>
-        <a href="about.html">About</a>
+        <a href="framework.html">The framework</a><a href="articles.html">Articles</a><a href="applications.html">Applications</a><a href="membership.html">Membership</a><a href="about.html">About</a>
       </nav>
-      <div class="header-actions"><a class="button button-small" href="framework.html">Enter</a></div>
+      <div class="header-actions"><a class="button button-small button-gold" href="framework.html">Enter</a></div>
       <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"></button>
     </div>
   </header>
-  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden>
-    <a href="framework.html">Framework</a><a href="articles.html">Articles</a><a href="applications.html">Applications</a><a href="membership.html">Membership</a><a href="about.html">About</a><a class="button" href="framework.html">Enter the framework</a>
+  <nav class="mobile-menu mobile-menu-v12" id="mobile-menu" aria-label="Mobile navigation" hidden>
+    <a href="framework.html">The framework</a><a href="articles.html">Articles</a><a href="applications.html">Applications</a><a href="membership.html">Membership</a><a href="about.html">About</a><a class="button button-gold" href="framework.html">Enter the framework</a>
   </nav>
 
   <main id="main">
-    <section class="hero hero-v11" aria-labelledby="hero-title">
+    <section class="hero hero-v12" aria-labelledby="hero-title">
       <div class="hero-media" aria-hidden="true">
-        <picture class="hero-picture">
-          <source media="(max-width: 860px)" srcset="assets/hero-mobile-v8.webp">
-          <img id="hero-art" src="assets/hero-desktop-v8.webp" alt="" width="1672" height="941" fetchpriority="high" decoding="async">
-        </picture>
-        <div class="vortex-sweep vortex-sweep-a"></div>
-        <div class="vortex-sweep vortex-sweep-b"></div>
-        <div class="vortex-sweep vortex-sweep-c"></div>
-        <canvas class="vortex-canvas" id="vortex-canvas"></canvas>
-        <div class="hero-glow"></div><div class="hero-shade"></div><div class="hero-grain"></div>
+        <picture class="hero-picture"><source media="(max-width: 860px)" srcset="assets/hero-mobile-v8.webp"><img id="hero-art" src="assets/hero-desktop-v8.webp" alt="" width="1672" height="941" fetchpriority="high" decoding="async"></picture>
+        <div class="vortex-sweep vortex-sweep-outer"></div><div class="vortex-sweep vortex-sweep-mid"></div><div class="vortex-sweep vortex-sweep-inner"></div>
+        <canvas class="vortex-canvas" id="vortex-canvas"></canvas><div class="hero-glow"></div><div class="hero-shade"></div><div class="hero-gridline"></div><div class="hero-grain"></div>
       </div>
-      <div class="shell">
+      <div class="shell hero-shell">
         <div class="hero-content">
-          <p class="eyebrow">Exit Framework</p>
-          <h1 id="hero-title">Chaos <em>to</em> control</h1>
-          <p class="hero-lead">Stabilize the base. Build structure.<br>Create proof. Expand freedom.</p>
-          <div class="hero-actions">
-            <a class="button button-gold" href="framework.html">Enter the framework <span aria-hidden="true">→</span></a>
-            <a class="button button-ghost-light" href="articles.html">Read free field notes</a>
-          </div>
+          <p class="eyebrow">Exit Framework</p><h1 id="hero-title">Chaos <em>to</em> control</h1><p class="hero-lead">Stabilize the base. Build structure.<br>Create proof. Expand freedom.</p>
+          <div class="hero-actions"><a class="button button-gold" href="framework.html">Enter the framework <span aria-hidden="true">→</span></a><a class="button button-ghost-light" href="articles.html">Read free field notes</a></div>
         </div>
+        <aside class="system-status" aria-label="System status"><span>System OS</span><strong>V1.2</strong><i></i><span>Stabilize</span><span>Structure</span><span>Freedom</span></aside>
       </div>
-      <div class="system-stamp" aria-hidden="true"><span>System OS</span><strong>V1.1</strong><span>Active</span></div>
     </section>
 
-    <section class="principle-rail" aria-label="Exit Framework principles">
-      <div class="shell principle-rail-grid">
-        <span>System &gt; motivation</span><span>Discipline = freedom</span><span>Control is built</span><span>Autonomy first</span>
-      </div>
-    </section>
+    <section class="principle-rail" aria-label="Exit Framework principles"><div class="shell principle-rail-grid"><span>System &gt; motivation</span><span>Discipline = freedom</span><span>Control is built</span><span>Autonomy first</span></div></section>
 
     <section class="section section-dark framework-overview" id="framework">
-      <div class="shell">
-        <div class="split-heading">
-          <div><p class="section-label">The framework</p><h2>An operating system for human autonomy.</h2></div>
-          <div><p>Exit Framework turns a vague wish to change into a sequence that can be executed, measured and improved — including on bad days.</p><a class="text-link text-link-gold" href="framework.html">Explore the full framework →</a></div>
-        </div>
-
-        <div class="domain-grid" aria-label="Six operating domains">
-          <article><span class="domain-index">01</span><h3>Mind</h3><p>Clarity, identity and mental control.</p></article>
-          <article><span class="domain-index">02</span><h3>Energy</h3><p>Sleep, recovery, training and vitality.</p></article>
-          <article><span class="domain-index">03</span><h3>Focus</h3><p>Attention systems that compound.</p></article>
-          <article><span class="domain-index">04</span><h3>Time</h3><p>Design days that create momentum.</p></article>
-          <article><span class="domain-index">05</span><h3>Money</h3><p>Control resources and expand options.</p></article>
-          <article><span class="domain-index">06</span><h3>Environment</h3><p>Remove friction and shape behavior.</p></article>
-        </div>
-        <p class="domain-caption">6 domains. 1 system. Built around stability, proof and autonomy.</p>
-
-        <div class="stage-grid">
-          <article><p class="kicker">01 / Diagnose</p><h3>See the pattern</h3><p>Map the loops, inputs and constraints that keep life reactive.</p></article>
-          <article><p class="kicker">02 / Stabilize</p><h3>Protect the base</h3><p>Reduce volatility before expanding ambition.</p></article>
-          <article><p class="kicker">03 / Structure</p><h3>Build repeatable control</h3><p>Translate intention into missions, protocols and environments.</p></article>
-          <article><p class="kicker">04 / Prove</p><h3>Archive the evidence</h3><p>Track actions and outcomes until identity rests on proof.</p></article>
-        </div>
+      <div class="shell framework-overview-grid">
+        <div class="framework-intro"><p class="section-label">The operating system</p><h2>Control is built in stages.</h2><p>Exit Framework turns a vague wish to change into a sequence that can be executed, measured and improved — including on bad days.</p><a class="text-link text-link-gold" href="framework.html">Explore the framework →</a></div>
+        <div><div class="domain-grid" aria-label="Six operating domains">
+          <article><span class="domain-icon">◌</span><div><h3>Mind</h3><p>Clarity, identity and mental control.</p></div></article>
+          <article><span class="domain-icon">ϟ</span><div><h3>Energy</h3><p>Sleep, recovery and vitality.</p></div></article>
+          <article><span class="domain-icon">⌾</span><div><h3>Focus</h3><p>Attention systems that compound.</p></div></article>
+          <article><span class="domain-icon">◷</span><div><h3>Time</h3><p>Design days that build momentum.</p></div></article>
+          <article><span class="domain-icon">◇</span><div><h3>Money</h3><p>Control resources and expand options.</p></div></article>
+          <article><span class="domain-icon">⌂</span><div><h3>Environment</h3><p>Remove friction and shape behavior.</p></div></article>
+        </div><p class="domain-caption">6 domains. 1 system.</p></div>
       </div>
     </section>
 
-    <section class="section latest-section" id="field-notes">
-      <div class="shell">
-        <div class="section-heading section-heading-row"><div><p class="section-label">Latest articles</p><h2>Field notes for building real control.</h2></div><a class="text-link" href="articles.html">View all articles →</a></div>
-        <div class="article-card-grid">
-          <article class="article-card"><a class="article-cover cover-chaos" href="articles/chaos-audit.html" aria-label="Read The Chaos Audit"><span>Diagnose</span></a><p class="article-date">Field note 01</p><h3>The Chaos Audit</h3><p>Find the active constraint before you redesign your life.</p><a class="text-link" href="articles/chaos-audit.html">Read →</a></article>
-          <article class="article-card"><a class="article-cover cover-minimum" href="articles/minimum-viable-day.html" aria-label="Read The Minimum Viable Day"><span>Stabilize</span></a><p class="article-date">Field note 02</p><h3>The Minimum Viable Day</h3><p>Maintain continuity when capacity is low and pressure is high.</p><a class="text-link" href="articles/minimum-viable-day.html">Read →</a></article>
-          <article class="article-card"><a class="article-cover cover-proof" href="articles/proof-loop.html" aria-label="Read The Proof Loop"><span>Prove</span></a><p class="article-date">Field note 03</p><h3>The Proof Loop</h3><p>Build identity from observable evidence instead of intensity.</p><a class="text-link" href="articles/proof-loop.html">Read →</a></article>
-          <article class="article-card"><a class="article-cover cover-identity" href="articles/identity-is-a-daily-decision.html" aria-label="Read Identity Is a Daily Decision"><span>Identity</span></a><p class="article-date">Field note 04</p><h3>Identity Is a Daily Decision</h3><p>You become what your repeated decisions make credible.</p><a class="text-link" href="articles/identity-is-a-daily-decision.html">Read →</a></article>
-          <article class="article-card"><a class="article-cover cover-discipline" href="articles/discipline-creates-freedom.html" aria-label="Read Discipline Creates Freedom"><span>Structure</span></a><p class="article-date">Field note 05</p><h3>Discipline Creates Freedom</h3><p>Freedom is not doing anything. It is choosing what governs you.</p><a class="text-link" href="articles/discipline-creates-freedom.html">Read →</a></article>
-          <article class="article-card"><a class="article-cover cover-environment" href="articles/environment-shapes-outcome.html" aria-label="Read Environment Shapes Outcome"><span>Environment</span></a><p class="article-date">Field note 06</p><h3>Environment Shapes Outcome</h3><p>Change the conditions that make the old behavior easy.</p><a class="text-link" href="articles/environment-shapes-outcome.html">Read →</a></article>
-        </div>
-      </div>
-    </section>
+    <section class="os-sequence"><div class="shell os-sequence-grid">
+      <div><p class="section-label">The Exit Framework OS</p><h2>A practical system for human autonomy.</h2><p>Simple enough to start. Deep enough to compound. Each stage converts uncertainty into a more controllable operating state.</p><a class="text-link text-link-gold" href="framework.html">Open the full sequence →</a></div>
+      <div class="sequence-orbit" aria-hidden="true"><span></span><span></span><span></span><b>EF</b></div>
+      <ol class="sequence-list"><li><strong>01. Assess</strong><span>Know the baseline.</span></li><li><strong>02. Stabilize</strong><span>Protect the foundation.</span></li><li><strong>03. Structure</strong><span>Design the system.</span></li><li><strong>04. Execute</strong><span>Run the daily mission.</span></li><li><strong>05. Review</strong><span>Measure. Learn. Improve.</span></li></ol>
+    </div></section>
 
-    <section class="membership-preview">
-      <div class="shell membership-preview-grid">
-        <div>
-          <p class="section-label">Membership</p>
-          <h2>Join the operators building real control.</h2>
-          <p>The paid layer is implementation, not inspiration: the complete operating system, installation protocols, tools, reviews and ongoing operator support.</p>
-          <a class="button button-gold" href="membership.html">Explore membership →</a>
-        </div>
-        <ul class="membership-list">
-          <li>The full Exit Framework OS across all six domains</li>
-          <li>30-Day Control Sprint and installation roadmap</li>
-          <li>Chaos Scorecard, weekly review and decision templates</li>
-          <li>Trackers, protocols and personal command-center tools</li>
-          <li>Weekly operator briefings and implementation sessions</li>
-          <li>Private member archive and future module drops</li>
-        </ul>
+    <section class="section latest-section" id="field-notes"><div class="shell">
+      <div class="section-heading section-heading-row"><div><p class="section-label">Latest articles</p><h2>Proof before promises.</h2><p>Open-access field notes that show how the system thinks, decides and operates.</p></div><a class="text-link" href="articles.html">View all articles →</a></div>
+      <div class="article-card-grid">
+        <article class="article-card"><a class="article-cover cover-chaos" href="articles/chaos-audit.html"><span>Diagnose</span></a><p class="article-date">Field note 01</p><h3>The Chaos Audit</h3><p>Find the active constraint before you redesign your life.</p><a class="text-link" href="articles/chaos-audit.html">Read →</a></article>
+        <article class="article-card"><a class="article-cover cover-identity" href="articles/identity-is-a-daily-decision.html"><span>Identity</span></a><p class="article-date">Field note 04</p><h3>Identity Is a Daily Decision</h3><p>You become what your repeated decisions make credible.</p><a class="text-link" href="articles/identity-is-a-daily-decision.html">Read →</a></article>
+        <article class="article-card"><a class="article-cover cover-discipline" href="articles/discipline-creates-freedom.html"><span>Structure</span></a><p class="article-date">Field note 05</p><h3>Discipline Creates Freedom</h3><p>Freedom is choosing what governs you.</p><a class="text-link" href="articles/discipline-creates-freedom.html">Read →</a></article>
+        <article class="article-card"><a class="article-cover cover-environment" href="articles/environment-shapes-outcome.html"><span>Environment</span></a><p class="article-date">Field note 06</p><h3>Environment Shapes Outcome</h3><p>Change the conditions that make old behavior easy.</p><a class="text-link" href="articles/environment-shapes-outcome.html">Read →</a></article>
+        <article class="article-card"><a class="article-cover cover-minimum" href="articles/minimum-viable-day.html"><span>Stabilize</span></a><p class="article-date">Field note 02</p><h3>The Minimum Viable Day</h3><p>Protect continuity when capacity is low.</p><a class="text-link" href="articles/minimum-viable-day.html">Read →</a></article>
+        <article class="article-card"><a class="article-cover cover-proof" href="articles/proof-loop.html"><span>Prove</span></a><p class="article-date">Field note 03</p><h3>The Proof Loop</h3><p>Build identity from evidence instead of intensity.</p><a class="text-link" href="articles/proof-loop.html">Read →</a></article>
       </div>
-      <div class="membership-orbit" aria-hidden="true"></div>
-    </section>
+    </div></section>
 
-    <section class="section ecosystem-section">
-      <div class="shell about-grid">
-        <div class="section-heading"><p class="section-label">The wider system</p><h2>Mission, method and evidence.</h2><p>Exit Framework is the practical operating layer inside a larger architecture for studying and building human autonomy.</p></div>
-        <div class="ecosystem-list"><article><strong>Human Autonomy Study</strong><span>The research mission: understand the conditions that strengthen durable self-direction.</span></article><article><strong>Exit Framework</strong><span>The method: turn insight into repeatable control.</span></article><article><strong>Life Archive</strong><span>The evidence layer: preserve data, decisions, outcomes and learning.</span></article><article><strong>High Priority AS</strong><span>The structure: make the work sustainable without compromising the mission.</span></article></div>
-      </div>
-    </section>
+    <section class="membership-preview"><div class="shell membership-preview-grid">
+      <div class="membership-copy"><p class="section-label">Membership</p><h2>Join the operators building real control.</h2><p>The paid layer is implementation, not inspiration. It is the complete operating system plus the tools and review structure required to install it.</p><span class="membership-status">Founder access — coming soon</span><a class="button button-gold" href="membership.html">Explore membership →</a></div>
+      <div class="membership-panel"><p class="kicker">The full Exit Framework OS</p><ul class="membership-list"><li>All six operating domains</li><li>30-Day Control Sprint</li><li>Chaos Scorecard</li><li>Weekly Control Review</li><li>Personal Command Center</li><li>Trackers, templates and protocols</li><li>Operator briefings</li><li>Private archive and future modules</li></ul></div>
+    </div></section>
+
+    <section class="operator-value"><div class="shell operator-value-grid">
+      <div class="operator-value-intro"><p class="section-label">What you get</p><h2>Tools. Structure. Clarity. Results.</h2><p>Built for people who are serious about changing their operating conditions, not consuming another wave of motivation.</p></div>
+      <div class="value-grid"><article><span>01</span><h3>Implementation</h3><p>Step-by-step installation.</p></article><article><span>02</span><h3>Accountability</h3><p>Reviews and visible evidence.</p></article><article><span>03</span><h3>Community</h3><p>Connect with other operators.</p></article><article><span>04</span><h3>Resources</h3><p>Guides, tools and protocols.</p></article><article><span>05</span><h3>Updates</h3><p>New modules as the OS evolves.</p></article><article><span>06</span><h3>Autonomy</h3><p>Build freedom through control.</p></article></div>
+    </div></section>
+
+    <section class="final-cta"><div class="shell final-cta-grid"><div><p class="section-label">Next move</p><h2>Ready to exit the chaos?</h2><p>Start with the open framework and build the first layer of control.</p></div><a class="button" href="framework.html">Enter the framework →</a></div></section>
   </main>
 
-  <footer class="footer-v11"><div class="shell footer-v11-grid"><div class="footer-brand"><span>Exit Framework</span><p>Chaos to control.<br>Control to freedom.</p></div><div><strong>Navigate</strong><a href="framework.html">Framework</a><a href="articles.html">Articles</a><a href="membership.html">Membership</a><a href="about.html">About</a></div><div><strong>Principles</strong><span>System &gt; motivation</span><span>Discipline = freedom</span><span>Autonomy first</span></div></div><div class="shell footer-bottom"><span>© 2026 Exit Framework</span><span>Built by High Priority AS</span></div></footer>
-  <script src="hero.js" defer></script>
+  <footer class="footer-v12"><div class="shell footer-v12-grid"><div class="footer-brand"><span>Exit Framework</span><p>Chaos to control.<br>Control to freedom.</p></div><div><strong>Navigation</strong><a href="framework.html">The framework</a><a href="articles.html">Articles</a><a href="membership.html">Membership</a><a href="about.html">About</a></div><div><strong>Resources</strong><a href="articles.html">Free field notes</a><a href="applications.html">Applications</a><span>Scorecard — planned</span><span>Tools — planned</span></div><div><strong>System reminder</strong><span>Discipline is freedom.</span><span>Control is built.</span><span>Autonomy first.</span></div></div><div class="shell footer-bottom"><span>© 2026 Exit Framework</span><span>Built by High Priority AS</span></div></footer>
+  <script src="hero.js?v=12" defer></script>
 </body>
 </html>
