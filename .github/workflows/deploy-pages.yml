@@ -1,22 +1,15 @@
 name: Deploy Exit Framework to GitHub Pages
-
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: pages
-  # Do not cancel a deployment after deploy-pages has handed it to Pages.
-  # Cancelling at that point can leave Pages holding an in-progress deployment,
-  # which blocks every subsequent deployment for the same site.
   cancel-in-progress: false
-
 jobs:
   deploy:
     environment:
@@ -26,26 +19,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      - name: Validate static site
+      - name: Validate launch site
         shell: bash
         run: |
+          set -euo pipefail
           test -s index.html
+          test -s founders.html
+          test -s membership.html
+          test -s faq.html
+          test -s has.html
+          test -s privacy.html
           test -s styles.css
+          test -s brand-v14.css
+          test -s launch.css
+          test -s launch.js
+          test -s launch-config.js
           test -s hero.js
-          test -s assets/hero-desktop-v8.webp
-          test -s assets/hero-mobile-v8.webp
+          test -s assets/hero-chaos-control-v14.webp
           test "$(cat CNAME)" = "chaosexit.com"
           ! grep -Rni --include='*.html' 'chaos into control' .
-
+          ! grep -Rni --include='*.html' 'Control to fredom' .
+          grep -q 'hero-chaos-control-v14.webp' index.html
+          grep -q 'Human Autonomy Study' has.html
+          grep -q 'Research participation is not sold' index.html
       - name: Configure Pages
         uses: actions/configure-pages@v6
-
       - name: Upload site
         uses: actions/upload-pages-artifact@v5
         with:
           path: .
-
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
