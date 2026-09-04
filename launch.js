@@ -1,86 +1,12 @@
-(() => {
-  const config = window.EXIT_LAUNCH_CONFIG || {};
-  const stripe = config.stripe || {};
-  const crm = config.crm || {};
-
-  document.querySelectorAll('[data-founder-price]').forEach((el) => {
-    if (config.founderPriceLabel) el.textContent = config.founderPriceLabel;
-  });
-
-  document.querySelectorAll('[data-checkout="founder"]').forEach((link) => {
-    if (stripe.founderPaymentLink) {
-      link.href = stripe.founderPaymentLink;
-      link.removeAttribute('aria-disabled');
-      link.textContent = 'Secure founder access →';
-      link.rel = 'noopener';
-    }
-  });
-
-  const labels = {
-    instagram: 'Instagram',
-    youtube: 'YouTube',
-    tiktok: 'TikTok',
-    linkedin: 'LinkedIn'
-  };
-  const glyphs = {
-    instagram: '◎',
-    youtube: '▶',
-    tiktok: '♪',
-    linkedin: 'in'
-  };
-  document.querySelectorAll('[data-social-links]').forEach((container) => {
-    Object.entries(config.social || {}).forEach(([key, url]) => {
-      if (!url || !labels[key]) return;
-      const a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.setAttribute('aria-label', labels[key]);
-      a.title = labels[key];
-      a.textContent = glyphs[key] || labels[key].slice(0, 1);
-      container.appendChild(a);
-    });
-    if (!container.children.length) container.hidden = true;
-  });
-
-  const reserve = (type) => {
-    const form = document.querySelector('[data-founder-form]');
-    if (!form) return;
-    const interest = form.querySelector('[data-drop-interest]');
-    const status = form.querySelector('[data-form-status]');
-    const email = form.querySelector('input[type="email"]');
-    if (interest) interest.value = type;
-    if (status) status.textContent = `Founder ${type} interest selected. Add your email to reserve priority notice.`;
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => email?.focus(), 450);
-  };
-  document.querySelectorAll('[data-reserve]').forEach((button) => {
-    button.addEventListener('click', () => reserve(button.dataset.reserve));
-  });
-
-  document.querySelectorAll('[data-founder-form]').forEach((form) => {
-    const status = form.querySelector('[data-form-status]');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!crm.endpoint) {
-        if (status) status.textContent = 'CRM connection is not live yet. Opening the founder launch list instead.';
-        if (crm.fallbackUrl) location.href = crm.fallbackUrl;
-        return;
-      }
-      const payload = Object.fromEntries(new FormData(form).entries());
-      try {
-        const response = await fetch(crm.endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...payload, source: 'Founder 100', timestamp: new Date().toISOString() })
-        });
-        if (!response.ok) throw new Error('CRM request failed');
-        form.reset();
-        if (status) status.textContent = 'Recorded. Founder launch updates are on the way.';
-      } catch (_) {
-        if (status) status.textContent = 'Could not record the request. Please use the launch list instead.';
-        if (crm.fallbackUrl) setTimeout(() => { location.href = crm.fallbackUrl; }, 900);
-      }
-    });
-  });
+(()=>{
+  const config=window.EXIT_LAUNCH_CONFIG||{},stripe=config.stripe||{},crm=config.crm||{};
+  const toggle=document.querySelector('.menu-toggle'),menu=document.getElementById('mobile-menu');
+  if(toggle&&menu){const close=()=>{toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu');menu.hidden=true};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));toggle.setAttribute('aria-label',open?'Open menu':'Close menu');menu.hidden=open});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));addEventListener('resize',()=>{if(innerWidth>860)close()},{passive:true})}
+  document.querySelectorAll('[data-founder-price]').forEach(el=>{if(config.founderPriceLabel)el.textContent=config.founderPriceLabel});
+  document.querySelectorAll('[data-checkout="founder"]').forEach(link=>{if(stripe.founderPaymentLink){link.href=stripe.founderPaymentLink;link.textContent='Secure founder access →';link.dataset.mode='checkout';link.target='_blank';link.rel='noopener noreferrer'}else{link.href='#founder-form';link.textContent='Reserve founder access →';link.dataset.mode='waitlist'}});
+  const labels={instagram:'Instagram',youtube:'YouTube',tiktok:'TikTok',linkedin:'LinkedIn'},glyphs={instagram:'IG',youtube:'YT',tiktok:'TT',linkedin:'in'};
+  document.querySelectorAll('[data-social-links]').forEach(box=>{Object.entries(config.social||{}).forEach(([key,url])=>{if(!url||!labels[key])return;const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',labels[key]);a.title=labels[key];a.textContent=glyphs[key];box.appendChild(a)});if(!box.children.length)box.hidden=true});
+  const selectInterest=type=>{const form=document.querySelector('[data-founder-form]');if(!form)return;const select=form.querySelector('[name="interest_type"]'),status=form.querySelector('[data-form-status]'),email=form.querySelector('input[type="email"]');if(select)select.value=type;if(status)status.textContent=`${type} selected. Add your details to register priority interest.`;form.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>email?.focus(),420)};
+  document.querySelectorAll('[data-reserve]').forEach(btn=>btn.addEventListener('click',()=>selectInterest(btn.dataset.reserve)));
+  document.querySelectorAll('[data-founder-form]').forEach(form=>{const status=form.querySelector('[data-form-status]');form.addEventListener('submit',async e=>{e.preventDefault();const payload=Object.fromEntries(new FormData(form).entries());payload.has_interest=form.querySelector('[name="has_interest"]')?.checked?'yes':'no';payload.source='Exit Framework launch';payload.timestamp=new Date().toISOString();if(!crm.endpoint){try{sessionStorage.setItem('exit_founder_interest',JSON.stringify(payload))}catch(_){}if(status)status.textContent='Interest captured locally. Opening the launch list to complete signup.';if(crm.fallbackUrl)setTimeout(()=>{location.href=crm.fallbackUrl},550);return}try{const response=await fetch(crm.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!response.ok)throw new Error('CRM request failed');form.reset();if(status)status.textContent='Recorded. Founder launch updates are on the way.'}catch(_){if(status)status.textContent='The CRM endpoint did not respond. Opening the fallback launch list.';if(crm.fallbackUrl)setTimeout(()=>{location.href=crm.fallbackUrl},850)}})});
 })();
