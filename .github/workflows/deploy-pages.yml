@@ -42,6 +42,20 @@ jobs:
           grep -q 'hero-chaos-control-v14.webp' index.html
           grep -q 'Human Autonomy Study' has.html
           grep -q 'Research participation is not sold' index.html
+
+          if grep -q "launchMode:'live'" launch-config.js; then
+            grep -q "founderPriceConfirmed:true" launch-config.js
+            grep -q "qaPassed:true" launch-config.js
+            grep -q "socialVerified:true" launch-config.js
+            ! grep -q "founderPaymentLink:''" launch-config.js
+            ! grep -q "endpoint:''" launch-config.js
+            ! grep -q "instagram:''" launch-config.js
+            ! grep -q "youtube:''" launch-config.js
+            ! grep -q "tiktok:''" launch-config.js
+            ! grep -q "linkedin:''" launch-config.js
+          else
+            grep -q "launchMode:'preview'" launch-config.js
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Upload site
