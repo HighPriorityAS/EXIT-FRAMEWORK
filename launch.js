@@ -1,10 +1,29 @@
 (()=>{
+  const style=document.createElement('link');style.rel='stylesheet';style.href='obsidian-amber.css?v=15';style.dataset.obsidianAmber='true';document.head.appendChild(style);
+
   const config=window.EXIT_LAUNCH_CONFIG||{},stripe=config.stripe||{},crm=config.crm||{},social=config.social||{};
   const socialKeys=['instagram','youtube','tiktok','linkedin'];
   const launchMode=config.launchMode==='live'?'live':'preview';
   const socialReady=config.socialVerified===true&&socialKeys.every(key=>Boolean(social[key]));
   const activationReady=launchMode==='live'&&config.founderPriceConfirmed===true&&config.qaPassed===true&&Boolean(stripe.founderPaymentLink)&&Boolean(crm.endpoint)&&socialReady;
   document.documentElement.dataset.launchMode=activationReady?'live':'preview';
+
+  if(document.body.classList.contains('home-launch-v14')){
+    const hero=document.getElementById('launch-hero-image');
+    if(hero){hero.src='assets/hero-obsidian-amber-v15.webp';hero.width=1600;hero.height=900}
+    const chip=document.querySelector('.hero-system-chip');
+    if(chip)chip.innerHTML='<span>Exit / Operating System</span><strong>Direction 02</strong><span>Obsidian / Amber</span>';
+    const label=document.querySelector('.hero-message .section-label');
+    if(label)label.textContent='A clearer path forward';
+    const sub=document.querySelector('.hero-message .hero-subline');
+    if(sub)sub.textContent='A practical operating system for recovery, self-leadership and autonomy.';
+    const title=document.querySelector('.hero-message h2');
+    if(title)title.innerHTML='From chaos<em>to control.</em>';
+    const copy=document.querySelector('.hero-message .hero-copy');
+    if(copy)copy.textContent='Reduce the noise. Build real systems. Create enough structure that progress can survive imperfect days.';
+    const micro=document.querySelector('.hero-message .hero-micro');
+    if(micro)micro.textContent='Clarity / Discipline / A freer tomorrow';
+  }
 
   const toggle=document.querySelector('.menu-toggle'),menu=document.getElementById('mobile-menu');
   if(toggle&&menu){const close=()=>{toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open menu');menu.hidden=true};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));toggle.setAttribute('aria-label',open?'Open menu':'Close menu');menu.hidden=open});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));addEventListener('resize',()=>{if(innerWidth>860)close()},{passive:true})}
