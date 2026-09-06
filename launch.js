@@ -1,5 +1,5 @@
 (()=>{
-  const style=document.createElement('link');style.rel='stylesheet';style.href='obsidian-amber.css?v=15';style.dataset.obsidianAmber='true';document.head.appendChild(style);
+  if(!document.querySelector('link[data-obsidian-amber]')){const style=document.createElement('link');style.rel='stylesheet';style.href='obsidian-amber.css?v=15';style.dataset.obsidianAmber='true';document.head.appendChild(style)}
 
   const config=window.EXIT_LAUNCH_CONFIG||{},stripe=config.stripe||{},crm=config.crm||{},social=config.social||{};
   const socialKeys=['instagram','youtube','tiktok','linkedin'];
