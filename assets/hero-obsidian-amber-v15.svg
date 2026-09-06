@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Obsidian and amber mountain horizon</title>
+  <desc id="desc">A dark mountain landscape with a warm amber horizon and a lone figure facing the light.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#080909"/>
+      <stop offset="0.55" stop-color="#15120e"/>
+      <stop offset="0.76" stop-color="#8a531c"/>
+      <stop offset="1" stop-color="#18120d"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="73%" cy="42%" r="28%">
+      <stop offset="0" stop-color="#ffd692" stop-opacity="0.98"/>
+      <stop offset="0.2" stop-color="#f0ae4f" stop-opacity="0.72"/>
+      <stop offset="0.55" stop-color="#b96d22" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leftFade" x1="0" x2="1">
+      <stop offset="0" stop-color="#050606" stop-opacity="1"/>
+      <stop offset="0.36" stop-color="#050606" stop-opacity="0.97"/>
+      <stop offset="0.55" stop-color="#050606" stop-opacity="0.55"/>
+      <stop offset="0.78" stop-color="#050606" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bottomFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.58" stop-color="#050606" stop-opacity="0"/>
+      <stop offset="1" stop-color="#050606" stop-opacity="0.94"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect width="1600" height="900" fill="url(#sun)"/>
+  <ellipse cx="1170" cy="435" rx="155" ry="38" fill="#f6bb61" opacity="0.15" filter="url(#glow)"/>
+  <path d="M520 510 650 392 718 448 810 326 900 455 980 382 1050 474 1150 338 1240 452 1330 365 1450 492 1600 390 1600 900 430 900Z" fill="#151515"/>
+  <path d="M620 566 760 455 825 503 930 414 1015 518 1115 439 1205 534 1300 454 1410 530 1510 469 1600 522 1600 900 560 900Z" fill="#101111" opacity="0.95"/>
+  <path d="M740 610 900 530 1000 593 1090 536 1195 612 1290 550 1410 623 1510 568 1600 626 1600 900 700 900Z" fill="#090a0a"/>
+  <path d="M895 680 1030 610 1100 664 1210 608 1320 670 1455 615 1600 700 1600 900 820 900Z" fill="#060707"/>
+  <path d="M1106 666c7-18 18-31 30-31s22 13 29 31l8 42h-74z" fill="#070808"/>
+  <circle cx="1136" cy="620" r="13" fill="#070808"/>
+  <path d="M1126 648 1114 744m43-96 10 96m-31-86v78" stroke="#070808" stroke-width="13" stroke-linecap="round"/>
+  <path d="M1134 645c17 28 31 46 47 58" fill="none" stroke="#17130e" stroke-width="3" opacity="0.9"/>
+  <rect width="1600" height="900" fill="url(#leftFade)"/>
+  <rect width="1600" height="900" fill="url(#bottomFade)"/>
+  <path d="M1090 504h270" stroke="#e3a449" stroke-opacity="0.18"/>
+  <path d="M1172 486h132" stroke="#f1b45a" stroke-opacity="0.28"/>
+</svg>
