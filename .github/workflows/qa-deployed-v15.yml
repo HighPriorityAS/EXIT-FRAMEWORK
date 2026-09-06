@@ -1,0 +1,29 @@
+name: QA deployed V15 render
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Audit deployed site
+        env:
+          QA_BASE_URL: https://chaosexit.com
+        run: node qa/deployed-render-audit.mjs
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployed-v15-render-audit
+          path: qa-artifacts
+          if-no-files-found: warn
