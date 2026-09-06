@@ -10,7 +10,7 @@
 
   if(document.body.classList.contains('home-launch-v14')){
     const hero=document.getElementById('launch-hero-image');
-    if(hero){hero.src='assets/hero-obsidian-amber-v15.webp';hero.width=1600;hero.height=900}
+    if(hero){hero.src='assets/hero-obsidian-amber-v15.svg';hero.width=1600;hero.height=900}
     const chip=document.querySelector('.hero-system-chip');
     if(chip)chip.innerHTML='<span>Exit / Operating System</span><strong>Direction 02</strong><span>Obsidian / Amber</span>';
     const label=document.querySelector('.hero-message .section-label');
