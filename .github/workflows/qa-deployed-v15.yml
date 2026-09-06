@@ -1,6 +1,8 @@
 name: QA deployed V15 render
 on:
   workflow_dispatch:
+  push:
+    branches: ["qa/deployed-v15-render-pass"]
 permissions:
   contents: read
 jobs:
