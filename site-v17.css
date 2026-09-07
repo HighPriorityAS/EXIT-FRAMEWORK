@@ -1,0 +1,143 @@
+/* Exit Framework V17 — global visual hardening
+   Purpose: one coherent Obsidian / Amber system across every public page.
+   This file intentionally overrides the older beige/HAS-blue legacy surfaces. */
+
+:root{
+  --v17-bg:#050606;
+  --v17-bg-2:#090a0a;
+  --v17-panel:#0e1010;
+  --v17-panel-2:#121414;
+  --v17-ink:#f2eee6;
+  --v17-muted:rgba(242,238,230,.68);
+  --v17-faint:rgba(242,238,230,.46);
+  --v17-amber:#d59a3a;
+  --v17-amber-hi:#f2b75a;
+  --v17-line:rgba(242,238,230,.10);
+  --v17-line-amber:rgba(242,183,90,.22);
+}
+
+html,body{background:var(--v17-bg)!important;color:var(--v17-ink)!important;color-scheme:dark}
+body{overflow-x:hidden}
+a{color:inherit}
+::selection{background:rgba(242,183,90,.25);color:#fff}
+
+/* Header / navigation */
+.site-header,.launch-header{
+  background:linear-gradient(180deg,rgba(5,6,6,.985),rgba(5,6,6,.90))!important;
+  border-bottom:1px solid var(--v17-line)!important;
+  box-shadow:none!important;
+  backdrop-filter:blur(18px)!important;
+}
+.nav a,.header-link,.mobile-menu a{color:rgba(242,238,230,.68)!important}
+.nav a:hover,.nav a[aria-current="page"],.mobile-menu a:hover{color:var(--v17-ink)!important}
+.menu-toggle::before,.menu-toggle::after{background:var(--v17-ink)!important}
+.mobile-menu{background:#070808!important;border-color:var(--v17-line)!important}
+
+/* Global section backgrounds */
+.section,.section-compact,.launch-section,.launch-section-light,.launch-section-dark,
+.launch-page-hero,.page-hero,.article-header,.access,.founder-thesis,.founder-drop,
+.checkout-section,.founder-crm,.research-lane{
+  background:var(--v17-bg)!important;
+  color:var(--v17-ink)!important;
+}
+.section-dark,.launch-section-dark{
+  background:linear-gradient(180deg,#070808,#0a0b0b)!important;
+}
+.page-hero,.launch-page-hero,.article-header{
+  border-bottom:1px solid var(--v17-line)!important;
+  background:radial-gradient(circle at 78% 18%,rgba(213,154,58,.08),transparent 30%),linear-gradient(145deg,#070808,#0d0f0f)!important;
+}
+
+/* Kill legacy beige / HAS-blue boxes everywhere. */
+.framework-grid article,.applications-grid article,.principles-grid article,
+.resource-card,.detail-card,.case-card,.ecosystem-list article,
+.simple-grid article,.problem-grid article,.framework-steps article,
+.product-card,.product-card.future,.founder-included-grid article,
+.drop-grid article,.partner-cards article,.has-roadmap article,
+.founder-ledger div,.journal-card,.research-boundary,.checkout-card,
+.crm-form,.faq-list details,.quote-block,.callout,.note,.notice,
+[class*="card"],[class*="panel"],[class*="callout"],[class*="info-box"]{
+  background:#0e1010!important;
+  color:var(--v17-ink)!important;
+  border-color:var(--v17-line)!important;
+  box-shadow:none!important;
+}
+
+/* Grid seams should be neutral, never blue. */
+.framework-grid,.applications-grid,.principles-grid,.resource-grid,.detail-grid,
+.case-grid,.ecosystem-list,.simple-grid,.problem-grid,.framework-steps,
+.product-grid,.founder-included-grid,.drop-grid,.partner-cards,.has-roadmap,
+.founder-ledger,.journal-grid{
+  border-color:var(--v17-line)!important;
+  background-color:var(--v17-line)!important;
+}
+
+/* Typography */
+.page-hero h1,.launch-page-hero h1,.section-heading h1,.section-heading h2,
+.section-head h2,.article-header h1,.access h2,.founder-callout h2,.research-grid h2,
+.framework-grid h3,.applications-grid h3,.resource-card h3,.detail-card h3,
+.case-card h3,.simple-grid h3,.problem-grid h3,.framework-steps h3,.product-card h3,
+.founder-included-grid h3,.drop-grid h3,.journal-card h3,.faq-list summary{
+  color:var(--v17-ink)!important;
+}
+.page-hero p,.launch-page-hero p,.section-heading>p:last-child,.section-head>p:last-child,
+.article-header p,.access p,.framework-grid p,.framework-grid li,.applications-grid p,
+.resource-card p,.detail-card p,.case-card p,.simple-grid p,.problem-grid p,
+.framework-steps p,.product-card p,.product-card li,.founder-included-grid li,
+.drop-grid p,.partner-cards p,.has-roadmap p,.journal-card p,.research-boundary p,
+.faq-list details p,.quote-block,.crm-form,.form-note{
+  color:var(--v17-muted)!important;
+}
+.section-label,.kicker,.eyebrow,.product-index,.problem-grid span,.framework-steps>article>span,
+.founder-included-grid article>span,.drop-grid .kicker,.partner-cards article>span,
+.has-roadmap article>span,.journal-card>span,.founder-ledger span{
+  color:var(--v17-amber-hi)!important;
+}
+
+/* Buttons / links */
+.button{border-radius:3px!important;box-shadow:none!important}
+.button:not(.button-gold){background:#101111!important;color:var(--v17-ink)!important;border-color:rgba(242,238,230,.22)!important}
+.button-gold{background:linear-gradient(135deg,#f0b75c,#c98528)!important;color:#15100a!important;border-color:rgba(255,202,115,.50)!important}
+.text-link{color:var(--v17-ink)!important}
+.text-link-gold,.has-external-link{color:var(--v17-amber-hi)!important}
+.has-external-link{text-decoration:none;border-bottom:1px solid rgba(242,183,90,.35)}
+.has-external-link:hover{border-bottom-color:var(--v17-amber-hi)}
+
+/* Research boundary: distinct through amber line, not HAS blue. */
+.research-boundary{
+  border:1px solid var(--v17-line-amber)!important;
+  background:linear-gradient(145deg,#0d0f0f,#111212)!important;
+}
+.research-boundary strong{color:var(--v17-amber-hi)!important}
+
+/* Forms */
+input,select,textarea{
+  background:#080909!important;
+  color:var(--v17-ink)!important;
+  border-color:rgba(242,238,230,.18)!important;
+}
+input::placeholder,textarea::placeholder{color:rgba(242,238,230,.38)!important}
+
+/* Footer */
+footer,.launch-footer{background:#050606!important;color:var(--v17-faint)!important;border-top:1px solid var(--v17-line)!important}
+footer a,.launch-footer a{color:rgba(242,238,230,.68)!important}
+
+/* Article reading surfaces */
+.article-body,.article-shell,.article-content,.prose{background:var(--v17-bg)!important;color:var(--v17-ink)!important}
+.article-body p,.article-content p,.prose p,.article-body li,.article-content li,.prose li{color:rgba(242,238,230,.76)!important}
+.article-body h2,.article-body h3,.article-content h2,.article-content h3,.prose h2,.prose h3{color:var(--v17-ink)!important}
+.article-body blockquote,.article-content blockquote,.prose blockquote{background:#0e1010!important;border-color:var(--v17-amber)!important;color:var(--v17-muted)!important}
+
+/* Mobile readability */
+@media(max-width:860px){
+  .shell{width:min(calc(100% - 32px),var(--max))!important}
+  .page-hero,.launch-page-hero{padding-top:118px!important}
+  .framework-grid,.applications-grid,.resource-grid,.detail-grid,.case-grid,.simple-grid,
+  .problem-grid,.framework-steps,.product-grid,.founder-included-grid,.drop-grid,
+  .partner-cards,.has-roadmap,.journal-grid{grid-template-columns:1fr!important}
+}
+
+@media(max-width:520px){
+  .page-hero h1,.launch-page-hero h1,.article-header h1{font-size:clamp(2.6rem,13vw,4.2rem)!important}
+  .section-heading h2,.section-head h2{font-size:clamp(2.25rem,11vw,3.7rem)!important}
+}
