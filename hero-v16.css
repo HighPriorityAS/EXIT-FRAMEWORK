@@ -1,25 +1,123 @@
-/* Exit Framework — Hero V17 hardening
-   The hero has a CSS background fallback so the artwork is visible even if
-   the <picture> source or JavaScript swap fails. */
-.home-launch-v14 .cinematic-hero{min-height:100svh!important;background:#050606!important;border-bottom:1px solid rgba(242,238,230,.09)!important;overflow:hidden!important}
-.home-launch-v14 .cinematic-hero-media,.home-launch-v14 .cinematic-hero-media picture{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important}
-.home-launch-v14 .cinematic-hero-media{background:#050606 url('assets/hero-desktop-v8.webp?v=17') center center/cover no-repeat!important}
-.home-launch-v14 .cinematic-hero-media img{width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center center!important;filter:none!important;opacity:1!important;visibility:visible!important}
-.home-launch-v14 .cinematic-hero-shade{position:absolute!important;inset:0!important;background:linear-gradient(180deg,rgba(5,6,6,.08) 0%,rgba(5,6,6,.00) 38%,rgba(5,6,6,.04) 68%,rgba(5,6,6,.56) 100%)!important;pointer-events:none!important}
-.home-launch-v14 .cinematic-hero-grid{min-height:100svh!important;display:flex!important;align-items:flex-end!important;justify-content:flex-start!important;padding-top:110px!important;padding-bottom:48px!important}
-.home-launch-v14 .hero-system-chip,.home-launch-v14 .hero-message>.section-label,.home-launch-v14 .hero-message>.hero-subline,.home-launch-v14 .hero-message>h2,.home-launch-v14 .hero-message>.hero-copy,.home-launch-v14 .hero-message>.hero-micro,.home-launch-v14 .hero-principles{display:none!important}
-.home-launch-v14 .hero-message{width:auto!important;margin:0!important;padding:0!important;max-width:none!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
-.home-launch-v14 .hero-message .hero-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+/* Exit Framework — Hero V18 hard lock
+   Canonical hero = split CHAOS / CONTROL silhouette.
+   The legacy <picture> remains only as inert fallback markup; it is hidden so
+   older vortex/door assets can never render over the approved hero. */
+.home-launch-v14 .cinematic-hero{
+  position:relative!important;
+  min-height:100svh!important;
+  background:#050606!important;
+  border-bottom:1px solid rgba(242,238,230,.09)!important;
+  overflow:hidden!important;
+}
+.home-launch-v14 .cinematic-hero-media{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  background:#050606 url('assets/hero-silhouette-desktop-v18.webp?v=18') center center/cover no-repeat!important;
+}
+.home-launch-v14 .cinematic-hero-media picture,
+.home-launch-v14 .cinematic-hero-media img{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.home-launch-v14 .cinematic-hero-shade{
+  position:absolute!important;
+  inset:0!important;
+  background:linear-gradient(180deg,rgba(5,6,6,.10) 0%,rgba(5,6,6,0) 25%,rgba(5,6,6,0) 70%,rgba(5,6,6,.52) 100%)!important;
+  pointer-events:none!important;
+}
+.home-launch-v14 .cinematic-hero-grid{
+  position:relative!important;
+  z-index:2!important;
+  min-height:100svh!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:flex-start!important;
+  padding-top:110px!important;
+  padding-bottom:42px!important;
+}
+.home-launch-v14 .hero-system-chip,
+.home-launch-v14 .hero-message>.section-label,
+.home-launch-v14 .hero-message>.hero-subline,
+.home-launch-v14 .hero-message>h2,
+.home-launch-v14 .hero-message>.hero-copy,
+.home-launch-v14 .hero-message>.hero-micro,
+.home-launch-v14 .hero-principles{display:none!important}
+.home-launch-v14 .hero-message{
+  width:auto!important;
+  margin:0!important;
+  padding:0!important;
+  max-width:none!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+.home-launch-v14 .hero-message .hero-actions{
+  display:flex!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
 .home-launch-v14 .hero-message .button{min-height:44px!important}
-.home-launch-v14 .launch-section,.home-launch-v14 .launch-section-light,.home-launch-v14 .launch-section-dark{background:#080909!important;color:#f2eee6!important}
-.home-launch-v14 .problem-grid article,.home-launch-v14 .framework-steps article,.home-launch-v14 .product-card,.home-launch-v14 .product-card.future,.home-launch-v14 .founder-ledger div,.home-launch-v14 .journal-card,.home-launch-v14 .research-boundary{background:#0f1010!important;border-color:rgba(242,238,230,.09)!important;color:#f2eee6!important}
-.home-launch-v14 .problem-grid h3,.home-launch-v14 .framework-steps h3,.home-launch-v14 .product-card h3,.home-launch-v14 .founder-ledger strong,.home-launch-v14 .journal-card h3{color:#f2eee6!important}
-.home-launch-v14 .problem-grid p,.home-launch-v14 .framework-steps p,.home-launch-v14 .product-card p,.home-launch-v14 .product-card li,.home-launch-v14 .journal-card p,.home-launch-v14 .research-boundary p{color:rgba(242,238,230,.68)!important}
+
+/* Keep the rest of the homepage in the V17 black surface system. */
+.home-launch-v14 .launch-section,
+.home-launch-v14 .launch-section-light,
+.home-launch-v14 .launch-section-dark{background:#080909!important;color:#f2eee6!important}
+.home-launch-v14 .problem-grid article,
+.home-launch-v14 .framework-steps article,
+.home-launch-v14 .product-card,
+.home-launch-v14 .product-card.future,
+.home-launch-v14 .founder-ledger div,
+.home-launch-v14 .journal-card,
+.home-launch-v14 .research-boundary{background:#0f1010!important;border-color:rgba(242,238,230,.09)!important;color:#f2eee6!important}
+.home-launch-v14 .problem-grid h3,
+.home-launch-v14 .framework-steps h3,
+.home-launch-v14 .product-card h3,
+.home-launch-v14 .founder-ledger strong,
+.home-launch-v14 .journal-card h3{color:#f2eee6!important}
+.home-launch-v14 .problem-grid p,
+.home-launch-v14 .framework-steps p,
+.home-launch-v14 .product-card p,
+.home-launch-v14 .product-card li,
+.home-launch-v14 .journal-card p,
+.home-launch-v14 .research-boundary p{color:rgba(242,238,230,.68)!important}
+
 @media(max-width:860px){
-  .home-launch-v14 .cinematic-hero-media{background-image:url('assets/exit-framework-poster-9x16.webp?v=17')!important;background-position:center top!important}
-  .home-launch-v14 .cinematic-hero-media img{object-position:center top!important}
-  .home-launch-v14 .cinematic-hero-grid{min-height:100svh!important;padding-top:92px!important;padding-bottom:28px!important;align-items:flex-end!important}
+  .home-launch-v14 .cinematic-hero-media{
+    background-image:url('assets/hero-silhouette-mobile-v18.webp?v=18')!important;
+    background-position:center top!important;
+    background-size:cover!important;
+  }
+  .home-launch-v14 .cinematic-hero-shade{
+    background:linear-gradient(180deg,rgba(5,6,6,.08) 0%,rgba(5,6,6,0) 18%,rgba(5,6,6,0) 72%,rgba(5,6,6,.60) 100%)!important;
+  }
+  .home-launch-v14 .cinematic-hero-grid{
+    min-height:100svh!important;
+    padding-top:92px!important;
+    padding-bottom:max(24px,env(safe-area-inset-bottom))!important;
+    align-items:flex-end!important;
+  }
   .home-launch-v14 .hero-message{width:100%!important}
-  .home-launch-v14 .hero-message .hero-actions{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
-  .home-launch-v14 .hero-message .button{width:100%!important;justify-content:center!important;padding-left:12px!important;padding-right:12px!important;font-size:.68rem!important}
+  .home-launch-v14 .hero-message .hero-actions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    width:min(100%,420px)!important;
+  }
+  .home-launch-v14 .hero-message .button{
+    width:100%!important;
+    justify-content:center!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
+    font-size:.68rem!important;
+    min-height:48px!important;
+  }
 }

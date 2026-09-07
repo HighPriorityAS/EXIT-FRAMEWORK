@@ -24,7 +24,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v16.css site-v17.css assets/hero-desktop-v8.webp assets/exit-framework-poster-9x16.webp; do
+          for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v16.css site-v17.css assets/hero-silhouette-desktop-v18.webp assets/hero-silhouette-mobile-v18.webp; do
             test -s "$f"
           done
           test "$(cat CNAME)" = "chaosexit.com"
@@ -34,8 +34,11 @@ jobs:
           ! grep -Rni --include='*.html' 'Control to fredom' .
           ! grep -Rni --include='*.html' -E 'href="(\.\./)?has\.html([#?][^"]*)?"' .
           grep -q 'site-v17.css?v=17' index.html
-          grep -q 'hero-desktop-v8.webp?v=17' index.html
-          grep -q 'exit-framework-poster-9x16.webp?v=17' index.html
+          grep -q 'hero-v16.css' index.html
+          grep -q 'hero-silhouette-desktop-v18.webp' hero-v16.css
+          grep -q 'hero-silhouette-mobile-v18.webp' hero-v16.css
+          ! grep -q "background-image:url('assets/exit-framework-poster-9x16.webp" hero-v16.css
+          ! grep -q "background:#050606 url('assets/hero-desktop-v8.webp" hero-v16.css
           for f in index.html founders.html membership.html faq.html about.html applications.html; do grep -q 'humanautonomystudy.org' "$f"; done
           grep -q 'Research participation is not sold' index.html
 
