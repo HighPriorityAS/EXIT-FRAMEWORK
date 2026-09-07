@@ -35,11 +35,14 @@ jobs:
           test -s launch.js
           test -s launch-config.js
           test -s hero.js
-          test -s assets/hero-chaos-control-v14.webp
+          test -s hero-v16.css
+          test -s assets/hero-silhouette-desktop-v16.webp
+          test -s assets/hero-silhouette-mobile-v16.webp
           test "$(cat CNAME)" = "chaosexit.com"
           ! grep -Rni --include='*.html' 'chaos into control' .
           ! grep -Rni --include='*.html' 'Control to fredom' .
-          grep -q 'hero-chaos-control-v14.webp' index.html
+          grep -q 'hero-silhouette-desktop-v16.webp' index.html
+          grep -q 'hero-silhouette-mobile-v16.webp' index.html
           grep -q 'Human Autonomy Study' has.html
           grep -q 'Research participation is not sold' index.html
 
