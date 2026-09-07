@@ -1,0 +1,946 @@
+{
+  "result": "passed",
+  "widths": [
+    390,
+    430,
+    768,
+    1440
+  ],
+  "page_tests": [
+    {
+      "route": "index.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "EXIT FRAMEWORK",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "framework.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Control is built through a loop.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "founders.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "The first 100 operators.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "membership.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Implementation over inspiration.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Useful before impressive.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "faq.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Clear answers before checkout.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "about.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Build control. Preserve autonomy.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "applications.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Use systems where intention keeps failing.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "philosophy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Freedom becomes durable when structure holds.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "privacy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Data should have a job.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "has.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Research stays separate from commerce.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "404.html",
+      "css": [
+        "/styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "This path does not lead forward.",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/chaos-audit.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "The Chaos Audit",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/minimum-viable-day.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "The Minimum Viable Day",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/proof-loop.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "The Proof Loop",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/identity-is-a-daily-decision.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Identity Is a Daily Decision",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/discipline-creates-freedom.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Discipline Creates Freedom",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "articles/environment-shapes-outcome.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 375,
+      "h1": "Environment Shapes Outcome",
+      "height": 780,
+      "overflow": [],
+      "width": 390
+    },
+    {
+      "route": "index.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "EXIT FRAMEWORK",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "framework.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Control is built through a loop.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "founders.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "The first 100 operators.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "membership.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Implementation over inspiration.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Useful before impressive.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "faq.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Clear answers before checkout.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "about.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Build control. Preserve autonomy.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "applications.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Use systems where intention keeps failing.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "philosophy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Freedom becomes durable when structure holds.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "privacy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Data should have a job.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "has.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Research stays separate from commerce.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "404.html",
+      "css": [
+        "/styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "This path does not lead forward.",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/chaos-audit.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "The Chaos Audit",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/minimum-viable-day.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "The Minimum Viable Day",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/proof-loop.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "The Proof Loop",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/identity-is-a-daily-decision.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Identity Is a Daily Decision",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/discipline-creates-freedom.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Discipline Creates Freedom",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "articles/environment-shapes-outcome.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 415,
+      "h1": "Environment Shapes Outcome",
+      "height": 780,
+      "overflow": [],
+      "width": 430
+    },
+    {
+      "route": "index.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "EXIT FRAMEWORK",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "framework.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Control is built through a loop.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "founders.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "The first 100 operators.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "membership.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Implementation over inspiration.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Useful before impressive.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "faq.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Clear answers before checkout.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "about.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Build control. Preserve autonomy.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "applications.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Use systems where intention keeps failing.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "philosophy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Freedom becomes durable when structure holds.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "privacy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Data should have a job.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "has.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Research stays separate from commerce.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "404.html",
+      "css": [
+        "/styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "This path does not lead forward.",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/chaos-audit.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "The Chaos Audit",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/minimum-viable-day.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "The Minimum Viable Day",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/proof-loop.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "The Proof Loop",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/identity-is-a-daily-decision.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Identity Is a Daily Decision",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/discipline-creates-freedom.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Discipline Creates Freedom",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "articles/environment-shapes-outcome.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 753,
+      "h1": "Environment Shapes Outcome",
+      "height": 780,
+      "overflow": [],
+      "width": 768
+    },
+    {
+      "route": "index.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "EXIT FRAMEWORK",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "framework.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Control is built through a loop.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "founders.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "The first 100 operators.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "membership.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Implementation over inspiration.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Useful before impressive.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "faq.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Clear answers before checkout.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "about.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Build control. Preserve autonomy.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "applications.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Use systems where intention keeps failing.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "philosophy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Freedom becomes durable when structure holds.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "privacy.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Data should have a job.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "has.html",
+      "css": [
+        "styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Research stays separate from commerce.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "404.html",
+      "css": [
+        "/styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "This path does not lead forward.",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/chaos-audit.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "The Chaos Audit",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/minimum-viable-day.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "The Minimum Viable Day",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/proof-loop.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "The Proof Loop",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/identity-is-a-daily-decision.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Identity Is a Daily Decision",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/discipline-creates-freedom.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Discipline Creates Freedom",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    },
+    {
+      "route": "articles/environment-shapes-outcome.html",
+      "css": [
+        "../styles.css?v=4e8c9ad9762c"
+      ],
+      "docWidth": 1425,
+      "h1": "Environment Shapes Outcome",
+      "height": 780,
+      "overflow": [],
+      "width": 1440
+    }
+  ],
+  "interactions": [
+    {
+      "width": 390,
+      "opened": "true",
+      "focus": "Framework",
+      "closed": "false",
+      "restored": "Open menu",
+      "primary": "http://127.0.0.1:4173/framework.html",
+      "secondary": "http://127.0.0.1:4173/founders.html",
+      "notice": "Founder Hoodie 01: reservations are not open. Follow launch updates on Substack; no details have been submitted.",
+      "disclosure": true
+    },
+    {
+      "width": 430,
+      "opened": "true",
+      "focus": "Framework",
+      "closed": "false",
+      "restored": "Open menu",
+      "primary": "http://127.0.0.1:4173/framework.html",
+      "secondary": "http://127.0.0.1:4173/founders.html",
+      "notice": "Founder Hoodie 01: reservations are not open. Follow launch updates on Substack; no details have been submitted.",
+      "disclosure": true
+    },
+    {
+      "width": 768,
+      "opened": "true",
+      "focus": "Framework",
+      "closed": "false",
+      "restored": "Open menu",
+      "primary": "http://127.0.0.1:4173/framework.html",
+      "secondary": "http://127.0.0.1:4173/founders.html",
+      "notice": "Founder Hoodie 01: reservations are not open. Follow launch updates on Substack; no details have been submitted.",
+      "disclosure": true
+    },
+    {
+      "width": 1440,
+      "opened": "true",
+      "focus": "Framework",
+      "closed": "false",
+      "restored": "Open menu",
+      "primary": "http://127.0.0.1:4173/framework.html",
+      "secondary": "http://127.0.0.1:4173/founders.html",
+      "notice": "Founder Hoodie 01: reservations are not open. Follow launch updates on Substack; no details have been submitted.",
+      "disclosure": true
+    }
+  ],
+  "anchors": [
+    {
+      "id": "problem",
+      "top": 47.85416793823242,
+      "width": 390
+    },
+    {
+      "id": "framework",
+      "top": 47.91666793823242,
+      "width": 390
+    },
+    {
+      "id": "products",
+      "top": 47.921875,
+      "width": 390
+    },
+    {
+      "id": "founder100",
+      "top": 48.03125,
+      "width": 390
+    },
+    {
+      "id": "research",
+      "top": 47.94791793823242,
+      "width": 390
+    },
+    {
+      "id": "journal",
+      "top": 47.88021087646485,
+      "width": 390
+    },
+    {
+      "id": "problem",
+      "top": 48,
+      "width": 768
+    },
+    {
+      "id": "framework",
+      "top": 48.11458587646485,
+      "width": 768
+    },
+    {
+      "id": "products",
+      "top": 47.88021087646485,
+      "width": 768
+    },
+    {
+      "id": "founder100",
+      "top": 47.97396087646485,
+      "width": 768
+    },
+    {
+      "id": "research",
+      "top": 47.83333587646485,
+      "width": 768
+    },
+    {
+      "id": "journal",
+      "top": 48.08854293823242,
+      "width": 768
+    },
+    {
+      "id": "problem",
+      "top": 48,
+      "width": 1440
+    },
+    {
+      "id": "framework",
+      "top": 48.078125,
+      "width": 1440
+    },
+    {
+      "id": "products",
+      "top": 47.92708587646485,
+      "width": 1440
+    },
+    {
+      "id": "founder100",
+      "top": 48.109375,
+      "width": 1440
+    },
+    {
+      "id": "research",
+      "top": 47.9375,
+      "width": 1440
+    },
+    {
+      "id": "journal",
+      "top": 48.15625,
+      "width": 1440
+    }
+  ],
+  "image_sha256": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
+  "site_sha256": "b72d63faf5217e0f0d6e6b5e88d6db1eec8350364c4ab97544d6944e73824e2b",
+  "browser": "Codex in-app browser",
+  "full_pixel_decode": "passed",
+  "console_errors": []
+}
