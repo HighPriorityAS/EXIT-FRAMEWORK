@@ -12,7 +12,8 @@ errors = []
 
 def site_digest():
     digest=hashlib.sha256()
-    for path in sorted(ROOT.rglob('*')):
+    # Path ordering is case-insensitive on Windows; sort portable strings instead.
+    for path in sorted(ROOT.rglob('*'), key=lambda p: p.relative_to(ROOT).as_posix()):
         if path.is_file() and '.git' not in path.parts and (path.suffix in ('.html','.css','.js','.jpg','.webp','.svg','.ttf','.xml') or path.name in ('CNAME','robots.txt')):
             digest.update(path.relative_to(ROOT).as_posix().encode())
             # Text checkout newlines can differ between Windows and the Pages runner.

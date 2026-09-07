@@ -939,7 +939,7 @@
     }
   ],
   "image_sha256": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
-  "site_sha256": "b72d63faf5217e0f0d6e6b5e88d6db1eec8350364c4ab97544d6944e73824e2b",
+  "site_sha256": "d3c3e5dbf432a80acb7043c8a5d369b6dd5e7ff82e1d37dce423fec752a0958c",
   "browser": "Codex in-app browser",
   "full_pixel_decode": "passed",
   "console_errors": []
