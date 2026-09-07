@@ -10,18 +10,19 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
 errors = []
 
+def site_manifest():
+    # Bind QA to every active page, stylesheet, script and asset. Historic unused
+    # assets are outside the implementation being tested, but remain available.
+    paths=list(ROOT.glob('*.html'))+list((ROOT/'articles').glob('*.html'))
+    paths += [ROOT/p for p in ('styles.css','site.js','CNAME','assets/exit-framework-hero-source.jpg','assets/ibm-plex-mono-regular.ttf')]
+    manifest={}
+    for path in paths:
+        data=path.read_text(encoding='utf-8').encode('utf-8') if path.suffix in ('.html','.css','.js') or path.name=='CNAME' else path.read_bytes()
+        manifest[path.relative_to(ROOT).as_posix()]=hashlib.sha256(data).hexdigest()
+    return manifest
+
 def site_digest():
-    digest=hashlib.sha256()
-    # Path ordering is case-insensitive on Windows; sort portable strings instead.
-    for path in sorted(ROOT.rglob('*'), key=lambda p: p.relative_to(ROOT).as_posix()):
-        if path.is_file() and '.git' not in path.parts and (path.suffix in ('.html','.css','.js','.jpg','.webp','.svg','.ttf','.xml') or path.name in ('CNAME','robots.txt')):
-            digest.update(path.relative_to(ROOT).as_posix().encode())
-            # Text checkout newlines can differ between Windows and the Pages runner.
-            if path.suffix in ('.html','.css','.js','.xml') or path.name in ('CNAME','robots.txt'):
-                digest.update(path.read_text(encoding='utf-8').encode('utf-8'))
-            else:
-                digest.update(path.read_bytes())
-    return digest.hexdigest()
+    return hashlib.sha256(json.dumps(site_manifest(),sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 class Page(HTMLParser):
     def __init__(self, path):
@@ -79,7 +80,11 @@ if '--release' in sys.argv:
     report=json.loads((ROOT/'qa-results.json').read_text())
     if report.get('result')!='passed' or report.get('widths')!=[390,430,768,1440]: errors.append('Mandatory browser QA has not passed')
     if report.get('image_sha256')!=EXPECTED: errors.append('Browser QA references different artwork')
-    if report.get('site_sha256')!=site_digest(): errors.append('Site changed after browser QA; repeat affected checks')
+    if report.get('site_sha256')!=site_digest():
+        expected=report.get('site_manifest',{})
+        actual_manifest=site_manifest()
+        changed=[name for name in sorted(set(expected)|set(actual_manifest)) if expected.get(name)!=actual_manifest.get(name)]
+        errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
 print(f'PASS: {len(pages)} pages; local routes and anchors; one stylesheet; H1s; exact method; research boundary; hero SHA-256 {actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))

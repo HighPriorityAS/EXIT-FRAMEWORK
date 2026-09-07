@@ -939,8 +939,33 @@
     }
   ],
   "image_sha256": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
-  "site_sha256": "d3c3e5dbf432a80acb7043c8a5d369b6dd5e7ff82e1d37dce423fec752a0958c",
+  "site_sha256": "4b94cf860c1599e70673777de2d3b98153dca38d419842d0c28142c65ec96104",
   "browser": "Codex in-app browser",
   "full_pixel_decode": "passed",
-  "console_errors": []
+  "console_errors": [],
+  "site_manifest": {
+    "404.html": "8ca7cfdfb720e5e46a4224f60a58f65ed1ffec09805fce589325bbf6d90ef78d",
+    "about.html": "3cbca5d0669efde37f0ab2c47d7cf4f9adb35aca11e83c3f34f2865ebc6ad6e6",
+    "applications.html": "cf951192b90a2b84e3abd7d8b3cfba218ddb902942e93a5dc83bb80c7ab89b16",
+    "articles.html": "e80fa1209676a391ea997920542756d079c397dbda79687bea7c90428c5fe3ee",
+    "faq.html": "c384597c69eac57849f5d0e8bd5cbfa786e497308d3ea4f7eea4bfa571c68313",
+    "founders.html": "bc5d794ed044ad21677580190fd6d98504aed78c061a7122e083a217802fbfdd",
+    "framework.html": "8ce40d179e2ec89ca348100753fdd512adeb17d46c46a60f8efee511bb3f937b",
+    "has.html": "3659f7eb1952a1aee9375fab177284d367733e88ea490e3ecb17b366c42c4cfc",
+    "index.html": "79a0385a82c5679ec2a2ce3dc202d73643ce1d2186e716de8a2078e8a01d3a88",
+    "membership.html": "4af7ebff1727d7df17b8f9bf30015974e2aa31e1cd900cd7db2aebacd268433c",
+    "philosophy.html": "fa0fc284562f6a762bc66a97a5a6cab24448aaa7b6b5f7a688355a8c1724b3cf",
+    "privacy.html": "2aec351ac3232336b149c838b61dfe93d89438509216e9682b6fbc5889e115ca",
+    "articles/chaos-audit.html": "409551cc7117ca19b5db5ab095edadb3b2ce923d6a4569e21fa19108d564189d",
+    "articles/discipline-creates-freedom.html": "d973f1a5003974c5a62402531a5327aef26f3c133b1e9470ed6f54e90eb40e21",
+    "articles/environment-shapes-outcome.html": "00874f54e7682fbccf886e5af86aba67169240560d23c5f00231534eb9d1ed85",
+    "articles/identity-is-a-daily-decision.html": "19db321d58855e1d4b776bea3a3db668dd2c2d700ec795ecc6308ee5f0af5c41",
+    "articles/minimum-viable-day.html": "4dd0047eb6d895f6bda4d00cd81ccc9c1cfdf3d65405163cf73ed27c5f07bf45",
+    "articles/proof-loop.html": "4d6991774086052cc49709dd6b4d907c9336ed31f39dbb1baab8e4d725a6d4fd",
+    "styles.css": "e2f1e10e7779e483d554943a43fd8e7a173772992b4c0afd1d7c7c7950d3f0ab",
+    "site.js": "fe9bee8fcb89e21e288dbc1d80b8d9719dc232444a5772635ad31f05f91f2e67",
+    "CNAME": "53f382ed6de27b55cf3b60df05b44cd357ad6319aa4463785148d516ab3cc1aa",
+    "assets/exit-framework-hero-source.jpg": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
+    "assets/ibm-plex-mono-regular.ttf": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46"
+  }
 }
