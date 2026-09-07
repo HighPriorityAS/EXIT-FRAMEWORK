@@ -1,73 +1,56 @@
-/* Exit Framework — Hero V18 hard lock
-   Canonical hero = split CHAOS / CONTROL silhouette.
-   The legacy <picture> remains only as inert fallback markup; it is hidden so
-   older vortex/door assets can never render over the approved hero. */
+/* Exit Framework — Hero V19 hard lock
+   Canonical artwork is the original user-approved silhouette poster.
+   No JS source switching. No vortex/door fallback. No generated replacement. */
 .home-launch-v14 .cinematic-hero{
   position:relative!important;
-  min-height:100svh!important;
+  min-height:0!important;
   background:#050606!important;
   border-bottom:1px solid rgba(242,238,230,.09)!important;
   overflow:hidden!important;
 }
 .home-launch-v14 .cinematic-hero-media{
-  position:absolute!important;
-  inset:0!important;
+  position:relative!important;
+  inset:auto!important;
   width:100%!important;
-  height:100%!important;
-  display:block!important;
-  background:#050606 url('assets/hero-silhouette-desktop-v18.webp?v=18') center center/cover no-repeat!important;
+  height:auto!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  background:linear-gradient(90deg,#050606 0 50%,#d4c2a8 50% 100%)!important;
 }
-.home-launch-v14 .cinematic-hero-media picture,
+.home-launch-v14 .cinematic-hero-media picture{display:block!important;width:100%!important}
 .home-launch-v14 .cinematic-hero-media img{
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:none!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  opacity:1!important;
+  visibility:visible!important;
+  filter:none!important;
 }
-.home-launch-v14 .cinematic-hero-shade{
-  position:absolute!important;
-  inset:0!important;
-  background:linear-gradient(180deg,rgba(5,6,6,.10) 0%,rgba(5,6,6,0) 25%,rgba(5,6,6,0) 70%,rgba(5,6,6,.52) 100%)!important;
-  pointer-events:none!important;
-}
-.home-launch-v14 .cinematic-hero-grid{
+.home-launch-v14 .cinematic-hero-shade{display:none!important}
+.home-launch-v14 .cinematic-hero-grid{display:none!important}
+.home-launch-v14 .hero-cta-band{
   position:relative!important;
   z-index:2!important;
-  min-height:100svh!important;
-  display:flex!important;
-  align-items:flex-end!important;
-  justify-content:flex-start!important;
-  padding-top:110px!important;
-  padding-bottom:42px!important;
+  background:#050606!important;
+  border-top:1px solid rgba(242,238,230,.09)!important;
+  padding:18px 0 22px!important;
 }
-.home-launch-v14 .hero-system-chip,
-.home-launch-v14 .hero-message>.section-label,
-.home-launch-v14 .hero-message>.hero-subline,
-.home-launch-v14 .hero-message>h2,
-.home-launch-v14 .hero-message>.hero-copy,
-.home-launch-v14 .hero-message>.hero-micro,
-.home-launch-v14 .hero-principles{display:none!important}
-.home-launch-v14 .hero-message{
-  width:auto!important;
-  margin:0!important;
-  padding:0!important;
-  max-width:none!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  backdrop-filter:none!important;
-}
-.home-launch-v14 .hero-message .hero-actions{
+.home-launch-v14 .hero-cta-band .hero-actions{
   display:flex!important;
+  justify-content:center!important;
   gap:10px!important;
   flex-wrap:wrap!important;
-  padding:0!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
+  margin:0!important;
 }
-.home-launch-v14 .hero-message .button{min-height:44px!important}
+.home-launch-v14 .hero-cta-band .button{min-height:46px!important}
 
-/* Keep the rest of the homepage in the V17 black surface system. */
+/* Keep homepage surfaces in the locked Obsidian / Amber system. */
 .home-launch-v14 .launch-section,
 .home-launch-v14 .launch-section-light,
 .home-launch-v14 .launch-section-dark{background:#080909!important;color:#f2eee6!important}
@@ -90,34 +73,37 @@
 .home-launch-v14 .journal-card p,
 .home-launch-v14 .research-boundary p{color:rgba(242,238,230,.68)!important}
 
+@media(min-width:861px){
+  .home-launch-v14 .cinematic-hero-media{
+    min-height:calc(100svh - 88px)!important;
+    align-items:center!important;
+  }
+  .home-launch-v14 .cinematic-hero-media img{
+    height:calc(100svh - 88px)!important;
+    width:auto!important;
+    max-width:100%!important;
+  }
+}
 @media(max-width:860px){
   .home-launch-v14 .cinematic-hero-media{
-    background-image:url('assets/hero-silhouette-mobile-v18.webp?v=18')!important;
-    background-position:center top!important;
-    background-size:cover!important;
+    background:#050606!important;
   }
-  .home-launch-v14 .cinematic-hero-shade{
-    background:linear-gradient(180deg,rgba(5,6,6,.08) 0%,rgba(5,6,6,0) 18%,rgba(5,6,6,0) 72%,rgba(5,6,6,.60) 100%)!important;
+  .home-launch-v14 .cinematic-hero-media img{
+    width:100%!important;
+    height:auto!important;
   }
-  .home-launch-v14 .cinematic-hero-grid{
-    min-height:100svh!important;
-    padding-top:92px!important;
-    padding-bottom:max(24px,env(safe-area-inset-bottom))!important;
-    align-items:flex-end!important;
-  }
-  .home-launch-v14 .hero-message{width:100%!important}
-  .home-launch-v14 .hero-message .hero-actions{
+  .home-launch-v14 .hero-cta-band{padding:14px 16px max(18px,env(safe-area-inset-bottom))!important}
+  .home-launch-v14 .hero-cta-band .hero-actions{
     display:grid!important;
     grid-template-columns:1fr!important;
+    width:100%!important;
+    max-width:520px!important;
+    margin:0 auto!important;
     gap:8px!important;
-    width:min(100%,420px)!important;
   }
-  .home-launch-v14 .hero-message .button{
+  .home-launch-v14 .hero-cta-band .button{
     width:100%!important;
     justify-content:center!important;
-    padding-left:12px!important;
-    padding-right:12px!important;
-    font-size:.68rem!important;
-    min-height:48px!important;
+    min-height:50px!important;
   }
 }
