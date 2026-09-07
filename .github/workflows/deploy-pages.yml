@@ -23,29 +23,97 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -s index.html
-          test -s founders.html
-          test -s membership.html
-          test -s faq.html
-          test -s has.html
-          test -s privacy.html
-          test -s styles.css
-          test -s brand-v14.css
-          test -s launch.css
-          test -s launch.js
-          test -s launch-config.js
-          test -s hero.js
-          test -s hero-v16.css
-          test -s assets/hero-silhouette-desktop-v16.webp
-          test -s assets/hero-silhouette-mobile-v16.webp
+
+          # Core documents and assets.
+          for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v16.css site-v17.css assets/hero-desktop-v8.webp assets/exit-framework-poster-9x16.webp; do
+            test -s "$f"
+          done
           test "$(cat CNAME)" = "chaosexit.com"
+
+          # Brand/release regressions that must never ship again.
+          ! grep -Rni --include='*.html' --include='*.xml' --include='*.txt' 'theexitmission.com' .
           ! grep -Rni --include='*.html' 'chaos into control' .
           ! grep -Rni --include='*.html' 'Control to fredom' .
-          grep -q 'hero-silhouette-desktop-v16.webp' index.html
-          grep -q 'hero-silhouette-mobile-v16.webp' index.html
-          grep -q 'Human Autonomy Study' has.html
+          ! grep -Rni --include='*.html' -E 'href="(\.\./)?has\.html([#?][^"]*)?"' .
+          grep -q 'site-v17.css?v=17' index.html
+          grep -q 'hero-desktop-v8.webp?v=17' index.html
+          grep -q 'exit-framework-poster-9x16.webp?v=17' index.html
+          grep -q 'humanautonomystudy.org' index.html
+          grep -q 'humanautonomystudy.org' founders.html
+          grep -q 'humanautonomystudy.org' membership.html
+          grep -q 'humanautonomystudy.org' faq.html
+          grep -q 'humanautonomystudy.org' about.html
+          grep -q 'humanautonomystudy.org' applications.html
           grep -q 'Research participation is not sold' index.html
 
+          # Canonical framework rhetoric must agree across homepage + Framework page.
+          for term in Stabilize Observe Separate Choose Execute Measure Document Adjust; do
+            grep -q "$term" framework.html
+            grep -q "$term" index.html
+          done
+
+          # Every public HTML surface except the tiny 404 must either load V17
+          # directly or through the shared V17 runtime.
+          while IFS= read -r page; do
+            [ "$page" = "./404.html" ] && continue
+            if ! grep -Eq 'site-v17\.css|hero\.js|launch\.js' "$page"; then
+              echo "V17 visual system missing from $page" >&2
+              exit 1
+            fi
+          done < <(find . -name '*.html' -type f | sort)
+
+          # Verify all local href/src references resolve to files in the build.
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlsplit, unquote
+
+          root = Path('.').resolve()
+          failures = []
+
+          class Parser(HTMLParser):
+              def __init__(self, page):
+                  super().__init__()
+                  self.page = page
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ('href', 'src'):
+                      raw = attrs.get(key)
+                      if not raw:
+                          continue
+                      if raw.startswith(('#','mailto:','tel:','javascript:','data:')):
+                          continue
+                      u = urlsplit(raw)
+                      if u.scheme or u.netloc:
+                          continue
+                      path = unquote(u.path)
+                      if not path:
+                          continue
+                      target = (self.page.parent / path).resolve()
+                      try:
+                          target.relative_to(root)
+                      except ValueError:
+                          failures.append((self.page, raw, 'escapes site root'))
+                          continue
+                      if path.endswith('/'):
+                          target = target / 'index.html'
+                      if not target.exists():
+                          failures.append((self.page, raw, 'missing'))
+
+          for page in root.rglob('*.html'):
+              try:
+                  Parser(page).feed(page.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  failures.append((page, '', f'parse error: {exc}'))
+
+          if failures:
+              for page, ref, reason in failures:
+                  print(f'{page.relative_to(root)} -> {ref}: {reason}')
+              raise SystemExit(1)
+          print('Internal link/source QA passed')
+          PY
+
+          # Fail-closed commercial activation.
           if grep -q "launchMode:'live'" launch-config.js; then
             grep -q "founderPriceConfirmed:true" launch-config.js
             grep -q "qaPassed:true" launch-config.js

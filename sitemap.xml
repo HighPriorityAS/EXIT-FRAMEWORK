@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://theexitmission.com/</loc></url>
-  <url><loc>https://theexitmission.com/framework.html</loc></url>
-  <url><loc>https://theexitmission.com/philosophy.html</loc></url>
-  <url><loc>https://theexitmission.com/applications.html</loc></url>
-  <url><loc>https://theexitmission.com/articles.html</loc></url>
-  <url><loc>https://theexitmission.com/about.html</loc></url>
-  <url><loc>https://theexitmission.com/articles/chaos-audit.html</loc></url>
-  <url><loc>https://theexitmission.com/articles/minimum-viable-day.html</loc></url>
-  <url><loc>https://theexitmission.com/articles/proof-loop.html</loc></url>
+  <url><loc>https://chaosexit.com/</loc></url>
+  <url><loc>https://chaosexit.com/framework.html</loc></url>
+  <url><loc>https://chaosexit.com/philosophy.html</loc></url>
+  <url><loc>https://chaosexit.com/applications.html</loc></url>
+  <url><loc>https://chaosexit.com/articles.html</loc></url>
+  <url><loc>https://chaosexit.com/founders.html</loc></url>
+  <url><loc>https://chaosexit.com/membership.html</loc></url>
+  <url><loc>https://chaosexit.com/faq.html</loc></url>
+  <url><loc>https://chaosexit.com/about.html</loc></url>
+  <url><loc>https://chaosexit.com/privacy.html</loc></url>
+  <url><loc>https://chaosexit.com/articles/chaos-audit.html</loc></url>
+  <url><loc>https://chaosexit.com/articles/minimum-viable-day.html</loc></url>
+  <url><loc>https://chaosexit.com/articles/proof-loop.html</loc></url>
 </urlset>
