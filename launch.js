@@ -10,19 +10,39 @@
 
   if(document.body.classList.contains('home-launch-v14')){
     const hero=document.getElementById('launch-hero-image');
-    if(hero){hero.src='assets/hero-obsidian-amber-v15.svg';hero.width=1600;hero.height=900}
-    const chip=document.querySelector('.hero-system-chip');
-    if(chip)chip.innerHTML='<span>Exit / Operating System</span><strong>Direction 02</strong><span>Obsidian / Amber</span>';
-    const label=document.querySelector('.hero-message .section-label');
-    if(label)label.textContent='A clearer path forward';
-    const sub=document.querySelector('.hero-message .hero-subline');
-    if(sub)sub.textContent='A practical operating system for recovery, self-leadership and autonomy.';
-    const title=document.querySelector('.hero-message h2');
-    if(title)title.innerHTML='From chaos<em>to control.</em>';
-    const copy=document.querySelector('.hero-message .hero-copy');
-    if(copy)copy.textContent='Reduce the noise. Build real systems. Create enough structure that progress can survive imperfect days.';
-    const micro=document.querySelector('.hero-message .hero-micro');
-    if(micro)micro.textContent='Clarity / Discipline / A freer tomorrow';
+    const mobile=matchMedia('(max-width: 860px)');
+    const syncHero=()=>{
+      if(!hero)return;
+      if(mobile.matches){hero.src='assets/hero-silhouette-mobile-v16.webp';hero.width=941;hero.height=1672;}
+      else{hero.src='assets/hero-silhouette-desktop-v16.webp';hero.width=1672;hero.height=941;}
+    };
+    syncHero();
+    if(mobile.addEventListener)mobile.addEventListener('change',syncHero);else if(mobile.addListener)mobile.addListener(syncHero);
+
+    const heroStyle=document.createElement('style');
+    heroStyle.dataset.heroSilhouetteV16='true';
+    heroStyle.textContent=`
+      .home-launch-v14 .cinematic-hero{min-height:100svh!important;background:#050606!important;}
+      .home-launch-v14 .cinematic-hero-media img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important;filter:none!important;}
+      .home-launch-v14 .cinematic-hero-shade{background:linear-gradient(180deg,rgba(5,6,6,.28) 0%,rgba(5,6,6,.04) 28%,rgba(5,6,6,.03) 67%,rgba(5,6,6,.68) 100%)!important;}
+      .home-launch-v14 .cinematic-hero-grid{min-height:100svh!important;display:flex!important;align-items:flex-end!important;justify-content:flex-start!important;padding-top:110px!important;padding-bottom:48px!important;}
+      .home-launch-v14 .hero-system-chip,.home-launch-v14 .hero-message>.section-label,.home-launch-v14 .hero-message>.hero-subline,.home-launch-v14 .hero-message>h2,.home-launch-v14 .hero-message>.hero-copy,.home-launch-v14 .hero-message>.hero-micro,.home-launch-v14 .hero-principles{display:none!important;}
+      .home-launch-v14 .hero-message{margin:0!important;padding:0!important;max-width:none!important;background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;}
+      .home-launch-v14 .hero-message .hero-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important;}
+      .home-launch-v14 .hero-message .button{min-height:44px!important;}
+      @media(max-width:860px){
+        .home-launch-v14 .cinematic-hero{min-height:100svh!important;}
+        .home-launch-v14 .cinematic-hero-media img{object-position:center top!important;}
+        .home-launch-v14 .cinematic-hero-grid{min-height:100svh!important;padding-top:92px!important;padding-bottom:28px!important;align-items:flex-end!important;}
+        .home-launch-v14 .hero-message{width:100%!important;}
+        .home-launch-v14 .hero-message .hero-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;}
+        .home-launch-v14 .hero-message .button{width:100%!important;justify-content:center!important;padding-left:12px!important;padding-right:12px!important;font-size:.68rem!important;}
+      }
+      @media(max-width:520px){
+        .home-launch-v14 .hero-message .hero-actions{grid-template-columns:1fr!important;}
+      }
+    `;
+    document.head.appendChild(heroStyle);
   }
 
   const toggle=document.querySelector('.menu-toggle'),menu=document.getElementById('mobile-menu');
