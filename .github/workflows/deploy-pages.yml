@@ -24,13 +24,11 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Core documents and assets.
           for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v16.css site-v17.css assets/hero-desktop-v8.webp assets/exit-framework-poster-9x16.webp; do
             test -s "$f"
           done
           test "$(cat CNAME)" = "chaosexit.com"
 
-          # Brand/release regressions that must never ship again.
           ! grep -Rni --include='*.html' --include='*.xml' --include='*.txt' 'theexitmission.com' .
           ! grep -Rni --include='*.html' 'chaos into control' .
           ! grep -Rni --include='*.html' 'Control to fredom' .
@@ -38,22 +36,14 @@ jobs:
           grep -q 'site-v17.css?v=17' index.html
           grep -q 'hero-desktop-v8.webp?v=17' index.html
           grep -q 'exit-framework-poster-9x16.webp?v=17' index.html
-          grep -q 'humanautonomystudy.org' index.html
-          grep -q 'humanautonomystudy.org' founders.html
-          grep -q 'humanautonomystudy.org' membership.html
-          grep -q 'humanautonomystudy.org' faq.html
-          grep -q 'humanautonomystudy.org' about.html
-          grep -q 'humanautonomystudy.org' applications.html
+          for f in index.html founders.html membership.html faq.html about.html applications.html; do grep -q 'humanautonomystudy.org' "$f"; done
           grep -q 'Research participation is not sold' index.html
 
-          # Canonical framework rhetoric must agree across homepage + Framework page.
           for term in Stabilize Observe Separate Choose Execute Measure Document Adjust; do
             grep -q "$term" framework.html
             grep -q "$term" index.html
           done
 
-          # Every public HTML surface except the tiny 404 must either load V17
-          # directly or through the shared V17 runtime.
           while IFS= read -r page; do
             [ "$page" = "./404.html" ] && continue
             if ! grep -Eq 'site-v17\.css|hero\.js|launch\.js' "$page"; then
@@ -62,7 +52,6 @@ jobs:
             fi
           done < <(find . -name '*.html' -type f | sort)
 
-          # Verify all local href/src references resolve to files in the build.
           python - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
@@ -79,9 +68,7 @@ jobs:
                   attrs = dict(attrs)
                   for key in ('href', 'src'):
                       raw = attrs.get(key)
-                      if not raw:
-                          continue
-                      if raw.startswith(('#','mailto:','tel:','javascript:','data:')):
+                      if not raw or raw.startswith(('#','mailto:','tel:','javascript:','data:')):
                           continue
                       u = urlsplit(raw)
                       if u.scheme or u.netloc:
@@ -89,7 +76,11 @@ jobs:
                       path = unquote(u.path)
                       if not path:
                           continue
-                      target = (self.page.parent / path).resolve()
+                      if path.startswith('/'):
+                          target = root / path.lstrip('/')
+                      else:
+                          target = self.page.parent / path
+                      target = target.resolve()
                       try:
                           target.relative_to(root)
                       except ValueError:
@@ -113,7 +104,6 @@ jobs:
           print('Internal link/source QA passed')
           PY
 
-          # Fail-closed commercial activation.
           if grep -q "launchMode:'live'" launch-config.js; then
             grep -q "founderPriceConfirmed:true" launch-config.js
             grep -q "qaPassed:true" launch-config.js
