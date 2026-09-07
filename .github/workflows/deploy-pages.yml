@@ -24,10 +24,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v20.css site-v17.css; do
+          for f in index.html founders.html membership.html faq.html has.html privacy.html framework.html about.html philosophy.html applications.html articles.html styles.css brand-v14.css launch.css launch.js launch-config.js hero.js hero-v20.css site-v17.css assets/hero-silhouette-locked-v21.webp; do
             test -s "$f"
           done
           test "$(cat CNAME)" = "chaosexit.com"
+          test "$(wc -c < assets/hero-silhouette-locked-v21.webp)" -gt 10000
+          test "$(head -c 4 assets/hero-silhouette-locked-v21.webp)" = "RIFF"
 
           ! grep -Rni --include='*.html' --include='*.xml' --include='*.txt' 'theexitmission.com' .
           ! grep -Rni --include='*.html' 'chaos into control' .
@@ -35,8 +37,8 @@ jobs:
           ! grep -Rni --include='*.html' -E 'href="(\.\./)?has\.html([#?][^"]*)?"' .
           grep -q 'site-v17.css?v=17' index.html
           grep -q 'hero-v20.css?v=20' index.html
-          grep -q 'data:image/webp;base64' hero-v20.css
-          grep -q 'original user-approved silhouette poster' hero-v20.css
+          grep -q "assets/hero-silhouette-locked-v21.webp?v=21" hero-v20.css
+          ! grep -q 'data:image/webp;base64' hero-v20.css
           ! grep -q 'hero-silhouette-original-v19.webp' index.html
           ! grep -q 'hero-desktop-v8.webp' index.html
           ! grep -q 'exit-framework-poster-9x16.webp' index.html
