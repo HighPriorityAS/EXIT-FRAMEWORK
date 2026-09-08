@@ -9,6 +9,7 @@ import sys
 ROOT = Path(__file__).resolve().parent
 EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
 errors = []
+INTERNAL_HTML = {'qa-viewport.html'}
 
 CORE_MANIFEST_FILES = (
     'styles.css',
@@ -23,10 +24,16 @@ CORE_MANIFEST_FILES = (
 )
 
 
-def site_manifest():
-    # Bind QA to every active page plus the shared CSS/JS/assets that can alter
-    # the launch experience. Historic unused assets remain outside this digest.
+def public_html_paths():
     paths = list(ROOT.glob('*.html')) + list((ROOT / 'articles').glob('*.html'))
+    return [p for p in paths if p.name not in INTERNAL_HTML]
+
+
+def site_manifest():
+    # Bind QA to every public page plus the shared CSS/JS/assets that can alter
+    # the launch experience. Internal QA harnesses and historic unused assets
+    # remain outside the production digest.
+    paths = public_html_paths()
     paths += [ROOT / p for p in CORE_MANIFEST_FILES]
     manifest = {}
     for path in paths:
@@ -73,7 +80,7 @@ class Page(HTMLParser):
                 self.refs.append(a[key])
 
 
-pages = {p.resolve(): Page(p) for p in ROOT.rglob('*.html') if '_site' not in p.parts}
+pages = {p.resolve(): Page(p) for p in public_html_paths()}
 for path, page in pages.items():
     if page.h1 != 1:
         errors.append(f'{path.name}: expected one H1')
@@ -179,7 +186,7 @@ if errors:
     raise SystemExit(1)
 
 print(
-    f'PASS: {len(pages)} pages; local routes and anchors; approved stylesheets; '
+    f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; '
     f'H1s; exact method; research boundary; hero SHA-256 {actual}'
     + ('; full pixel decode' if '--decode' in sys.argv else '')
 )
