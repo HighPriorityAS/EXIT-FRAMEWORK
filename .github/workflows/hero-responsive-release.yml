@@ -1,0 +1,56 @@
+name: Hero responsive production release
+on:
+  push:
+    branches: ["qa/hero-responsive-release"]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser QA runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start release candidate
+        run: python3 -m http.server 4173 >/tmp/exit-framework-http.log 2>&1 &
+      - name: Verify responsive hero
+        env:
+          QA_BASE_URL: http://127.0.0.1:4173
+          QA_LABEL: release
+        run: node qa/hero-responsive-audit.mjs
+      - name: Upload QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-responsive-release
+          path: qa-artifacts
+      - name: Prepare site artifact
+        run: |
+          mkdir _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'qa' --exclude 'qa-artifacts' --exclude '_site' ./ _site/
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+  deploy:
+    needs: verify
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy verified artifact
+        id: deployment
+        uses: actions/deploy-pages@v5
+        with:
+          timeout: 600000
