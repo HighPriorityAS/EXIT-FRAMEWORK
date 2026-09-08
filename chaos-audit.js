@@ -13,6 +13,7 @@
   const fill = document.querySelector('[data-audit-progress-fill]');
   const status = document.querySelector('[data-audit-status]');
   const emailContinue = document.querySelector('[data-email-continue]');
+  const mvdContinue = document.querySelector('[data-mvd-continue]');
   let step = 0;
 
   const track = (name, meta) => window.ExitMetrics?.track(name, meta);
@@ -109,5 +110,6 @@
   });
 
   emailContinue?.addEventListener('click', () => track('email_continue'));
+  mvdContinue?.addEventListener('click', () => track('audit_mvd_continue'));
   track('audit_view');
 })();
