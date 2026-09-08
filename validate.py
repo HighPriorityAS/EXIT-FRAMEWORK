@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
 errors = []
 INTERNAL_HTML = {'qa-viewport.html'}
+LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'articles/chaos-is-not-random.html'}
 
 CORE_MANIFEST_FILES = (
     'styles.css',
@@ -82,20 +83,21 @@ class Page(HTMLParser):
 
 pages = {p.resolve(): Page(p) for p in public_html_paths()}
 for path, page in pages.items():
+    rel = path.relative_to(ROOT).as_posix()
     if page.h1 != 1:
-        errors.append(f'{path.name}: expected one H1')
+        errors.append(f'{rel}: expected one H1')
 
     style_names = [Path(urlsplit(href).path).name for href in page.styles]
     if 'styles.css' not in style_names:
-        errors.append(f'{path.name}: shared stylesheet missing')
+        errors.append(f'{rel}: shared stylesheet missing')
     extras = [name for name in style_names if name not in ('styles.css', 'launch-loop.css')]
     if extras:
-        errors.append(f'{path.name}: unexpected stylesheet(s): {", ".join(extras)}')
-    uses_launch_loop = path.name in ('chaos-audit.html', 'chaos-is-not-random.html')
+        errors.append(f'{rel}: unexpected stylesheet(s): {", ".join(extras)}')
+    uses_launch_loop = rel in LAUNCH_LOOP_PAGES
     if uses_launch_loop and 'launch-loop.css' not in style_names:
-        errors.append(f'{path.name}: launch-loop stylesheet missing')
+        errors.append(f'{rel}: launch-loop stylesheet missing')
     if not uses_launch_loop and 'launch-loop.css' in style_names:
-        errors.append(f'{path.name}: launch-loop stylesheet loaded outside launch flow')
+        errors.append(f'{rel}: launch-loop stylesheet loaded outside launch flow')
 
     for raw in page.refs:
         u = urlsplit(raw)
@@ -109,16 +111,16 @@ for path, page in pages.items():
         if target.is_dir():
             target = target / 'index.html'
         if not target.is_relative_to(ROOT) or not target.exists():
-            errors.append(f'{path.name}: missing/outside link {raw}')
+            errors.append(f'{rel}: missing/outside link {raw}')
         elif u.fragment and target in pages and unquote(u.fragment) not in pages[target].ids:
-            errors.append(f'{path.name}: missing anchor {raw}')
+            errors.append(f'{rel}: missing anchor {raw}')
 
     for im in page.images:
         if not all(im.get(a) for a in ('alt', 'width', 'height')):
-            errors.append(f'{path.name}: image lacks alt/dimensions')
+            errors.append(f'{rel}: image lacks alt/dimensions')
 
     if 'Research participation is not sold.' not in path.read_text(encoding='utf-8'):
-        errors.append(f'{path.name}: research boundary missing')
+        errors.append(f'{rel}: research boundary missing')
 
 image = ROOT / 'assets/exit-framework-hero-source.jpg'
 actual = hashlib.sha256(image.read_bytes()).hexdigest()
