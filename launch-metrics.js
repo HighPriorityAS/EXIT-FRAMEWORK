@@ -1,5 +1,5 @@
-/* Privacy-first measurement hooks for the Post #001 -> Chaos Audit launch loop.
-   No provider is configured here and no audit answers or result categories are sent.
+/* Privacy-first measurement hooks for the Post #001 -> Chaos Audit -> Exit OS launch loop.
+   No provider is configured here and no audit or MVD answers are sent.
    If a production analytics provider is added later, it can consume these event names. */
 (() => {
   const allowed = new Set([
@@ -11,7 +11,15 @@
     'audit_complete',
     'result_view',
     'email_continue',
-    'audit_restart'
+    'audit_restart',
+    'audit_mvd_continue',
+    'mvd_view',
+    'mvd_start',
+    'mvd_step_complete',
+    'mvd_complete',
+    'mvd_result_view',
+    'mvd_copy',
+    'mvd_restart'
   ]);
 
   const track = (eventName, meta = {}) => {
@@ -19,15 +27,12 @@
 
     const payload = {
       event: `exit_${eventName}`,
-      surface: 'post001_chaos_audit',
-      version: 1,
+      surface: 'post001_exit_os',
+      version: 2,
       ...meta
     };
 
-    // Local application hook. Does not transmit data by itself.
     window.dispatchEvent(new CustomEvent('exit:metric', { detail: payload }));
-
-    // Adapter hooks: inert unless a provider is deliberately configured elsewhere.
     if (Array.isArray(window.dataLayer)) window.dataLayer.push(payload);
     if (typeof window.plausible === 'function') {
       window.plausible(payload.event, { props: { surface: payload.surface } });
