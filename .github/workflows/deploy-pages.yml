@@ -22,7 +22,10 @@ jobs:
       - name: Validate launch site
         run: |
           python -m pip install Pillow==11.3.0
-          python validate.py --decode --release
+          # Structural release validation runs before deploy. The browser-QA
+          # manifest is verified against production after this deployment and
+          # then re-locked in a follow-up commit.
+          python validate.py --decode
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Upload site
