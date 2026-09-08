@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Exit Framework viewport QA</title>
+  <style>html,body{margin:0;background:#080909;overflow:auto}iframe{display:block;border:0;background:#080909}</style>
+</head>
+<body>
+  <iframe id="qa" title="Exit Framework viewport QA"></iframe>
+  <script>
+    const query = new URLSearchParams(location.search);
+    const frame = document.getElementById('qa');
+    frame.width = query.get('width') || '390';
+    frame.height = query.get('height') || '780';
+    frame.src = query.get('target') || '/';
+  </script>
+</body>
+</html>
