@@ -18,14 +18,16 @@ jobs:
           npm init -y >/dev/null 2>&1
           npm install playwright@1.55.0
           npx playwright install --with-deps chromium
-      - name: Capture production before state
+      - name: Start local site
+        run: python3 -m http.server 4173 >/tmp/exit-framework-http.log 2>&1 &
+      - name: Capture fixed branch
         env:
-          QA_BASE_URL: https://chaosexit.com
-          QA_LABEL: before
+          QA_BASE_URL: http://127.0.0.1:4173
+          QA_LABEL: after
         run: node qa/hero-responsive-audit.mjs
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: hero-responsive-before
+          name: hero-responsive-after
           path: qa-artifacts
