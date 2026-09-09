@@ -97,14 +97,15 @@ if '--decode' in sys.argv:
         im.load()
         if im.size!=(864,1536) or im.format!='JPEG': errors.append('Incorrect hero dimensions/format')
 
-for name in ('index.html','framework.html'):
-    text=(ROOT/name).read_text(encoding='utf-8')
-    import re
-    pattern=r'<h3>(Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adjust)</h3>' if name=='index.html' else r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adjust)'
-    if re.findall(pattern,text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']: errors.append(f'{name}: method order changed')
+# The full eight-step method now lives on framework.html; the homepage is intentionally compressed.
+text=(ROOT/'framework.html').read_text(encoding='utf-8')
+import re
+pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adjust)'
+if re.findall(pattern,text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
+    errors.append('framework.html: method order changed')
 
 text=(ROOT/'index.html').read_text(encoding='utf-8')
-for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM FOR','HUMAN AUTONOMY','CLARITY TODAY.','A DIFFERENT TOMORROW.','assets/exit-framework-hero-source.jpg'):
+for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM FOR','HUMAN AUTONOMY','CLARITY TODAY.','A DIFFERENT TOMORROW.','assets/exit-framework-hero-source.jpg','Chaos Is Not Random','Three free tools'):
     if required not in text: errors.append(f'Homepage missing {required}')
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
@@ -123,4 +124,4 @@ if '--release' in sys.argv:
         errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; H1s; exact method; research boundary; hero SHA-256 {actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))
+print(f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; H1s; exact framework method; research boundary; hero SHA-256 {actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))
