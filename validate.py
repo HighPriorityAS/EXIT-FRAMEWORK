@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
 errors = []
 INTERNAL_HTML = {'qa-viewport.html'}
-LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'articles/chaos-is-not-random.html'}
+LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', 'articles/chaos-is-not-random.html'}
 
 CORE_MANIFEST_FILES = (
     'styles.css',
@@ -20,6 +20,7 @@ CORE_MANIFEST_FILES = (
     'launch-metrics.js',
     'chaos-audit.js',
     'minimum-viable-day.js',
+    'daily-mission.js',
     'CNAME',
     'assets/exit-framework-hero-source.jpg',
     'assets/ibm-plex-mono-regular.ttf',

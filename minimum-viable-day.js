@@ -9,6 +9,7 @@
   const back=document.querySelector('[data-mvd-back]');
   const restart=document.querySelector('[data-mvd-restart]');
   const copy=document.querySelector('[data-mvd-copy]');
+  const mission=document.querySelector('[data-mvd-mission]');
   const progress=document.querySelector('[data-mvd-progress]');
   const fill=document.querySelector('[data-mvd-progress-fill]');
   const status=document.querySelector('[data-mvd-status]');
@@ -38,12 +39,14 @@
     result.querySelector('[data-mvd-not-today-detail]').textContent=notDetail;
     result.querySelector('[data-mvd-review]').textContent=review;
     result.dataset.stateDetail=stateDetail;
+    try{sessionStorage.setItem('exit_mvd_state',state);}catch{}
   };
   const cardText=()=>`EXIT OS — MINIMUM VIABLE DAY\nOperating state: ${result.querySelector('[data-mvd-state]').textContent}\n\nPROTECT FIRST\n${result.querySelector('[data-mvd-protect]').textContent}\n${result.querySelector('[data-mvd-protect-detail]').textContent}\n\nONE KEPT PROMISE\n${result.querySelector('[data-mvd-promise]').textContent}\n${result.querySelector('[data-mvd-promise-detail]').textContent}\n\nNOT TODAY\n${result.querySelector('[data-mvd-not-today]').textContent}\n${result.querySelector('[data-mvd-not-today-detail]').textContent}\n\nNEXT REVIEW\n${result.querySelector('[data-mvd-review]').textContent}`;
   start.addEventListener('click',()=>{intro.hidden=true;form.hidden=false;showStep();steps[0].querySelector('input')?.focus();track('mvd_start');});
   next.addEventListener('click',()=>{const checked=steps[step].querySelector('input:checked');if(!checked){status.textContent='Choose the option that fits today best.';steps[step].querySelector('input')?.focus();return;}track('mvd_step_complete',{step:step+1});if(step<steps.length-1){step+=1;showStep();steps[step].querySelector('input')?.focus();return;}build();form.hidden=true;result.hidden=false;result.focus();track('mvd_complete');track('mvd_result_view');});
   back.addEventListener('click',()=>{if(step>0)step-=1;showStep();});
-  restart.addEventListener('click',()=>{form.reset();step=0;result.hidden=true;form.hidden=false;copyStatus.textContent='';showStep();steps[0].querySelector('input')?.focus();track('mvd_restart');});
+  restart.addEventListener('click',()=>{form.reset();step=0;result.hidden=true;form.hidden=false;copyStatus.textContent='';try{sessionStorage.removeItem('exit_mvd_state');}catch{}showStep();steps[0].querySelector('input')?.focus();track('mvd_restart');});
   copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(cardText());copyStatus.textContent='Operating card copied.';track('mvd_copy');}catch{copyStatus.textContent='Copy is unavailable in this browser. Select the card text manually.';}});
+  mission?.addEventListener('click',()=>track('mvd_mission_continue'));
   track('mvd_view');
 })();
