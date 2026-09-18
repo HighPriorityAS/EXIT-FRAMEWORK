@@ -22,7 +22,7 @@ for (const width of widths) {
 
     await page.goto('/control-sprint.html?utm_source=qa');
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Install control');
-    await expect(page.locator('[data-exit-price]')).toHaveText('NOK 499 / one-time');
+    await expect(page.locator('[data-exit-price]')).toHaveText('$49 / one-time');
     await noOverflow(page);
 
     const events = [];
@@ -30,11 +30,16 @@ for (const width of widths) {
       window.__qaEvents = [];
       window.addEventListener('exit:metric', event => window.__qaEvents.push(event.detail));
     });
-    await page.locator('[data-sprint-checkout]').click();
-    await expect(page.locator('[data-checkout-status]')).toContainText('Checkout is not connected yet');
+    const checkout = page.locator('[data-sprint-checkout]');
+    await expect(checkout).toHaveAttribute('href', 'https://buy.stripe.com/8x214m9fCbfmbPN4zeasg00');
+    await expect(checkout).toHaveAttribute('target', '_blank');
+    await page.evaluate(() => {
+      document.querySelector('[data-sprint-checkout]').addEventListener('click', event => event.preventDefault(), { once: true });
+    });
+    await checkout.click();
     const checkoutEvents = await page.evaluate(() => window.__qaEvents);
     expect(checkoutEvents.some(event => event.event === 'exit_sprint_checkout_click')).toBeTruthy();
-    expect(checkoutEvents.some(event => event.event === 'exit_sprint_checkout_unavailable')).toBeTruthy();
+    expect(checkoutEvents.some(event => event.event === 'exit_sprint_checkout_unavailable')).toBeFalsy();
 
     await page.goto('/sprint-access.html');
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
@@ -43,7 +48,7 @@ for (const width of widths) {
 
     await page.goto('/');
     await expect(page.locator('#paid')).toContainText('30-Day Control Sprint');
-    await expect(page.locator('#paid')).toContainText('NOK 499 / one-time');
+    await expect(page.locator('#paid')).toContainText('$49 / one-time');
     await expect(page.locator('#paid [data-sprint-interest]')).toHaveAttribute('href', /control-sprint\.html/);
     await noOverflow(page);
   });
