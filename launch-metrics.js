@@ -6,7 +6,7 @@
     'post001_view','post001_audit_click','audit_view','audit_start','audit_step_complete','audit_complete','result_view','email_continue','audit_restart','audit_mvd_continue',
     'mvd_view','mvd_start','mvd_step_complete','mvd_complete','mvd_result_view','mvd_copy','mvd_restart','mvd_mission_continue',
     'mission_view','mission_start','mission_step_complete','mission_complete','mission_result_view','mission_copy','mission_restart',
-    'sprint_view','sprint_start','sprint_checkin','sprint_day30_complete','sprint_summary_copy','sprint_reset'
+    'sprint_view','sprint_start','sprint_checkin','sprint_review','sprint_control_system_open','sprint_control_system_complete','sprint_day30_complete','sprint_summary_copy','sprint_reset'
   ]);
 
   const track = (eventName, meta = {}) => {
