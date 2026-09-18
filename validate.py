@@ -18,6 +18,7 @@ CORE_MANIFEST_FILES = (
     'site.js',
     'launch-config.js',
     'launch-metrics.js',
+    'conversion.js',
     'chaos-audit.js',
     'minimum-viable-day.js',
     'daily-mission.js',
