@@ -4,12 +4,22 @@ on:
   pull_request:
     branches: ["main"]
     paths:
-      - "30-day-control-sprint.html"\n      - "tests/conversion-funnel-qa.spec.js"\n      - "sitemap.xml"\n      - "daily-mission.html"\n      - "minimum-viable-day.html"\n      - "chaos-audit.html"\n      - "index.html"\n      - "launch-config.js"\n      - "conversion.js"\n      - "sprint-access.html"\n      - "control-sprint.html"
+      - "30-day-control-sprint.html"
       - "30-day-control-sprint.js"
+      - "control-sprint.html"
+      - "sprint-access.html"
+      - "conversion.js"
+      - "index.html"
+      - "chaos-audit.html"
+      - "minimum-viable-day.html"
+      - "daily-mission.html"
+      - "launch-config.js"
       - "launch-loop.css"
       - "launch-metrics.js"
+      - "sitemap.xml"
       - "validate.py"
       - "tests/control-sprint-qa.spec.js"
+      - "tests/conversion-funnel-qa.spec.js"
       - ".github/workflows/sprint-browser-qa.yml"
 
 permissions:
