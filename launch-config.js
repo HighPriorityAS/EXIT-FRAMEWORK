@@ -7,11 +7,11 @@ window.EXIT_LAUNCH_CONFIG=Object.freeze({
   founderCapacity:100,
   exitOS:{
     productLabel:'30-Day Control Sprint',
-    priceLabel:'NOK 499 / one-time',
-    priceNok:499,
+    priceLabel:'$49 / one-time',
+    priceUsd:49,
     priceConfirmed:true,
     offer:'validation_2026_09',
-    paymentLink:'',
+    paymentLink:'https://buy.stripe.com/8x214m9fCbfmbPN4zeasg00',
     successUrl:'https://chaosexit.com/sprint-access.html'
   },
   controlRoom:{
