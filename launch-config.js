@@ -6,9 +6,13 @@ window.EXIT_LAUNCH_CONFIG=Object.freeze({
   socialVerified:false,
   founderCapacity:100,
   exitOS:{
-    priceLabel:'One-time access',
-    priceConfirmed:false,
-    paymentLink:''
+    productLabel:'30-Day Control Sprint',
+    priceLabel:'NOK 499 / one-time',
+    priceNok:499,
+    priceConfirmed:true,
+    offer:'validation_2026_09',
+    paymentLink:'',
+    successUrl:'https://chaosexit.com/sprint-access.html'
   },
   controlRoom:{
     priceLabel:'NOK 690 / month',
