@@ -6,6 +6,8 @@ on:
     paths:
       - "30-day-control-sprint.html"
       - "30-day-control-sprint.js"
+      - "control-room.html"
+      - "control-room.js"
       - "control-sprint.html"
       - "sprint-access.html"
       - "conversion.js"
@@ -19,6 +21,7 @@ on:
       - "sitemap.xml"
       - "validate.py"
       - "tests/control-sprint-qa.spec.js"
+      - "tests/control-room-qa.spec.js"
       - "tests/conversion-funnel-qa.spec.js"
       - ".github/workflows/sprint-browser-qa.yml"
 
@@ -57,7 +60,7 @@ jobs:
           exit 1
 
       - name: Run Sprint browser QA
-        run: npx playwright test tests/control-sprint-qa.spec.js tests/conversion-funnel-qa.spec.js --reporter=line
+        run: npx playwright test tests/control-sprint-qa.spec.js tests/control-room-qa.spec.js tests/conversion-funnel-qa.spec.js --reporter=line
 
       - name: Run structural validator
         run: |
