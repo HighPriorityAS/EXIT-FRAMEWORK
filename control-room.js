@@ -26,7 +26,11 @@
   const reviewCheckpoint = day => day >= 28 ? 4 : day >= 21 ? 3 : day >= 14 ? 2 : day >= 7 ? 1 : 0;
   const checkinForDay = (sprint, day = sprintDay(sprint)) => sprint.checkins.find(item => Number(item.day) === Number(day));
   const latestCheckin = sprint => sprint.checkins.length ? [...sprint.checkins].sort((a, b) => Number(a.day) - Number(b.day)).at(-1) : null;
-  const currentRating = sprint => latestCheckin(sprint)?.control ?? sprint.baseline ?? 5;
+  const runtimeLogs = sprint => Array.isArray(sprint.controlRoom?.runtimeLogs) ? sprint.controlRoom.runtimeLogs : [];
+  const runtimeLogForDate = (sprint, date = todayKey()) => runtimeLogs(sprint).find(item => item.date === date);
+  const latestRuntimeLog = sprint => runtimeLogs(sprint).length ? [...runtimeLogs(sprint)].sort((a, b) => String(a.date).localeCompare(String(b.date))).at(-1) : null;
+  const latestEvidence = sprint => sprint.completedAt ? (latestRuntimeLog(sprint) || latestCheckin(sprint)) : latestCheckin(sprint);
+  const currentRating = sprint => latestEvidence(sprint)?.control ?? sprint.baseline ?? 5;
   const reviewForWeek = (sprint, week) => (sprint.reviews || []).find(item => Number(item.week) === Number(week));
 
   const normalize = stored => {
@@ -101,6 +105,26 @@
   const logControlOutput = document.querySelector('[data-cr-control-output]');
   const logStatus = document.querySelector('[data-cr-log-status]');
 
+  let logDirty = false;
+  let frictionDirty = false;
+  const captureForm = form => ({
+    hidden: form.hidden,
+    fields: Array.from(form.elements).map(field => ({
+      value: field.value,
+      checked: typeof field.checked === 'boolean' ? field.checked : null
+    }))
+  });
+  const restoreForm = (form, snapshot) => {
+    if (!snapshot) return;
+    form.hidden = snapshot.hidden;
+    Array.from(form.elements).forEach((field, index) => {
+      const saved = snapshot.fields[index];
+      if (!saved) return;
+      if (saved.checked !== null) field.checked = saved.checked;
+      else field.value = saved.value;
+    });
+  };
+
   const activeFriction = sprint => {
     const item = sprint.controlRoom?.activeFriction;
     return item && item.status !== 'resolved' && cleanText(item.statement) ? item : null;
@@ -170,9 +194,8 @@
 
   const fillLog = () => {
     if (!data) return;
-    const day = sprintDay(data);
-    const current = checkinForDay(data, day);
-    const latest = latestCheckin(data);
+    const current = data.completedAt ? runtimeLogForDate(data) : checkinForDay(data, sprintDay(data));
+    const latest = latestEvidence(data);
     logForm.reset();
     logForm.elements.action.value = current?.action || activeFriction(data)?.nextAction || '';
     logForm.elements.control.value = current?.control ?? currentRating(data);
@@ -201,11 +224,12 @@
   };
 
   const renderLast = () => {
-    const latest = latestCheckin(data);
+    const runtimeEntry = data.completedAt ? latestRuntimeLog(data) : null;
+    const latest = runtimeEntry || latestCheckin(data);
     lastCard.hidden = !latest;
     lastEmpty.hidden = Boolean(latest);
     if (!latest) return;
-    lastMeta.textContent = `Day ${latest.day} · ${latest.date || 'recorded evidence'}`;
+    lastMeta.textContent = runtimeEntry ? `Runtime · ${runtimeEntry.date || 'recorded evidence'}` : `Day ${latest.day} · ${latest.date || 'recorded evidence'}`;
     lastAction.textContent = latest.action || 'No action text recorded.';
     lastNote.textContent = latest.note || 'No additional note. The action status is the evidence.';
     lastState.textContent = humanState(latest.state);
@@ -225,7 +249,7 @@
     empty.hidden = true;
     runtime.hidden = false;
     const day = sprintDay(data);
-    const latest = latestCheckin(data);
+    const latest = latestEvidence(data);
     const lowCapacity = latest?.state === 'red';
     const next = deriveNext(data);
 
@@ -251,6 +275,18 @@
     renderLast();
     fillLog();
     runtime.focus({ preventScroll: true });
+  };
+
+  const renderPreservingDrafts = () => {
+    const logDraft = logDirty ? captureForm(logForm) : null;
+    const frictionDraft = frictionDirty ? captureForm(frictionForm) : null;
+    const focusedForm = logForm.contains(document.activeElement) ? logForm : frictionForm.contains(document.activeElement) ? frictionForm : null;
+    const focusedIndex = focusedForm ? Array.from(focusedForm.elements).indexOf(document.activeElement) : -1;
+    render();
+    restoreForm(logForm, logDraft);
+    restoreForm(frictionForm, frictionDraft);
+    if (logDraft) logControlOutput.textContent = logControl.value;
+    if (focusedForm && focusedIndex >= 0) focusedForm.elements[focusedIndex]?.focus({ preventScroll: true });
   };
 
   const openLog = () => {
@@ -284,9 +320,15 @@
   frictionStart.addEventListener('click', openFriction);
   frictionEdit.addEventListener('click', openFriction);
   frictionCancel.addEventListener('click', () => {
+    frictionDirty = false;
     frictionForm.hidden = true;
     (activeFriction(data) ? frictionEdit : frictionStart).focus();
   });
+
+  logForm.addEventListener('input', () => { logDirty = true; });
+  logForm.addEventListener('change', () => { logDirty = true; });
+  frictionForm.addEventListener('input', () => { frictionDirty = true; });
+  frictionForm.addEventListener('change', () => { frictionDirty = true; });
 
   frictionForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -309,8 +351,9 @@
       frictionStatus.textContent = 'Could not save locally. Nothing was sent.';
       return;
     }
+    frictionDirty = false;
     data = fresh;
-    render();
+    renderPreservingDrafts();
   });
 
   frictionResolve.addEventListener('click', () => {
@@ -323,7 +366,7 @@
       return;
     }
     data = fresh;
-    render();
+    renderPreservingDrafts();
     frictionStart.focus();
   });
 
@@ -343,29 +386,39 @@
     const day = sprintDay(fresh);
     const entry = {
       date: todayKey(),
-      day,
       state,
       action,
       mission,
       control: clampRating(logForm.elements.control.value),
       note: cleanText(logForm.elements.note.value)
     };
-    const existingIndex = fresh.checkins.findIndex(item => Number(item.day) === day);
-    if (existingIndex >= 0) fresh.checkins[existingIndex] = entry;
-    else fresh.checkins.push(entry);
-    fresh.checkins.sort((a, b) => Number(a.day) - Number(b.day));
+    if (fresh.completedAt) {
+      fresh.controlRoom = fresh.controlRoom && typeof fresh.controlRoom === 'object' ? fresh.controlRoom : {};
+      fresh.controlRoom.runtimeLogs = Array.isArray(fresh.controlRoom.runtimeLogs) ? fresh.controlRoom.runtimeLogs : [];
+      const existingIndex = fresh.controlRoom.runtimeLogs.findIndex(item => item.date === entry.date);
+      if (existingIndex >= 0) fresh.controlRoom.runtimeLogs[existingIndex] = entry;
+      else fresh.controlRoom.runtimeLogs.push(entry);
+      fresh.controlRoom.runtimeLogs.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    } else {
+      entry.day = day;
+      const existingIndex = fresh.checkins.findIndex(item => Number(item.day) === day);
+      if (existingIndex >= 0) fresh.checkins[existingIndex] = entry;
+      else fresh.checkins.push(entry);
+      fresh.checkins.sort((a, b) => Number(a.day) - Number(b.day));
+    }
 
     if (!save(fresh)) {
       logStatus.textContent = 'Could not save locally. Nothing was sent.';
       return;
     }
+    logDirty = false;
     data = fresh;
-    render();
+    renderPreservingDrafts();
     logStatus.textContent = 'Saved locally. Context restored.';
   });
 
   window.addEventListener('storage', event => {
-    if (event.key === KEY) render();
+    if (event.key === KEY) renderPreservingDrafts();
   });
 
   render();
