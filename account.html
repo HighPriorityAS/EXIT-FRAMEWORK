@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050606">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Optional Exit Framework account access for secure cloud synchronization across devices.">
+  <link rel="canonical" href="https://chaosexit.com/account.html">
+  <title>Account + Sync — Exit Framework</title>
+  <link rel="stylesheet" href="styles.css?v=4e8c9ad9762c">
+  <link rel="stylesheet" href="launch-loop.css?v=7">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell header-row">
+<a class="brand" href="index.html" aria-label="Exit Framework home"><span class="brand-words"><span class="brand-line">EXIT</span><span class="brand-line">FRAMEWORK</span><span class="brand-tag">STRATEGIC CONTROL.<br>HUMAN FREEDOM.</span></span></a>
+<nav class="nav" aria-label="Primary navigation"><a href="control-room.html">Control Room</a><a href="30-day-control-sprint.html">Sprint</a><a href="privacy.html">Privacy</a></nav>
+</div></header>
+
+<main id="main">
+<section class="launch-page-hero"><div class="shell"><p class="section-label">Exit OS / Optional account</p><h1>Make your operating context portable.</h1><p>Exit works without an account. Sign in only if you want your current Sprint and Control Room state synchronized across devices.</p></div></section>
+
+<section class="launch-section"><div class="shell account-shell">
+  <section data-account-signed-out>
+    <p class="section-label">Local mode</p>
+    <h2>Your current device remains the source of truth.</h2>
+    <p>Enter your email to receive a one-time sign-in link. Existing local Exit data is preserved and will never be silently replaced by a different cloud version.</p>
+    <form class="account-form" data-account-form>
+      <label class="mission-text-label" for="account-email"><span>Email</span><input class="mission-input" id="account-email" name="email" type="email" autocomplete="email" required></label>
+      <div class="audit-actions"><button class="button button-gold" type="submit">Send secure sign-in link →</button></div>
+      <p class="form-status" data-account-form-status aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section data-account-signed-in hidden>
+    <p class="section-label">Cloud sync enabled</p>
+    <h2 data-account-email></h2>
+    <div class="account-status-line"><span>Sync status</span><strong data-account-sync-status>SYNCING</strong></div>
+    <p>Local writes still happen first. Cloud sync adds portability; it does not replace offline operation.</p>
+    <div class="audit-actions"><a class="button button-gold" href="control-room.html">Open Control Room →</a><button class="button" type="button" data-account-sync-now>Sync now</button><button class="button" type="button" data-account-sign-out>Sign out</button></div>
+
+    <section class="account-conflict" data-account-conflict hidden>
+      <p class="section-label">Sync conflict</p>
+      <h2>Two meaningful versions exist.</h2>
+      <p>Nothing has been overwritten. Choose which version should become the active Exit state.</p>
+      <div class="account-choice-grid">
+        <button class="button" type="button" data-conflict-local>Use this device</button>
+        <button class="button" type="button" data-conflict-cloud>Use cloud version</button>
+      </div>
+      <p class="form-status" data-conflict-status aria-live="polite"></p>
+    </section>
+
+    <section class="account-danger">
+      <p class="section-label">Cloud data control</p>
+      <h2>Delete synchronized Exit state.</h2>
+      <p>This removes the cloud copy only. Local Sprint and Control Room data on this device is left intact.</p>
+      <button class="text-link" type="button" data-delete-cloud>Delete cloud state</button>
+      <div data-delete-confirm hidden>
+        <p>Confirm cloud deletion. This cannot be restored by Exit Framework.</p>
+        <div class="audit-actions"><button class="button" type="button" data-delete-cancel>Cancel</button><button class="button" type="button" data-delete-confirm-button>Delete cloud copy</button></div>
+      </div>
+      <p class="form-status" data-delete-status aria-live="polite"></p>
+    </section>
+  </section>
+
+  <p class="account-privacy">Signed out: Exit state stays in browser-local storage. Signed in: that same operating state is also stored in your authenticated Supabase account so it can be restored on another device.</p>
+</div></section>
+</main>
+
+<footer class="site-footer"><div class="shell footer-grid"><div><p class="footer-brand">EXIT FRAMEWORK</p><p>Strategic control.<br>Human freedom.</p></div><nav aria-label="Footer navigation"><a href="control-room.html">Control Room</a><a href="framework.html">Framework</a><a href="privacy.html">Privacy</a></nav><div><a href="https://humanautonomystudy.org/">Human Autonomy Study</a><p>A separate research initiative.<br>Research participation is not sold.</p></div></div><div class="shell footer-bottom"><span>© 2026 Exit Framework · High Priority AS</span><span>Control is built. Not given.</span></div></footer>
+<script src="exit-state.js" defer></script><script src="account.js" defer></script><script src="site.js" defer></script>
+</body>
+</html>
