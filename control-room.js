@@ -48,15 +48,15 @@
 
   const load = () => {
     try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return null;
-      return normalize(JSON.parse(raw));
+      const stored = window.ExitState?.load ? window.ExitState.load() : JSON.parse(localStorage.getItem(KEY) || 'null');
+      return normalize(stored);
     } catch {
       return null;
     }
   };
 
   const save = sprint => {
+    if (window.ExitState?.save) return window.ExitState.save(sprint);
     try {
       localStorage.setItem(KEY, JSON.stringify(sprint));
       return true;
@@ -70,6 +70,7 @@
   const dayLabel = document.querySelector('[data-cr-day-label]');
   const progressFill = document.querySelector('[data-cr-progress-fill]');
   const mode = document.querySelector('[data-cr-mode]');
+  const syncStatus = document.querySelector('[data-cr-sync-status]');
   const gap = document.querySelector('[data-cr-gap]');
   const control = document.querySelector('[data-cr-control]');
   const priority = document.querySelector('[data-cr-priority]');
@@ -232,6 +233,7 @@
     dayLabel.textContent = data.completedAt ? 'CONTROL SYSTEM INSTALLED' : `Day ${day} / 30 · ${phaseForDay(day)}`;
     progressFill.style.width = `${data.completedAt ? 100 : (day / 30) * 100}%`;
     mode.textContent = lowCapacity ? 'LOW CAPACITY' : data.completedAt ? 'RUNTIME' : 'OPERATING';
+    if (syncStatus) syncStatus.textContent = window.ExitState?.getStatus?.().status || 'LOCAL';
     runtime.classList.toggle('is-low-capacity', lowCapacity);
     control.textContent = currentRating(data);
     priority.textContent = data.priority || data.constraint || 'No priority recorded';
@@ -366,6 +368,12 @@
 
   window.addEventListener('storage', event => {
     if (event.key === KEY) render();
+  });
+  window.addEventListener('exit-state:changed', event => {
+    if (event.detail?.source !== 'local-save') render();
+  });
+  window.addEventListener('exit-state:status', event => {
+    if (syncStatus) syncStatus.textContent = event.detail?.status || 'LOCAL';
   });
 
   render();
