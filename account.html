@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#050606">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="Optional Exit Framework account access for secure cloud synchronization across devices.">
+  <meta name="description" content="Keep your Exit state available across devices without giving up local-first control.">
   <link rel="canonical" href="https://chaosexit.com/account.html">
-  <title>Account + Sync — Exit Framework</title>
+  <title>Account — Exit Framework</title>
   <link rel="stylesheet" href="styles.css?v=4e8c9ad9762c">
-  <link rel="stylesheet" href="launch-loop.css?v=7">
+  <link rel="stylesheet" href="launch-loop.css?v=8">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -19,52 +19,66 @@
 </div></header>
 
 <main id="main">
-<section class="launch-page-hero"><div class="shell"><p class="section-label">Exit OS / Optional account</p><h1>Make your operating context portable.</h1><p>Exit works without an account. Sign in only if you want your current Sprint and Control Room state synchronized across devices.</p></div></section>
+<section class="launch-page-hero"><div class="shell"><p class="section-label">Exit OS / Continuity</p><h1>Keep your state. Keep control.</h1><p>Your work stays on this device by default. Sign in only when you want the same Exit state available across devices.</p></div></section>
 
 <section class="launch-section"><div class="shell account-shell">
+  <div class="account-return"><a class="text-link" href="control-room.html" data-account-return>← Return to Control Room</a></div>
+
   <section data-account-signed-out>
-    <p class="section-label">Local mode</p>
-    <h2>Your current device remains the source of truth.</h2>
-    <p>Enter your email to receive a one-time sign-in link. Existing local Exit data is preserved and will never be silently replaced by a different cloud version.</p>
+    <p class="section-label">Saved on this device</p>
+    <h2>Exit already works here.</h2>
+    <p>Your work stays on this device by default. Sign in to keep your Exit state across devices. You remain in control of what is stored in the cloud.</p>
     <form class="account-form" data-account-form>
       <label class="mission-text-label" for="account-email"><span>Email</span><input class="mission-input" id="account-email" name="email" type="email" autocomplete="email" required></label>
-      <div class="audit-actions"><button class="button button-gold" type="submit">Send secure sign-in link →</button></div>
+      <div class="audit-actions"><button class="button button-gold" type="submit">Send sign-in link →</button></div>
       <p class="form-status" data-account-form-status aria-live="polite"></p>
     </form>
   </section>
 
   <section data-account-signed-in hidden>
-    <p class="section-label">Cloud sync enabled</p>
-    <h2 data-account-email></h2>
-    <div class="account-status-line"><span>Sync status</span><strong data-account-sync-status>SYNCING</strong></div>
-    <p>Local writes still happen first. Cloud sync adds portability; it does not replace offline operation.</p>
-    <div class="audit-actions"><a class="button button-gold" href="control-room.html">Open Control Room →</a><button class="button" type="button" data-account-sync-now>Sync now</button><button class="button" type="button" data-account-sign-out>Sign out</button></div>
+    <p class="section-label">Account</p>
+    <h2 data-account-state-title>Your Exit state is available across devices.</h2>
+    <p class="account-identity">Signed in as <span data-account-email></span></p>
+    <div class="account-status-line"><span>State</span><strong data-account-sync-status>Syncing</strong></div>
+    <p data-account-sync-copy>Changes save on this device first, then sync when available.</p>
+
+    <div class="audit-actions"><a class="button button-gold" href="control-room.html" data-account-return-primary>Return to Control Room →</a></div>
+    <div class="account-secondary-actions">
+      <button class="text-link" type="button" data-account-sync-now>Sync now</button>
+      <button class="text-link" type="button" data-account-resume-sync hidden>Resume cloud sync</button>
+      <button class="text-link" type="button" data-account-sign-out>Sign out</button>
+    </div>
+    <p class="form-status" data-account-action-status aria-live="polite"></p>
 
     <section class="account-conflict" data-account-conflict hidden>
-      <p class="section-label">Sync conflict</p>
-      <h2>Two meaningful versions exist.</h2>
-      <p>Nothing has been overwritten. Choose which version should become the active Exit state.</p>
+      <p class="section-label">Needs a choice</p>
+      <h2>Two versions changed.</h2>
+      <p>Exit will not overwrite either one. Choose which version should become your active state.</p>
       <div class="account-choice-grid">
-        <button class="button" type="button" data-conflict-local>Use this device</button>
+        <button class="button" type="button" data-conflict-local>Keep this device version</button>
         <button class="button" type="button" data-conflict-cloud>Use cloud version</button>
       </div>
       <p class="form-status" data-conflict-status aria-live="polite"></p>
     </section>
 
-    <section class="account-danger">
-      <p class="section-label">Cloud data control</p>
-      <h2>Delete synchronized Exit state.</h2>
-      <p>This removes the cloud copy only. Local Sprint and Control Room data on this device is left intact.</p>
-      <button class="text-link" type="button" data-delete-cloud>Delete cloud state</button>
+    <section class="account-paused" data-account-cloud-paused hidden>
+      <p class="section-label">Cloud sync paused</p>
+      <p>No Exit state is stored in the cloud. This device continues to save locally.</p>
+    </section>
+
+    <section class="account-danger" data-account-cloud-active>
+      <p class="section-label">Cloud control</p>
+      <p>Delete the cloud copy at any time. Sprint and Control Room data on this device will stay here.</p>
+      <button class="text-link" type="button" data-delete-cloud>Delete cloud copy</button>
       <div data-delete-confirm hidden>
-        <p>Confirm cloud deletion. This cannot be restored by Exit Framework.</p>
+        <p>Delete the cloud copy? This device will keep its local state, and cloud sync will pause.</p>
         <div class="audit-actions"><button class="button" type="button" data-delete-cancel>Cancel</button><button class="button" type="button" data-delete-confirm-button>Delete cloud copy</button></div>
       </div>
       <p class="form-status" data-delete-status aria-live="polite"></p>
     </section>
   </section>
 
-  <p class="account-privacy">Signed out: Exit state stays in browser-local storage. Signed in: that same operating state is also stored in your authenticated Supabase account so it can be restored on another device.</p>
+  <p class="account-privacy">Your work stays on this device by default. When you sign in, Exit keeps a synchronized copy so you can restore it elsewhere. Delete that copy whenever you want.</p>
 </div></section>
 </main>
 

@@ -233,7 +233,7 @@
     dayLabel.textContent = data.completedAt ? 'CONTROL SYSTEM INSTALLED' : `Day ${day} / 30 · ${phaseForDay(day)}`;
     progressFill.style.width = `${data.completedAt ? 100 : (day / 30) * 100}%`;
     mode.textContent = lowCapacity ? 'LOW CAPACITY' : data.completedAt ? 'RUNTIME' : 'OPERATING';
-    if (syncStatus) syncStatus.textContent = window.ExitState?.getStatus?.().status || 'LOCAL';
+    if (syncStatus) syncStatus.textContent = window.ExitState?.getDisplayStatus?.() || 'Saved locally';
     runtime.classList.toggle('is-low-capacity', lowCapacity);
     control.textContent = currentRating(data);
     priority.textContent = data.priority || data.constraint || 'No priority recorded';
@@ -372,8 +372,8 @@
   window.addEventListener('exit-state:changed', event => {
     if (event.detail?.source !== 'local-save') render();
   });
-  window.addEventListener('exit-state:status', event => {
-    if (syncStatus) syncStatus.textContent = event.detail?.status || 'LOCAL';
+  window.addEventListener('exit-state:status', () => {
+    if (syncStatus) syncStatus.textContent = window.ExitState?.getDisplayStatus?.() || 'Saved locally';
   });
 
   render();

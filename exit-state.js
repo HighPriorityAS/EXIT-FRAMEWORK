@@ -45,14 +45,43 @@
   const publicState = () => {
     const meta = readMeta();
     const userId = session?.user?.id || '';
+    const sameAccount = Boolean(userId && meta.userId === userId);
     return {
       status,
       signedIn: Boolean(session?.user),
       email: session?.user?.email || '',
       userId,
       conflict: Boolean(conflict),
-      cloudSyncDisabled: Boolean(userId && meta.userId === userId && meta.cloudSyncDisabled)
+      cloudSyncDisabled: Boolean(sameAccount && meta.cloudSyncDisabled),
+      lastSyncedAt: sameAccount ? (meta.lastSyncedAt || '') : ''
     };
+  };
+
+  const relativeSyncTime = value => {
+    const timestamp = Date.parse(value || '');
+    if (!Number.isFinite(timestamp)) return '';
+    const seconds = Math.max(0, Math.round((Date.now() - timestamp) / 1000));
+    if (seconds < 60) return 'just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes} min ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return 'earlier';
+  };
+
+  const displayStatus = () => {
+    const state = publicState();
+    if (state.cloudSyncDisabled) return 'Cloud sync paused';
+    if (state.status === 'OFFLINE') return 'Offline — saved locally';
+    if (state.status === 'SYNCING') return 'Syncing';
+    if (state.status === 'SYNCED') {
+      const when = relativeSyncTime(state.lastSyncedAt);
+      return when ? `Synced · ${when}` : 'Synced';
+    }
+    if (state.status === 'SYNC ISSUE') {
+      return state.conflict ? 'Sync needs a choice' : 'Saved locally · sync unavailable';
+    }
+    return 'Saved locally';
   };
 
   const fetchRemote = async userId => {
@@ -179,8 +208,17 @@
       }
 
       const sameAccount = meta.userId === userId;
+      const hasKnownBaseline = sameAccount && typeof meta.syncedHash === 'string';
       const knowsRemoteRevision = sameAccount && Number(meta.revision) === Number(remote.revision);
-      const localChangedSinceSync = sameAccount && meta.syncedHash && meta.syncedHash !== hash(local);
+      const remoteChangedSinceSync = sameAccount && Number(meta.revision) !== Number(remote.revision);
+      const localChangedSinceSync = hasKnownBaseline && meta.syncedHash !== hash(local);
+
+      if (hasKnownBaseline && !localChangedSinceSync && remoteChangedSinceSync) {
+        if (!writeLocal(remote.state)) throw new Error('local_storage_unavailable');
+        markSynced(userId, remote, remote.state);
+        emit('exit-state:changed', { source: 'cloud-restore' });
+        return;
+      }
 
       if (knowsRemoteRevision && localChangedSinceSync) {
         await updateRemote(userId, local, remote.revision);
@@ -355,6 +393,7 @@
     sync: reconcile,
     ready,
     getStatus: publicState,
+    getDisplayStatus: displayStatus,
     getSession: () => session,
     signInWithEmail,
     signOut,
