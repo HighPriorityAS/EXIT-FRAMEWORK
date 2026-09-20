@@ -10,15 +10,6 @@
   icon.setAttribute('type', 'image/svg+xml');
   icon.setAttribute('href', identityHref);
 
-  document.querySelectorAll('svg.brand-symbol').forEach(symbol => {
-    const mark = document.createElement('img');
-    mark.className = symbol.getAttribute('class') || 'brand-symbol';
-    mark.src = identityHref;
-    mark.alt = '';
-    mark.setAttribute('aria-hidden', 'true');
-    symbol.replaceWith(mark);
-  });
-
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const close = (restoreFocus = false) => {

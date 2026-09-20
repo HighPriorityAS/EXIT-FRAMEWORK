@@ -28,6 +28,7 @@ CORE_MANIFEST_FILES = (
     'account.js',
     'CNAME',
     'assets/exit-framework-hero-source.jpg',
+    'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
 
@@ -115,7 +116,7 @@ for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM F
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'background-image' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
-# DOM creation is allowed for small identity/accessibility enhancements (for example favicon/brand marks).
+# DOM creation is allowed for the favicon enhancement only. Brand artwork remains declared in HTML.
 # Network integration remains explicit and must not be introduced through the shared site shell.
 if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
 if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mismatch')
