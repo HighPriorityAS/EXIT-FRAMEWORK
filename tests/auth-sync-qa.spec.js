@@ -252,3 +252,69 @@ test('offline Control Room save stays local and syncs after reconnect', async ({
   expect(remoteAfter.state.checkins).toHaveLength(1);
   expect(remoteAfter.revision).toBe(2);
 });
+
+
+test('deleting cloud state does not silently recreate it', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/account.html');
+  const state = sampleState();
+
+  await page.evaluate(({ state, userId }) => {
+    localStorage.setItem('__test_signed_in', 'true');
+    localStorage.setItem('exit_control_sprint_v1', JSON.stringify(state));
+    localStorage.setItem('exit_sync_meta_v1', JSON.stringify({
+      userId,
+      revision: 1,
+      syncedHash: JSON.stringify(state),
+      dirty: false
+    }));
+    localStorage.setItem('__test_remote', JSON.stringify({
+      user_id: userId,
+      state,
+      schema_version: 1,
+      revision: 1,
+      updated_at: new Date().toISOString()
+    }));
+  }, { state, userId: USER_ID });
+  await page.reload();
+  await expect(page.locator('[data-account-sync-status]')).toHaveText('SYNCED');
+
+  await page.locator('[data-delete-cloud]').click();
+  await page.locator('[data-delete-confirm-button]').click();
+
+  await expect(page.locator('[data-account-sync-status]')).toHaveText('LOCAL');
+  await page.locator('[data-account-sync-now]').click();
+  await expect(page.locator('[data-account-sync-status]')).toHaveText('LOCAL');
+
+  const values = await page.evaluate(() => ({
+    remote: localStorage.getItem('__test_remote'),
+    local: JSON.parse(localStorage.getItem('exit_control_sprint_v1')),
+    meta: JSON.parse(localStorage.getItem('exit_sync_meta_v1'))
+  }));
+  expect(values.remote).toBeNull();
+  expect(values.local.priority).toBe('Protect the first hour');
+  expect(values.meta.cloudSyncDisabled).toBe(true);
+});
+
+test('Sprint refreshes when cloud restore emits exit-state:changed', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/30-day-control-sprint.html');
+  const remoteState = sampleState('Cloud restored priority');
+
+  await page.evaluate(({ remoteState, userId }) => {
+    localStorage.setItem('__test_signed_in', 'true');
+    localStorage.removeItem('exit_control_sprint_v1');
+    localStorage.removeItem('exit_sync_meta_v1');
+    localStorage.setItem('__test_remote', JSON.stringify({
+      user_id: userId,
+      state: remoteState,
+      schema_version: 1,
+      revision: 3,
+      updated_at: new Date().toISOString()
+    }));
+  }, { remoteState, userId: USER_ID });
+  await page.reload();
+
+  await expect(page.locator('[data-sprint-active]')).toBeVisible();
+  await expect(page.locator('[data-active-priority]')).toHaveText('Cloud restored priority');
+});
