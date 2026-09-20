@@ -146,6 +146,7 @@
   const dayLabel = document.querySelector('[data-sprint-day-label]');
   const progressFill = document.querySelector('[data-sprint-progress-fill]');
   const currentControl = document.querySelector('[data-current-control]');
+  const syncStatus = document.querySelector('[data-sprint-sync-status]');
   const activePriority = document.querySelector('[data-active-priority]');
   const activeOutcome = document.querySelector('[data-active-outcome]');
   const activeProtect = document.querySelector('[data-active-protect]');
@@ -468,6 +469,7 @@
   });
 
   const render = () => {
+    if (syncStatus) syncStatus.textContent = window.ExitState?.getDisplayStatus?.() || 'Saved locally';
     empty.hidden = Boolean(data);
     setup.hidden = true;
     active.hidden = true;
@@ -495,6 +497,9 @@
     reloadFromPersistedState();
   });
   window.addEventListener('exit-state:changed', reloadFromPersistedState);
+  window.addEventListener('exit-state:status', () => {
+    if (syncStatus) syncStatus.textContent = window.ExitState?.getDisplayStatus?.() || 'Saved locally';
+  });
 
   render();
   track('sprint_view');
