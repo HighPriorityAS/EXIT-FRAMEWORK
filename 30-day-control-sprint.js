@@ -485,11 +485,16 @@
     }
   };
 
-  window.addEventListener('storage', event => {
-    if (event.key !== KEY) return;
+  const reloadFromPersistedState = () => {
     data = load();
     render();
+  };
+
+  window.addEventListener('storage', event => {
+    if (event.key !== KEY) return;
+    reloadFromPersistedState();
   });
+  window.addEventListener('exit-state:changed', reloadFromPersistedState);
 
   render();
   track('sprint_view');
