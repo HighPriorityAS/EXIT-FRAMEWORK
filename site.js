@@ -1,5 +1,24 @@
 /* Navigation and lightweight interaction only. Artwork and page content are declared in HTML. */
 (() => {
+  const identityHref = '/assets/exit-mark.svg';
+  let icon = document.querySelector('link[rel="icon"]');
+  if (!icon) {
+    icon = document.createElement('link');
+    icon.setAttribute('rel', 'icon');
+    document.head.appendChild(icon);
+  }
+  icon.setAttribute('type', 'image/svg+xml');
+  icon.setAttribute('href', identityHref);
+
+  document.querySelectorAll('svg.brand-symbol').forEach(symbol => {
+    const mark = document.createElement('img');
+    mark.className = symbol.getAttribute('class') || 'brand-symbol';
+    mark.src = identityHref;
+    mark.alt = '';
+    mark.setAttribute('aria-hidden', 'true');
+    symbol.replaceWith(mark);
+  });
+
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const close = (restoreFocus = false) => {
