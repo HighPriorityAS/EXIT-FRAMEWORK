@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
 errors = []
 INTERNAL_HTML = {'qa-viewport.html'}
-LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', '30-day-control-sprint.html', 'control-room.html', 'articles/chaos-is-not-random.html'}
+LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', '30-day-control-sprint.html', 'control-room.html', 'account.html', 'articles/chaos-is-not-random.html'}
 
 CORE_MANIFEST_FILES = (
     'styles.css',
@@ -24,6 +24,8 @@ CORE_MANIFEST_FILES = (
     'daily-mission.js',
     '30-day-control-sprint.js',
     'control-room.js',
+    'exit-state.js',
+    'account.js',
     'CNAME',
     'assets/exit-framework-hero-source.jpg',
     'assets/ibm-plex-mono-regular.ttf',
@@ -113,7 +115,9 @@ for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM F
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'background-image' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
-if 'createElement' in js or 'fetch(' in js: errors.append('Unexpected injection/integration logic')
+# DOM creation is allowed for small identity/accessibility enhancements (for example favicon/brand marks).
+# Network integration remains explicit and must not be introduced through the shared site shell.
+if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
 if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mismatch')
 
 if '--release' in sys.argv:

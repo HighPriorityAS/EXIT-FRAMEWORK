@@ -48,16 +48,16 @@
   };
   const load = () => {
     try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return null;
-      return normalize(JSON.parse(raw));
+      const stored = window.ExitState?.load ? window.ExitState.load() : JSON.parse(localStorage.getItem(KEY) || 'null');
+      return normalize(stored);
     } catch {
       return null;
     }
   };
   const save = sprint => {
+    sprint.version = VERSION;
+    if (window.ExitState?.save) return window.ExitState.save(sprint);
     try {
-      sprint.version = VERSION;
       localStorage.setItem(KEY, JSON.stringify(sprint));
       return true;
     } catch {
@@ -485,11 +485,16 @@
     }
   };
 
-  window.addEventListener('storage', event => {
-    if (event.key !== KEY) return;
+  const reloadFromPersistedState = () => {
     data = load();
     render();
+  };
+
+  window.addEventListener('storage', event => {
+    if (event.key !== KEY) return;
+    reloadFromPersistedState();
   });
+  window.addEventListener('exit-state:changed', reloadFromPersistedState);
 
   render();
   track('sprint_view');

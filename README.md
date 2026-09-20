@@ -15,6 +15,12 @@ The homepage uses the full portrait artwork with a shared dark/cream field, navi
 
 The typeface is locally hosted IBM Plex Mono under the bundled SIL Open Font License. Body text uses the system sans-serif stack.
 
+## State + sync
+
+Sprint and Control Room remain local-first. The canonical browser key is `exit_control_sprint_v1`. `exit-state.js` owns optional authenticated Supabase synchronization and stores sync metadata separately under `exit_sync_meta_v1`. Local writes must succeed before cloud sync is attempted. Anonymous use remains supported.
+
+The browser uses only the Supabase publishable key. Never add secret/service-role credentials to this repository.
+
 ## Launch boundary
 
 Checkout and the Founder collection form are inactive. There are no payment or CRM requests. Launch updates link explicitly to the established Substack list. No reservation, payment or research participation is implied. `launch-config.js` remains an inert record of the previous integration configuration and is not loaded.
