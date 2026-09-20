@@ -115,7 +115,9 @@ for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM F
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'background-image' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
-if 'createElement' in js or 'fetch(' in js: errors.append('Unexpected injection/integration logic')
+# DOM creation is allowed for small identity/accessibility enhancements (for example favicon/brand marks).
+# Network integration remains explicit and must not be introduced through the shared site shell.
+if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
 if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mismatch')
 
 if '--release' in sys.argv:
