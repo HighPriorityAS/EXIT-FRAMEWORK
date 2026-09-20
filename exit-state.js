@@ -42,13 +42,18 @@
   const hash = state => {
     try { return JSON.stringify(state ?? null); } catch { return ''; }
   };
-  const publicState = () => ({
-    status,
-    signedIn: Boolean(session?.user),
-    email: session?.user?.email || '',
-    userId: session?.user?.id || '',
-    conflict: Boolean(conflict)
-  });
+  const publicState = () => {
+    const meta = readMeta();
+    const userId = session?.user?.id || '';
+    return {
+      status,
+      signedIn: Boolean(session?.user),
+      email: session?.user?.email || '',
+      userId,
+      conflict: Boolean(conflict),
+      cloudSyncDisabled: Boolean(userId && meta.userId === userId && meta.cloudSyncDisabled)
+    };
+  };
 
   const fetchRemote = async userId => {
     const { data, error } = await client
@@ -60,14 +65,14 @@
     return data;
   };
 
-  const markSynced = (userId, remote) => {
-    const local = readLocal();
+  const markSynced = (userId, remote, syncedState) => {
     writeMeta({
       userId,
       revision: Number(remote.revision),
-      syncedHash: hash(local),
+      syncedHash: hash(syncedState),
       lastSyncedAt: remote.updated_at || new Date().toISOString(),
-      dirty: false
+      dirty: false,
+      cloudSyncDisabled: false
     });
     conflict = null;
     setStatus('SYNCED');
@@ -87,7 +92,7 @@
       .select('revision,updated_at')
       .single();
     if (error) throw error;
-    markSynced(userId, data);
+    markSynced(userId, data, local);
   };
 
   const enterConflict = (local, remote) => {
@@ -122,7 +127,7 @@
       enterConflict(local, remote);
       return false;
     }
-    markSynced(userId, data);
+    markSynced(userId, data, local);
     return true;
   };
 
@@ -139,6 +144,12 @@
     const userId = session.user.id;
     const local = readLocal();
     const meta = readMeta();
+
+    if (meta.userId === userId && meta.cloudSyncDisabled) {
+      setStatus('LOCAL', { reason: 'cloud-sync-disabled' });
+      return;
+    }
+
     setStatus('SYNCING');
 
     try {
@@ -157,13 +168,13 @@
 
       if (remote && !local) {
         if (!writeLocal(remote.state)) throw new Error('local_storage_unavailable');
-        markSynced(userId, remote);
+        markSynced(userId, remote, remote.state);
         emit('exit-state:changed', { source: 'cloud-restore' });
         return;
       }
 
       if (hash(local) === hash(remote.state)) {
-        markSynced(userId, remote);
+        markSynced(userId, remote, local);
         return;
       }
 
@@ -193,9 +204,14 @@
     if (!ok) return false;
     const meta = readMeta();
     if (session?.user) {
+      const cloudSyncDisabled = meta.userId === session.user.id && meta.cloudSyncDisabled;
       writeMeta({ ...meta, userId: session.user.id, dirty: true });
-      setStatus(navigator.onLine ? 'SYNCING' : 'OFFLINE');
-      scheduleSync();
+      if (cloudSyncDisabled) {
+        setStatus('LOCAL', { reason: 'cloud-sync-disabled' });
+      } else {
+        setStatus(navigator.onLine ? 'SYNCING' : 'OFFLINE');
+        scheduleSync();
+      }
     } else {
       setStatus('LOCAL');
     }
@@ -208,15 +224,28 @@
     const userId = session.user.id;
     if (choice === 'cloud') {
       if (!writeLocal(conflict.remote.state)) return false;
-      markSynced(userId, conflict.remote);
+      markSynced(userId, conflict.remote, conflict.remote.state);
       emit('exit-state:changed', { source: 'conflict-cloud' });
       return true;
     }
     if (choice === 'local') {
-      const remoteRevision = Number(conflict.remote.revision);
-      const local = conflict.local;
-      conflict = null;
-      return updateRemote(userId, local, remoteRevision);
+      const pendingConflict = conflict;
+      const remoteRevision = Number(pendingConflict.remote.revision);
+      const local = pendingConflict.local;
+      try {
+        return await updateRemote(userId, local, remoteRevision);
+      } catch (error) {
+        console.warn('Exit conflict resolution unavailable', error);
+        conflict = pendingConflict;
+        setStatus(navigator.onLine ? 'SYNC ISSUE' : 'OFFLINE', { reason: 'network' });
+        emit('exit-state:conflict', {
+          local: pendingConflict.local,
+          remote: pendingConflict.remote?.state || null,
+          remoteRevision: pendingConflict.remote?.revision || null,
+          remoteUpdatedAt: pendingConflict.remote?.updated_at || null
+        });
+        return false;
+      }
     }
     return false;
   };
@@ -225,8 +254,33 @@
     if (!client || !session?.user) throw new Error('not_signed_in');
     const { error } = await client.from('exit_states').delete().eq('user_id', session.user.id);
     if (error) throw error;
-    writeMeta({ userId: session.user.id, revision: 0, syncedHash: '', dirty: true });
-    setStatus('LOCAL');
+    const local = readLocal();
+    writeMeta({
+      userId: session.user.id,
+      revision: 0,
+      syncedHash: hash(local),
+      dirty: false,
+      cloudSyncDisabled: true,
+      cloudDeletedAt: new Date().toISOString()
+    });
+    conflict = null;
+    setStatus('LOCAL', { reason: 'cloud-sync-disabled' });
+    emit('exit-state:auth', publicState());
+    return true;
+  };
+
+  const resumeCloudSync = async () => {
+    await ready;
+    if (!client || !session?.user) throw new Error('not_signed_in');
+    const meta = readMeta();
+    writeMeta({
+      ...meta,
+      userId: session.user.id,
+      cloudSyncDisabled: false,
+      cloudDeletedAt: null,
+      dirty: Boolean(readLocal())
+    });
+    await reconcile();
     return true;
   };
 
@@ -247,8 +301,12 @@
       client = await importClient();
       const { data } = await client.auth.getSession();
       session = data?.session || null;
-      client.auth.onAuthStateChange((_event, nextSession) => {
+      client.auth.onAuthStateChange((event, nextSession) => {
         session = nextSession;
+        if (event === 'INITIAL_SESSION') {
+          emit('exit-state:auth', publicState());
+          return;
+        }
         if (session?.user) void reconcile();
         else {
           conflict = null;
@@ -302,6 +360,7 @@
     signOut,
     resolveConflict,
     deleteCloudState,
+    resumeCloudSync,
     project: { url: SUPABASE_URL, clientVersion: SUPABASE_VERSION }
   };
 })();
