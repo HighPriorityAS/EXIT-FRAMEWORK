@@ -14,6 +14,7 @@ LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-missi
 
 CORE_MANIFEST_FILES = (
     'styles.css',
+    'portal-hero.css',
     'launch-loop.css',
     'site.js',
     'launch-config.js',
@@ -28,6 +29,7 @@ CORE_MANIFEST_FILES = (
     'account.js',
     'CNAME',
     'assets/exit-framework-hero-source.jpg',
+    'assets/exit-portal-hero-v22.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -78,8 +80,11 @@ for path,page in pages.items():
     if page.h1!=1: errors.append(f'{rel}: expected one H1')
     style_names=[Path(urlsplit(href).path).name for href in page.styles]
     if 'styles.css' not in style_names: errors.append(f'{rel}: shared stylesheet missing')
-    extras=[name for name in style_names if name not in ('styles.css','launch-loop.css')]
+    allowed_styles={'styles.css','launch-loop.css'}
+    if rel=='index.html': allowed_styles.add('portal-hero.css')
+    extras=[name for name in style_names if name not in allowed_styles]
     if extras: errors.append(f'{rel}: unexpected stylesheet(s): {", ".join(extras)}')
+    if rel=='index.html' and 'portal-hero.css' not in style_names: errors.append('index.html: portal hero stylesheet missing')
     uses_launch_loop=rel in LAUNCH_LOOP_PAGES
     if uses_launch_loop and 'launch-loop.css' not in style_names: errors.append(f'{rel}: launch-loop stylesheet missing')
     if not uses_launch_loop and 'launch-loop.css' in style_names: errors.append(f'{rel}: launch-loop stylesheet loaded outside launch flow')
@@ -111,7 +116,7 @@ if re.findall(pattern,text)!=['Stabilize','Observe','Separate','Choose','Execute
     errors.append('framework.html: method order changed')
 
 text=(ROOT/'index.html').read_text(encoding='utf-8')
-for required in ('<h1 id="hero-title">EXIT FRAMEWORK</h1>','A STRATEGIC SYSTEM FOR','HUMAN AUTONOMY','CLARITY TODAY.','A DIFFERENT TOMORROW.','assets/exit-framework-hero-source.jpg','Chaos Is Not Random','Three free tools'):
+for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Framework','portal-hero.css','Chaos Is Not Random','Three free tools'):
     if required not in text: errors.append(f'Homepage missing {required}')
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
