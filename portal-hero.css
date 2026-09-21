@@ -94,7 +94,7 @@
 .portal-hero-copy{
   position:absolute;
   z-index:2;
-  top:54%;
+  top:49%;
   left:var(--gutter);
   transform:translateY(-50%);
   width:min(360px,32vw);
@@ -207,7 +207,7 @@
     top:auto;
     left:clamp(20px,6vw,38px);
     right:clamp(20px,6vw,38px);
-    bottom:164px;
+    bottom:178px;
     transform:none;
     width:auto;
   }
@@ -246,7 +246,7 @@
 
 @media(max-height:720px) and (max-width:599px){
   .portal-hero{background-position:center 52px}
-  .portal-hero-copy{bottom:148px}
+  .portal-hero-copy{bottom:160px}
   .portal-hero-copy::before{margin-bottom:12px}
   .portal-hero-statement{margin-bottom:12px}
   .portal-hero .portal-cta{min-height:50px}
