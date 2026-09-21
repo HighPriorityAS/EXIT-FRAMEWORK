@@ -71,7 +71,7 @@
   height:calc(100% - 240px);
   object-fit:contain;
   object-position:center;
-  transform:scale(.95);
+  transform:scale(1.0925);
   transform-origin:center;
   pointer-events:none;
   user-select:none;
