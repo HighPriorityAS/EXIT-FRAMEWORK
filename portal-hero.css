@@ -71,6 +71,8 @@
   height:calc(100% - 240px);
   object-fit:contain;
   object-position:center;
+  transform:scale(.85);
+  transform-origin:center;
   pointer-events:none;
   user-select:none;
 }
