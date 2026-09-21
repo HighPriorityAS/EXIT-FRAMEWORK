@@ -34,6 +34,7 @@ CORE_MANIFEST_FILES = (
     'assets/exit-portal-mobile-clean-v23.svg',
     'assets/exit-portal-approved-desktop-v24.webp',
     'assets/exit-portal-approved-mobile-v24.webp',
+    'assets/exit-portal-clean-v26.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -100,7 +101,7 @@ for path,page in pages.items():
         if not target.is_relative_to(ROOT) or not target.exists(): errors.append(f'{rel}: missing/outside link {raw}')
         elif u.fragment and target in pages and unquote(u.fragment) not in pages[target].ids: errors.append(f'{rel}: missing anchor {raw}')
     for im in page.images:
-        if not all(im.get(a) for a in ('alt','width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
+        if 'alt' not in im or not all(im.get(a) for a in ('width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
     if 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
 
 image=ROOT/'assets/exit-portal-approved-desktop-v24.webp'
@@ -117,6 +118,14 @@ if '--decode' in sys.argv:
     with Image.open(mobile_image) as im:
         im.load()
         if im.size!=(768,806) or im.format!='WEBP': errors.append('Incorrect mobile hero dimensions/format')
+
+# Current hero asset: both layouts contain the same complete artwork.
+clean_image=ROOT/'assets/exit-portal-clean-v26.webp'
+if hashlib.sha256(clean_image.read_bytes()).hexdigest()!='eb36596042d2ffcf2c4251ce8d2e5927c7e68770b3155832f57d7529dd8cf3cd': errors.append('Clean hero SHA-256 changed')
+if '--decode' in sys.argv:
+    with Image.open(clean_image) as im:
+        im.load()
+        if im.size!=(1672,941) or im.format!='WEBP': errors.append('Incorrect clean hero dimensions/format')
 
 # The full eight-step method now lives on framework.html; the homepage is intentionally compressed.
 text=(ROOT/'framework.html').read_text(encoding='utf-8')

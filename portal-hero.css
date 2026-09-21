@@ -59,24 +59,20 @@
   height:100svh;
   overflow:hidden;
   background-color:#040505;
-  background-image:url("assets/exit-portal-approved-desktop-v24.webp");
-  background-repeat:no-repeat;
-  background-size:auto 90%;
-  background-position:center center;
   border-bottom:1px solid var(--rule);
 }
 
-.portal-hero::before{
-  content:"";
+/* Contain the complete artwork: portrait screens must never crop EXIT. */
+.portal-hero-art{
   position:absolute;
-  inset:0;
-  z-index:0;
+  top:88px;
+  left:5%;
+  width:90%;
+  height:calc(100% - 240px);
+  object-fit:contain;
+  object-position:center;
   pointer-events:none;
-  background:
-    linear-gradient(rgba(4,5,5,.2),rgba(4,5,5,.2)),
-    linear-gradient(90deg,rgba(4,5,5,.38) 0%,rgba(4,5,5,.24) 27%,rgba(4,5,5,0) 48%),
-    linear-gradient(180deg,rgba(4,5,5,.42) 0%,rgba(4,5,5,.04) 24%,rgba(4,5,5,0) 50%),
-    linear-gradient(180deg,rgba(4,5,5,0) 56%,rgba(4,5,5,.18) 75%,rgba(4,5,5,.72) 100%);
+  user-select:none;
 }
 
 .portal-sr-only{
@@ -94,9 +90,10 @@
 .portal-hero-copy{
   position:absolute;
   z-index:2;
-  top:49%;
+  top:auto;
+  bottom:180px;
   left:var(--gutter);
-  transform:translateY(-50%);
+  transform:none;
   width:min(360px,32vw);
   color:var(--paper);
   font-family:var(--mono);
@@ -191,16 +188,12 @@
     background:rgba(4,5,5,.97);
   }
 
-  .portal-hero{
-    background-image:url("assets/exit-portal-approved-mobile-v24.webp");
-    background-size:auto 54%;
-    background-position:center 76px;
-  }
-
-  .portal-hero::before{
-    background:
-      linear-gradient(180deg,rgba(4,5,5,.58) 0%,rgba(4,5,5,0) 22%),
-      linear-gradient(180deg,rgba(4,5,5,0) 47%,rgba(4,5,5,.34) 64%,rgba(4,5,5,.96) 82%,#040505 100%);
+  .portal-hero{min-height:640px}
+  .portal-hero-art{
+    top:88px;
+    left:0;
+    width:100%;
+    height:calc(100% - 400px);
   }
 
   .portal-hero-copy{
@@ -239,13 +232,13 @@
 }
 
 @media(min-width:600px) and (max-width:899px){
-  .portal-hero{background-size:96% auto;background-position:center 52px}
+  .portal-hero-art{left:3%;width:94%;height:calc(100% - 350px)}
   .portal-hero-copy{left:var(--gutter);right:auto;width:360px}
   .portal-hero-actions{left:var(--gutter);right:var(--gutter);grid-template-columns:1fr 1fr}
 }
 
 @media(max-height:720px) and (max-width:599px){
-  .portal-hero{background-position:center 52px}
+  .portal-hero-art{top:76px;height:calc(100% - 360px)}
   .portal-hero-copy{bottom:160px}
   .portal-hero-copy::before{margin-bottom:12px}
   .portal-hero-statement{margin-bottom:12px}
