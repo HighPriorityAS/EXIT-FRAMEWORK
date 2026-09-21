@@ -10,6 +10,24 @@
   icon.setAttribute('type', 'image/svg+xml');
   icon.setAttribute('href', identityHref);
 
+  const highPriorityUrl = 'https://highpriority.no/';
+  document.querySelectorAll('.footer-bottom span').forEach(footerLine => {
+    const label = 'High Priority AS';
+    const text = footerLine.textContent || '';
+    const index = text.indexOf(label);
+    if (index === -1 || footerLine.querySelector('a[href*="highpriority.no"]')) return;
+
+    footerLine.textContent = '';
+    footerLine.append(document.createTextNode(text.slice(0, index)));
+    const link = document.createElement('a');
+    link.href = highPriorityUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = label;
+    footerLine.append(link);
+    footerLine.append(document.createTextNode(text.slice(index + label.length)));
+  });
+
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const close = (restoreFocus = false) => {
