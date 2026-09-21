@@ -30,6 +30,7 @@ CORE_MANIFEST_FILES = (
     'CNAME',
     'assets/exit-framework-hero-source.jpg',
     'assets/exit-portal-hero-v22.webp',
+    'assets/exit-portal-mobile-clean-v23.svg',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
