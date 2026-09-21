@@ -9,9 +9,9 @@ Run `python validate.py --decode` with Pillow installed to check every route and
 
 ## Composition
 
-`styles.css` is the only active stylesheet. `site.js` owns menu and launch-update interactions only. All identity, navigation, headings, links and page content are real HTML. The hero is `assets/exit-framework-hero-source.jpg`, an unchanged 864 × 1536 JPEG. Never convert, regenerate, crop or substitute it.
+`styles.css` is the shared stylesheet; `portal-hero.css` is loaded only by the homepage. `site.js` owns menu and launch-update interactions only. All identity, navigation, headings, links and page content are real HTML.
 
-The homepage uses the full portrait artwork with a shared dark/cream field, navigation and margin notes on desktop. Headline and outlined entry links follow the original CHAOS/CONTROL center. Mobile gives the original artwork a full proportional row and places headline, subtitle and entry links beneath it. Old hero styles and JavaScript injection have been removed. Historical image URLs remain available but are not referenced.
+The approved homepage hero uses `assets/exit-portal-approved-desktop-v24.webp` at desktop widths and `assets/exit-portal-approved-mobile-v24.webp` below 900 CSS pixels. The desktop file is the supplied 1920 × 1080 approved artwork. The mobile file is a clean crop of the supplied mobile scene with its baked CTA strip removed; live HTML supplies the copy and links. Both layouts keep the same distressed EXIT lettering, amber portal and centered figure. Historical image URLs remain available but are not referenced.
 
 The typeface is locally hosted IBM Plex Mono under the bundled SIL Open Font License. Body text uses the system sans-serif stack.
 
