@@ -938,8 +938,8 @@
       "width": 1440
     }
   ],
-  "image_sha256": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
-  "site_sha256": "4b94cf860c1599e70673777de2d3b98153dca38d419842d0c28142c65ec96104",
+  "image_sha256": "6d0945b63ed840bc5918113a95add5b81535475baf92e2bd111ca68395fa4a4d",
+  "site_sha256": "a1006f84f6b968f5a35b2fff70de99cabf19870502e80538e41ec66d36ffbd1d",
   "browser": "Codex in-app browser",
   "full_pixel_decode": "passed",
   "console_errors": [],
@@ -967,5 +967,43 @@
     "CNAME": "53f382ed6de27b55cf3b60df05b44cd357ad6319aa4463785148d516ab3cc1aa",
     "assets/exit-framework-hero-source.jpg": "aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853",
     "assets/ibm-plex-mono-regular.ttf": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46"
+  },
+  "mobile_image_sha256": "1b5bb9acb4920fb9b5eef57076f9075b4fb89f0ad9272ac826defe678ced48e2",
+  "homepage_hero": {
+    "390": {
+      "height": 844,
+      "nav": "hidden",
+      "menu": "visible",
+      "cta_layout": "stacked",
+      "overflow": false
+    },
+    "430": {
+      "height": 932,
+      "nav": "hidden",
+      "menu": "visible",
+      "cta_layout": "stacked",
+      "overflow": false
+    },
+    "768": {
+      "height": 1024,
+      "nav": "hidden",
+      "menu": "visible",
+      "cta_layout": "side-by-side",
+      "overflow": false
+    },
+    "1440": {
+      "height": 900,
+      "nav": "visible",
+      "menu": "hidden",
+      "cta_layout": "side-by-side",
+      "overflow": false
+    }
+  },
+  "hero_interactions": {
+    "mobile_menu": "passed",
+    "escape_close": "passed",
+    "chaos_audit_link": "/chaos-audit.html",
+    "framework_link": "/framework.html",
+    "page_console_errors": 0
   }
 }

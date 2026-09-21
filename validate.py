@@ -7,7 +7,8 @@ import json
 import sys
 
 ROOT = Path(__file__).resolve().parent
-EXPECTED = 'aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853'
+EXPECTED = '6d0945b63ed840bc5918113a95add5b81535475baf92e2bd111ca68395fa4a4d'
+EXPECTED_MOBILE = '1b5bb9acb4920fb9b5eef57076f9075b4fb89f0ad9272ac826defe678ced48e2'
 errors = []
 INTERNAL_HTML = {'qa-viewport.html'}
 LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', '30-day-control-sprint.html', 'control-room.html', 'account.html', 'articles/chaos-is-not-random.html'}
@@ -31,6 +32,8 @@ CORE_MANIFEST_FILES = (
     'assets/exit-framework-hero-source.jpg',
     'assets/exit-portal-hero-v22.webp',
     'assets/exit-portal-mobile-clean-v23.svg',
+    'assets/exit-portal-approved-desktop-v24.webp',
+    'assets/exit-portal-approved-mobile-v24.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -100,14 +103,20 @@ for path,page in pages.items():
         if not all(im.get(a) for a in ('alt','width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
     if 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
 
-image=ROOT/'assets/exit-framework-hero-source.jpg'
+image=ROOT/'assets/exit-portal-approved-desktop-v24.webp'
 actual=hashlib.sha256(image.read_bytes()).hexdigest()
-if actual!=EXPECTED: errors.append('Hero source SHA-256 changed')
+mobile_image=ROOT/'assets/exit-portal-approved-mobile-v24.webp'
+mobile_actual=hashlib.sha256(mobile_image.read_bytes()).hexdigest()
+if actual!=EXPECTED: errors.append('Desktop hero source SHA-256 changed')
+if mobile_actual!=EXPECTED_MOBILE: errors.append('Mobile hero source SHA-256 changed')
 if '--decode' in sys.argv:
     from PIL import Image
     with Image.open(image) as im:
         im.load()
-        if im.size!=(864,1536) or im.format!='JPEG': errors.append('Incorrect hero dimensions/format')
+        if im.size!=(1920,1080) or im.format!='WEBP': errors.append('Incorrect desktop hero dimensions/format')
+    with Image.open(mobile_image) as im:
+        im.load()
+        if im.size!=(768,806) or im.format!='WEBP': errors.append('Incorrect mobile hero dimensions/format')
 
 # The full eight-step method now lives on framework.html; the homepage is intentionally compressed.
 text=(ROOT/'framework.html').read_text(encoding='utf-8')
@@ -130,7 +139,8 @@ if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mi
 if '--release' in sys.argv:
     report=json.loads((ROOT/'qa-results.json').read_text())
     if report.get('result')!='passed' or report.get('widths')!=[390,430,768,1440]: errors.append('Mandatory browser QA has not passed')
-    if report.get('image_sha256')!=EXPECTED: errors.append('Browser QA references different artwork')
+    if report.get('image_sha256')!=EXPECTED: errors.append('Browser QA references different desktop artwork')
+    if report.get('mobile_image_sha256')!=EXPECTED_MOBILE: errors.append('Browser QA references different mobile artwork')
     if report.get('site_sha256')!=site_digest():
         expected=report.get('site_manifest',{})
         actual_manifest=site_manifest()
@@ -138,4 +148,4 @@ if '--release' in sys.argv:
         errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; H1s; exact framework method; research boundary; hero SHA-256 {actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))
+print(f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; H1s; exact framework method; research boundary; desktop hero SHA-256 {actual}; mobile hero SHA-256 {mobile_actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))

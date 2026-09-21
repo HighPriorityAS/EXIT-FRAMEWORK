@@ -1,42 +1,42 @@
-# Exit Framework launch QA
+# Approved Exit homepage hero — design QA
+
+## Evidence
+
+- Source visual truth: `/workspace/scratch/f3a90dafb89b/exit-hero-handoff/01_APPROVED_SOURCE_OF_TRUTH.png` (1536 × 1024) and `03_APPROVED_MOBILE_REFERENCE.png` (477 × 1024).
+- Approved production artwork: `assets/exit-portal-approved-desktop-v24.webp` (1920 × 1080) and `assets/exit-portal-approved-mobile-v24.webp` (768 × 806).
+- Browser-rendered implementation: `/workspace/scratch/exit-hero-desktop-1440.jpg` (1440 × 900), `/workspace/scratch/exit-hero-mobile-390.jpg` (375 × 844 content crop from a 390 CSS-pixel iframe), `/workspace/scratch/exit-hero-mobile-430.jpg` (415 × 932 content crop from a 430 CSS-pixel iframe), and `/workspace/scratch/exit-hero-tablet-768.jpg` (768 × 1024).
+- Full-view comparisons: `/workspace/scratch/exit-hero-desktop-comparison.jpg` and `/workspace/scratch/exit-hero-mobile-comparison.jpg`.
+- State: homepage hero, menu closed, default pointer state.
+- Density normalization: device scale factor 1. The 1440 × 900 layout was captured at 90% in the browser QA frame and normalized back to 1440 × 900. The 768 × 1024 layout was captured at 85% and normalized back to 768 × 1024. Mobile browser scrollbars consume 15 visible pixels in the QA iframe; CSS media-query widths remained exactly 390 and 430.
+
+## Required fidelity surfaces
+
+- Fonts and typography: local IBM Plex Mono is used for the brand, hero copy, navigation and CTAs. Weight, uppercase treatment, line height, tracking and wrapping match the approved editorial direction. Copy is exact.
+- Spacing and layout rhythm: hero height equals the viewport at 390 × 844, 430 × 932, 768 × 1024 and 1440 × 900. Mobile CTAs stack; tablet and desktop CTAs sit side by side. No horizontal overflow was detected.
+- Colors and visual tokens: obsidian background, warm cream type, amber portal/rules and restrained dark overlays match the approved palette. Contrast remains readable across the distressed artwork.
+- Image quality and asset fidelity: desktop uses the supplied approved 1920 × 1080 artwork unchanged. Mobile uses the supplied gritty mobile scene with only the baked CTA strip removed; the previous minimalist SVG is not referenced. The phone frame/status UI from the reference is intentionally not shipped.
+- Copy and content: “Strategic control. Human freedom.”, “Tools. Perspective. Systems for a clearer tomorrow.” and both approved CTA labels are present without changes.
+
+## Findings
+
+- No actionable P0, P1 or P2 mismatches remain.
+- Accepted responsive adaptation: the approved mobile reference contains phone chrome and composed UI rather than a clean full-height production background. The implementation uses the closest non-destructive crop authorized by the handoff, preserving the same scene, figure, EXIT lettering and portal without inventing replacement artwork.
+- P3: exact subject scale differs slightly between the presentation mockup and live viewport crops because the references and real browser surfaces have different aspect ratios.
+
+Focused-region comparison was not needed after the full-view boards because the critical details—brand/header switch, copy, portal/figure crop and CTA geometry—remain legible at native capture size. DOM measurements were used to confirm exact breakpoint behavior and control geometry.
+
+## Comparison history
+
+1. Initial mobile pass used a 126% natural-size crop, which hid too much of the distressed EXIT lettering. Changed the mobile art direction to 100% width × 62% viewport height; the post-fix 390 and 430 captures retain the central figure, portal and more of the lettering without empty bands.
+2. Initial desktop pass placed the copy too high and the CTA row too low/narrow relative to the source. Moved copy to 54%, set the CTA row to 9vh from the bottom with a 1148px maximum width, and added restrained scene-darkening for text contrast. The 1440 × 900 post-fix comparison matches the approved hierarchy.
+
+## Interaction and browser checks
+
+- Mobile hamburger opens, reports `aria-expanded="true"`, closes with Escape, and desktop navigation is never visible at mobile/tablet widths.
+- Desktop shows About / Approach / Join and hides the hamburger.
+- Primary CTA navigates to `/chaos-audit.html`; secondary CTA navigates to `/framework.html`.
+- The header tagline stays hidden at all four tested widths.
+- No page-origin console warnings or errors were recorded.
+- Content below the hero was not changed.
 
 final result: passed
-
-## Scope and evidence
-
-Compared the actual `exit-framework-layout-reference.jpg` (864 × 1536) with rendered local screenshots, including a combined comparison board. Inspected the actual `exit-framework-hero-source.jpg` separately before implementation. The source governs image details; the reference governs interface composition. This is a responsive website, so the wide desktop view and separate mobile text rows intentionally differ from the portrait mockup.
-
-Browser: Codex in-app browser. Actual `window.innerWidth` values: **390, 430, 768, 1440 CSS pixels**, height 780. All 18 public HTML routes, including all six articles, the research boundary page and 404 page were opened at every width: **72 checks**. Scrollbars occupy approximately 15 CSS pixels; saved browser screenshots can be scaled by the capture surface and are not used to infer viewport width. No desktop crop was used as a mobile test.
-
-Evidence retained in the task's `work/qa` directory: per-route screenshots at all four widths, settled lower-page screenshots at 390 and 1440, homepage section screenshots at 390/768/1440, `matrix.json`, `interactions.json`, `anchors.json`, `http.json`, and `reference-comparison.jpg`. Release metadata and the public-source fingerprint are in `qa-results.json`.
-
-## Findings resolved
-
-- P1: Original production used a background image, hid picture/img, hid the full brand, and lacked visible hero copy. Replaced its composition with a normal unchanged JPEG, full SVG/HTML identity, navigation, visible headline/subtitle/supporting copy, and primary/secondary outlined links.
-- P1: First local desktop headline lacked contrast on cream because a transformed parent isolated text blending. Removed that stacking context; the headline now takes a dark tone over cream and a light tone over black. Re-inspected the revised desktop and tablet entry screenshots.
-- P2: Three older articles lacked a skip-link target/mobile navigation. All public pages now have the same real header, menu, main target and footer. Route and anchor validation passes.
-- P2: The inactive Founder form previously accepted details and redirected without storing them. It now explains that collection and reservations are not open, and exposes the existing Substack destination as an explicit link. No payment/CRM integration is activated.
-- P2: Rapid anchor captures caught smooth-scroll intermediate positions. Switched anchor movement to instant scrolling and verified all six homepage targets at 390, 768 and 1440; targets settle at approximately 48 px (scroll padding plus target margin). Added a content-derived stylesheet cache key so existing visitors receive the new design.
-- Capture issue: Large stitched browser captures produced incomplete images. Discarded them as evidence and used settled viewport screenshots. This did not require changing the source artwork.
-
-## Fidelity review
-
-- Typography: full spaced wordmark and geometric emblem; locally hosted IBM Plex Mono for navigation, labels, subtitle and outlined entry controls; clear sans-serif content hierarchy.
-- Composition: identity/navigation precede the silhouette and its original CHAOS/CONTROL center, followed by headline, subtitle, support and the two entry links. Wide layout is integrated through the black/cream field and meaningful margin text. Mobile preserves the entire image and places readable HTML copy in a separate row.
-- Palette: obsidian, warm cream, muted amber. Shared editorial columns and dividing rules replace stacked gray cards and blue research panels. No vortex, duplicate grid, duplicate crosshair or duplicate CHAOS/CONTROL text is rendered.
-- Image: original JPEG copied as bytes; 864 × 1536 intrinsic and rendered proportional dimensions; no stretching, filtering, conversion or cropping. CHAOS/CONTROL, central crosshair and lower original signature remain unobstructed.
-- Copy: required hero wording, eight-step method and established products retained. No decorative founding date/statistic was imported from the mockup. Research links and the explicit commerce/research boundary remain present.
-
-## Functional and technical checks
-
-- Primary hero link opens Framework; secondary opens Founder 100, at all four widths.
-- Menu opens, Tab enters the first link, Escape closes it and restores toggle focus, at all four widths.
-- FAQ disclosure opens at all four widths.
-- Product-update buttons focus the explicit launch-updates link and announce that reservations are not open and no details were submitted. No local form submission, CRM request or payment request exists.
-- All 18 pages have exactly one H1 and one active stylesheet. All local links/resources and fragment targets resolve.
-- All 72 responsive passes show no horizontal overflow. Inspected top and lower page views, article text columns, tablet product columns, mobile stacked sections, and homepage research transition without text collisions.
-- Browser warning/error log: empty during the recorded checks. Local HTTP checks: all 23 requested page/style/script/font/hero resources returned 200.
-- Served hero: HTTP 200, `image/jpeg`. Pillow fully loaded all pixel data from both the copied file and the HTTP response; this is not merely a header/naturalWidth check.
-- Source and local served SHA-256: `aca2b26064cc3880e8722fe2d45ea877a62a1741906b573b658b7c3325def853`.
-
-No remaining P0/P1/P2 design or functional findings. Stripe/CRM activation remains deliberately outside this release. Production verification follows deployment and is recorded separately in the delivery report.
