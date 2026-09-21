@@ -61,7 +61,7 @@
   background-color:#040505;
   background-image:url("assets/exit-portal-approved-desktop-v24.webp");
   background-repeat:no-repeat;
-  background-size:cover;
+  background-size:auto 90%;
   background-position:center center;
   border-bottom:1px solid var(--rule);
 }
@@ -193,7 +193,7 @@
 
   .portal-hero{
     background-image:url("assets/exit-portal-approved-mobile-v24.webp");
-    background-size:100% 62%;
+    background-size:auto 54%;
     background-position:center 76px;
   }
 
@@ -239,7 +239,7 @@
 }
 
 @media(min-width:600px) and (max-width:899px){
-  .portal-hero{background-size:100% auto;background-position:center 52px}
+  .portal-hero{background-size:96% auto;background-position:center 52px}
   .portal-hero-copy{left:var(--gutter);right:auto;width:360px}
   .portal-hero-actions{left:var(--gutter);right:var(--gutter);grid-template-columns:1fr 1fr}
 }
