@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = '6d0945b63ed840bc5918113a95add5b81535475baf92e2bd111ca68395fa4a4d'
 EXPECTED_MOBILE = '1b5bb9acb4920fb9b5eef57076f9075b4fb89f0ad9272ac826defe678ced48e2'
 errors = []
-INTERNAL_HTML = {'qa-viewport.html'}
+INTERNAL_HTML = {'qa-viewport.html', 'decision-ledger.html'}
 LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', '30-day-control-sprint.html', 'control-room.html', 'account.html', 'articles/chaos-is-not-random.html'}
 
 CORE_MANIFEST_FILES = (
@@ -102,7 +102,7 @@ for path,page in pages.items():
         elif u.fragment and target in pages and unquote(u.fragment) not in pages[target].ids: errors.append(f'{rel}: missing anchor {raw}')
     for im in page.images:
         if 'alt' not in im or not all(im.get(a) for a in ('width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
-    if 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
+    if rel!='index.html' and 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
 
 image=ROOT/'assets/exit-portal-approved-desktop-v24.webp'
 actual=hashlib.sha256(image.read_bytes()).hexdigest()
@@ -127,16 +127,25 @@ if '--decode' in sys.argv:
         im.load()
         if im.size!=(1672,941) or im.format!='WEBP': errors.append('Incorrect clean hero dimensions/format')
 
-# The full eight-step method now lives on framework.html; the homepage is intentionally compressed.
+# The full eight-step method lives inside the operating-loop section on framework.html.
 text=(ROOT/'framework.html').read_text(encoding='utf-8')
 import re
+loop_start=text.find('id="operating-loop"')
+loop_end=text.find('</section>', loop_start)
+loop_text=text[loop_start:loop_end] if loop_start!=-1 and loop_end!=-1 else ''
 pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adjust)'
-if re.findall(pattern,text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
+if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
+# Homepage is a deliberate single-screen threshold: hero + exactly two entry paths.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
-for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Framework','portal-hero.css','Chaos Is Not Random','Three free tools'):
+for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Framework','portal-hero.css?v=27'):
     if required not in text: errors.append(f'Homepage missing {required}')
+for forbidden in ('class="principle-rail"','class="launch-section"','<footer class="site-footer"','aria-label="Primary navigation"'):
+    if forbidden in text: errors.append(f'Portal homepage contains below-fold/navigation content: {forbidden}')
+portal_css=(ROOT/'portal-hero.css').read_text(encoding='utf-8')
+for required in ('.home{','overflow:hidden','height:100svh'):
+    if required not in portal_css: errors.append(f'Portal no-scroll contract missing: {required}')
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'background-image' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
