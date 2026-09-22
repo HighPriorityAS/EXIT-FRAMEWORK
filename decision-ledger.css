@@ -1,0 +1,52 @@
+/* Decision Ledger v0 — scoped internal UI */
+.decision-ledger-page{background:#080909}
+.dl-hero-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:70px;align-items:end}
+.dl-principle{border-top:1px solid var(--amber);padding-top:22px;font:11px/1.7 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dl-principle span{display:block;color:var(--amber);margin-bottom:14px}
+.dl-principle strong{display:block;color:var(--paper);font-size:16px;font-weight:400;letter-spacing:.04em;text-transform:none}
+.dl-auth-gate{max-width:760px}
+.dl-topbar,.dl-section-head{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end;margin-bottom:46px}
+.dl-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.dl-stats>div{padding:18px 12px 0 0}
+.dl-stats span{display:block;font:10px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dl-stats strong{display:block;margin-top:8px;font:32px/1 var(--mono);font-weight:400;color:var(--paper)}
+.dl-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 34px;max-width:980px}
+.dl-field{display:grid;gap:9px;align-content:start}
+.dl-field-wide{grid-column:1/-1}
+.dl-field label,.dl-label-row label{font:11px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--paper)}
+.dl-field label span{color:var(--muted);font-size:9px}
+.dl-field input[type="text"],.dl-field input[type="date"],.dl-field select,.dl-field textarea{width:100%;border:1px solid var(--rule);border-radius:0;background:#0d0e0d;color:var(--paper);padding:14px 15px;font:15px/1.55 Arial,Helvetica,sans-serif}
+.dl-field textarea{resize:vertical;min-height:84px}
+.dl-field input:focus,.dl-field textarea:focus,.dl-field select:focus{border-color:var(--amber);outline:none;box-shadow:0 0 0 1px var(--amber)}
+.dl-label-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.dl-label-row output{font:22px/1 var(--mono);color:var(--amber)}
+.dl-confidence-wrap input[type="range"]{width:100%;accent-color:var(--amber)}
+.dl-scale{display:flex;justify-content:space-between;color:var(--muted);font:9px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.dl-submit-row{border-top:1px solid var(--amber);padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.dl-submit-row strong{font-size:18px;font-weight:400}
+.dl-submit-row p{font-size:14px;margin:.4em 0 0;max-width:620px}
+.dl-review-list,.dl-history{display:grid;gap:18px}
+.dl-card{border-top:1px solid var(--rule);padding:24px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px}
+.dl-card-main{min-width:0}
+.dl-card-meta{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:12px;font:10px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dl-card-meta .dl-accent{color:var(--amber)}
+.dl-card h3{margin-bottom:10px}
+.dl-card p{max-width:780px;margin-bottom:.8em}
+.dl-confidence-badge{align-self:start;border:1px solid var(--rule);padding:11px 13px;min-width:76px;text-align:center;font:15px/1 var(--mono);color:var(--amber)}
+.dl-review-form{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 26px;padding:22px;border:1px solid var(--rule);background:#0b0c0b}
+.dl-review-form[hidden]{display:none}
+.dl-review-form .dl-field-wide{grid-column:1/-1}
+.dl-rating-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.dl-review-actions{display:flex;justify-content:flex-end;gap:15px;align-items:center}
+.dl-empty{padding:28px 0;border-top:1px solid var(--rule);font:13px/1.7 var(--mono)}
+.dl-history .dl-card{grid-template-columns:minmax(0,1fr) auto}
+.dl-source{font:10px/1.4 var(--mono);color:var(--muted)}
+@media(max-width:767px){
+  .dl-hero-grid,.dl-topbar,.dl-section-head{grid-template-columns:1fr;gap:30px}
+  .dl-form,.dl-review-form,.dl-rating-row{grid-template-columns:1fr}
+  .dl-field-wide,.dl-review-form .dl-field-wide{grid-column:1}
+  .dl-submit-row{align-items:stretch;flex-direction:column}
+  .dl-submit-row .button{width:100%}
+  .dl-card,.dl-history .dl-card{grid-template-columns:1fr;gap:14px}
+  .dl-confidence-badge{justify-self:start}
+}
