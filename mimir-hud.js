@@ -29,11 +29,18 @@ $$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{const c=b.dataset.cm
 
 const SUPABASE_URL='https://awcgroilvvisccdsoewk.supabase.co', SUPABASE_KEY='sb_publishable_RP19ChzerZ5TAMHBuwnZvQ_kK9Dcmp2';
 const sb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
-const response=$('[data-mimir-response]'),transcript=$('[data-transcript]'),panel=$('[data-voice-panel]'),mic=$('[data-mic]'),state=$('[data-voice-state]'),audio=$('[data-realtime-audio]'),cloudState=$('[data-cloud-state]');
+const response=$('[data-mimir-response]'),transcript=$('[data-transcript]'),panel=$('[data-voice-panel]'),mic=$('[data-mic]'),state=$('[data-voice-state]'),audio=$('[data-realtime-audio]'),cloudState=$('[data-cloud-state]'),cloudTrigger=$('[data-cloud-trigger]'),authDialog=$('[data-auth-dialog]'),authForm=$('[data-auth-form]'),authEmail=$('[data-auth-email]'),authStatus=$('[data-auth-status]'),authClose=$('[data-auth-close]');
 let rt={pc:null,dc:null,stream:null,active:false,connecting:false},session=null;
 
-async function refreshSession(){if(!sb)return null;const {data}=await sb.auth.getSession();session=data.session||null;if(cloudState)cloudState.textContent=session?'CLOUD':'LOCAL';return session}
-refreshSession();sb?.auth.onAuthStateChange((_e,s)=>{session=s;if(cloudState)cloudState.textContent=s?'CLOUD':'LOCAL'});
+function paintCloud(){if(cloudState)cloudState.textContent=session?'CLOUD':'LOCAL';if(cloudTrigger)cloudTrigger.classList.toggle('connected',!!session)}
+async function refreshSession(){if(!sb)return null;const {data,error}=await sb.auth.getSession();if(error)console.error('Mímir auth',error);session=data.session||null;paintCloud();return session}
+function openAuth(){if(!authDialog)return;authStatus.textContent='';authDialog.showModal();setTimeout(()=>authEmail?.focus(),0)}
+function closeAuth(){authDialog?.close()}
+refreshSession();sb?.auth.onAuthStateChange((_e,s)=>{session=s;paintCloud();if(session&&authDialog?.open){authStatus.textContent='CONNECTED';setTimeout(closeAuth,450)}})
+cloudTrigger?.addEventListener('click',()=>session?null:openAuth());
+authClose?.addEventListener('click',closeAuth);
+authDialog?.addEventListener('click',e=>{if(e.target===authDialog)closeAuth()});
+authForm?.addEventListener('submit',async e=>{e.preventDefault();if(!sb)return;const email=authEmail.value.trim();if(!email)return;authStatus.textContent='SENDING…';const redirectTo=location.origin+location.pathname;const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:redirectTo}});authStatus.textContent=error?('ERROR // '+error.message):'MAGIC LINK SENT // OPEN IT ON THIS DEVICE';});
 
 function stopRealtime(){try{rt.dc?.close()}catch{}try{rt.pc?.close()}catch{}try{rt.stream?.getTracks().forEach(t=>t.stop())}catch{}rt={pc:null,dc:null,stream:null,active:false,connecting:false};panel.classList.remove('listening');state.textContent='IDLE'}
 function eventText(ev){return ev?.transcript||ev?.text||ev?.delta||''}
@@ -49,7 +56,7 @@ async function startRealtime(){
  if(rt.active){stopRealtime();return}
  if(rt.connecting)return;rt.connecting=true;state.textContent='CONNECTING';
  try{
-   const s=session||await refreshSession();if(!s)throw new Error('Digitwin cloud login required');
+   const s=session||await refreshSession();if(!s){rt.connecting=false;state.textContent='LOGIN REQUIRED';response.textContent='Koble Mímir til cloud først.';openAuth();return}
    const tokenRes=await fetch(SUPABASE_URL+'/functions/v1/mimir-realtime-token',{method:'POST',headers:{Authorization:'Bearer '+s.access_token,apikey:SUPABASE_KEY,'Content-Type':'application/json'}});
    if(!tokenRes.ok)throw new Error('Voice session '+tokenRes.status);
    const secret=await tokenRes.json();const ephemeral=secret.value||secret.client_secret?.value;if(!ephemeral)throw new Error('No realtime client secret');
@@ -59,7 +66,7 @@ async function startRealtime(){
    const offer=await pc.createOffer();await pc.setLocalDescription(offer);
    const ans=await fetch('https://api.openai.com/v1/realtime/calls',{method:'POST',headers:{Authorization:'Bearer '+ephemeral,'Content-Type':'application/sdp'},body:offer.sdp});
    if(!ans.ok)throw new Error('Realtime WebRTC '+ans.status);await pc.setRemoteDescription({type:'answer',sdp:await ans.text()});rt={pc,dc,stream,active:false,connecting:true};
- }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?'Kunne ikke starte Realtime voice.':'Logg inn i Digitwin-cloud først.'}
+ }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?('Voice error // '+(err?.message||'ukjent feil')):'Logg inn i Digitwin-cloud først.';if(!session)openAuth()}
 }
 function capture(text){const items=captures();items.push({id:crypto.randomUUID?.()||String(Date.now()),text,createdAt:new Date().toISOString(),status:'captured'});localStorage.setItem(CAPTURE_KEY,JSON.stringify(items.slice(-100)));render()}
 function route(raw){const text=clean(raw),q=text.toLowerCase();if(!text)return;transcript.textContent='“'+text+'”';if(/hva.*(gjøre|nå)|neste|mission|oppgave/.test(q)){response.textContent=deriveNow(load()).action;return}if(/friksjon/.test(q)){openDrawer('friction');return}if(/signal/.test(q)){openDrawer('signals');return}if(/execution|jarvis|loq/.test(q)){openDrawer('execution');return}if(/prosjekt|exit|saksfremgang|high priority/.test(q)){openDrawer('projects');return}if(/decision|beslutning/.test(q)){openDrawer('decisions');return}if(/arkiv|archive/.test(q)&&!/fang|husk/.test(q)){openDrawer('archive');return}if(/(fang|husk)/.test(q)){const p=text.replace(/^.*?(fang|husk)(\\s+dette)?[:;,\\s-]*/i,'').trim();if(p){capture(p);response.textContent='Fanget.';return}}response.textContent='Send dette til Mímir via voice eller Digitwin orchestrator.'}

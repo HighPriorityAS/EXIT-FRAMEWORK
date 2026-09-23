@@ -6,7 +6,8 @@
 <meta name="theme-color" content="#070907">
 <meta name="robots" content="noindex,nofollow">
 <title>Mímir HUD v2.1 — Exit OS</title>
-<link rel="stylesheet" href="mimir-hud.css">\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0"></script>
+<link rel="stylesheet" href="mimir-hud.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0"></script>
 </head>
 <body>
 <main class="hud-shell" id="main">
@@ -19,7 +20,7 @@
       </div>
     </div>
     <div class="hud-status">
-      <span><i class="status-dot"></i> <b data-cloud-state>LOCAL</b></span>
+      <button class="cloud-trigger" type="button" data-cloud-trigger><i class="status-dot"></i><b data-cloud-state>LOCAL</b></button>
       <span>SYNCED</span>
       <span data-capacity>CAPACITY: —</span>
       <span data-date>—</span>
@@ -100,7 +101,8 @@
     </article>
   </section>
 
-  <audio data-realtime-audio autoplay></audio>\n  <section class="voice-rail" data-voice-panel>
+  <audio data-realtime-audio autoplay></audio>
+  <section class="voice-rail" data-voice-panel>
     <button class="voice-state" data-mic><i></i><span data-voice-state>IDLE</span></button>
     <p data-transcript>“Hva bør jeg gjøre nå?”</p>
     <form data-command-form>
@@ -135,6 +137,15 @@
   </div>
 </div>
 
+<dialog class="auth-dialog" data-auth-dialog>
+  <form data-auth-form>
+    <div class="auth-head"><div><small>DIGITWIN // AUTH</small><h2>Connect Mímir</h2></div><button type="button" data-auth-close aria-label="Lukk">×</button></div>
+    <p>Logg inn én gang. Vi sender en sikker magic link til e-posten din.</p>
+    <label><span>EMAIL</span><input type="email" data-auth-email autocomplete="email" required placeholder="deg@epost.no"></label>
+    <button class="auth-submit" type="submit">SEND MAGIC LINK</button>
+    <output data-auth-status></output>
+  </form>
+</dialog>
 <script src="mimir-hud.js" defer></script>
 </body>
 </html>
