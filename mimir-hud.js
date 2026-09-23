@@ -44,9 +44,20 @@ authForm?.addEventListener('submit',async e=>{e.preventDefault();if(!sb)return;c
 
 function stopRealtime(){try{rt.dc?.close()}catch{}try{rt.pc?.close()}catch{}try{rt.stream?.getTracks().forEach(t=>t.stop())}catch{}rt={pc:null,dc:null,stream:null,active:false,connecting:false};panel.classList.remove('listening');state.textContent='IDLE'}
 function eventText(ev){return ev?.transcript||ev?.text||ev?.delta||''}
+function memoryCandidate(text){
+ const t=clean(text);if(t.length<18)return null;const q=t.toLowerCase();
+ const explicit=/\b(husk|remember|noter|lagre|framover|fremover|jeg foretrekker|jeg liker|jeg vil|jeg heter|målet mitt|vi har bestemt|beslutningen er)\b/.test(q);
+ const durable=/\b(jeg er|jeg bygger|prosjektet|målet|prioritet|preferanse|regel|prinsipp|beslutning)\b/.test(q)&&t.length>35;
+ if(!explicit&&!durable)return null;
+ return {text:t.replace(/^.*?\b(husk|remember|noter|lagre)(\s+dette)?[:;,\s-]*/i,''),kind:/\bprosjekt|beslutning|vi har bestemt\b/.test(q)?'context':'memory',priority:explicit?85:70,confidence:explicit?.95:.72};
+}
+async function writeMemoryCandidate(text){
+ const c=memoryCandidate(text);if(!c||!session)return;
+ try{const r=await fetch(SUPABASE_URL+'/functions/v1/mimir-memory-writeback',{method:'POST',headers:{Authorization:'Bearer '+session.access_token,apikey:SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(c)});if(!r.ok)console.warn('Mímir memory writeback',r.status)}catch(e){console.warn('Mímir memory writeback unavailable',e)}
+}
 function handleRealtimeEvent(e){let ev;try{ev=JSON.parse(e.data)}catch{return}
  if(ev.type==='input_audio_buffer.speech_started'){panel.classList.add('listening');state.textContent='LISTENING';transcript.textContent='…'}
- if(ev.type==='conversation.item.input_audio_transcription.completed'&&ev.transcript){transcript.textContent='“'+ev.transcript+'”'}
+ if(ev.type==='conversation.item.input_audio_transcription.completed'&&ev.transcript){transcript.textContent='“'+ev.transcript+'”';writeMemoryCandidate(ev.transcript)}
  if((ev.type==='response.output_audio_transcript.delta'||ev.type==='response.audio_transcript.delta')&&eventText(ev)){response.textContent=(response.dataset.live||'')+eventText(ev);response.dataset.live=response.textContent}
  if(ev.type==='response.created'){response.dataset.live='';state.textContent='MÍMIR'}
  if(ev.type==='response.done'){state.textContent='LISTENING';delete response.dataset.live}
@@ -62,10 +73,10 @@ async function startRealtime(){
    const secret=await tokenRes.json();const ephemeral=secret.value||secret.client_secret?.value;if(!ephemeral)throw new Error('No realtime client secret');
    const pc=new RTCPeerConnection();const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
    stream.getTracks().forEach(track=>pc.addTrack(track,stream));pc.ontrack=e=>{audio.srcObject=e.streams[0];audio.play().catch(()=>{})};
-   const dc=pc.createDataChannel('oai-events');dc.addEventListener('message',handleRealtimeEvent);dc.addEventListener('open',()=>{rt.active=true;rt.connecting=false;panel.classList.add('listening');state.textContent='LISTENING';response.textContent='Mímir er klar.'});dc.addEventListener('close',stopRealtime);
+   const dc=pc.createDataChannel('oai-events');rt={pc,dc,stream,active:false,connecting:true};dc.addEventListener('message',handleRealtimeEvent);dc.addEventListener('open',()=>{rt.active=true;rt.connecting=false;panel.classList.add('listening');state.textContent='LISTENING';response.textContent='Mímir er klar.'});dc.addEventListener('close',stopRealtime);
    const offer=await pc.createOffer();await pc.setLocalDescription(offer);
    const ans=await fetch('https://api.openai.com/v1/realtime/calls',{method:'POST',headers:{Authorization:'Bearer '+ephemeral,'Content-Type':'application/sdp'},body:offer.sdp});
-   if(!ans.ok)throw new Error('Realtime WebRTC '+ans.status);await pc.setRemoteDescription({type:'answer',sdp:await ans.text()});rt={pc,dc,stream,active:false,connecting:true};
+   if(!ans.ok)throw new Error('Realtime WebRTC '+ans.status);await pc.setRemoteDescription({type:'answer',sdp:await ans.text()});
  }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?('Voice error // '+(err?.message||'ukjent feil')):'Logg inn i Digitwin-cloud først.';if(!session)openAuth(true)}
 }
 function capture(text){const items=captures();items.push({id:crypto.randomUUID?.()||String(Date.now()),text,createdAt:new Date().toISOString(),status:'captured'});localStorage.setItem(CAPTURE_KEY,JSON.stringify(items.slice(-100)));render()}
