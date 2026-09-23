@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent
 EXPECTED = '6d0945b63ed840bc5918113a95add5b81535475baf92e2bd111ca68395fa4a4d'
 EXPECTED_MOBILE = '1b5bb9acb4920fb9b5eef57076f9075b4fb89f0ad9272ac826defe678ced48e2'
 errors = []
-INTERNAL_HTML = {'qa-viewport.html', 'decision-ledger.html'}
+INTERNAL_HTML = {'qa-viewport.html', 'decision-ledger.html', 'mimir-hud.html'}
 LAUNCH_LOOP_PAGES = {'chaos-audit.html', 'minimum-viable-day.html', 'daily-mission.html', '30-day-control-sprint.html', 'control-room.html', 'account.html', 'articles/chaos-is-not-random.html'}
 
 CORE_MANIFEST_FILES = (
