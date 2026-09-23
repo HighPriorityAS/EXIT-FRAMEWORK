@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#070907">
 <meta name="robots" content="noindex,nofollow">
 <title>Mímir HUD v2.1 — Exit OS</title>
-<link rel="stylesheet" href="mimir-hud.css">
+<link rel="stylesheet" href="mimir-hud.css">\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.0"></script>
 </head>
 <body>
 <main class="hud-shell" id="main">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="hud-status">
-      <span><i class="status-dot"></i> ONLINE</span>
+      <span><i class="status-dot"></i> <b data-cloud-state>LOCAL</b></span>
       <span>SYNCED</span>
       <span data-capacity>CAPACITY: —</span>
       <span data-date>—</span>
@@ -100,7 +100,7 @@
     </article>
   </section>
 
-  <section class="voice-rail" data-voice-panel>
+  <audio data-realtime-audio autoplay></audio>\n  <section class="voice-rail" data-voice-panel>
     <button class="voice-state" data-mic><i></i><span data-voice-state>IDLE</span></button>
     <p data-transcript>“Hva bør jeg gjøre nå?”</p>
     <form data-command-form>

@@ -27,17 +27,44 @@ const palette=$('[data-palette-panel]'),pinput=$('[data-palette-input]');functio
 $('[data-palette]').addEventListener('click',openPalette);$('[data-palette-close]').addEventListener('click',closePalette);palette.addEventListener('click',e=>{if(e.target===palette)closePalette()});window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openPalette()}if(e.key==='Escape'){closePalette();closeDrawer()}});
 $$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{const c=b.dataset.cmd;closePalette();if(c==='what-now')reply(deriveNow(load()).action);else openDrawer(c.replace('open-',''))}));pinput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();route(pinput.value);pinput.value='';closePalette()}});
 
-function bestVoice(){if(!('speechSynthesis'in window))return null;const voices=speechSynthesis.getVoices();return voices.find(v=>/^nb|^no/i.test(v.lang)&&/google|natural|online|premium|enhanced|microsoft/i.test(v.name))||voices.find(v=>/^nb|^no/i.test(v.lang))||voices.find(v=>/^sv/i.test(v.lang))||null}
-function speak(text){if(!('speechSynthesis'in window)||!text)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='nb-NO';u.rate=.98;u.pitch=.92;const v=bestVoice();if(v)u.voice=v;speechSynthesis.speak(u)}
-const response=$('[data-mimir-response]'),transcript=$('[data-transcript]');function reply(text,voice=true){response.textContent=text;if(voice)speak(text)}
-function capture(text){const items=captures();items.push({id:crypto.randomUUID?.()||String(Date.now()),text,createdAt:new Date().toISOString(),status:'captured'});localStorage.setItem(CAPTURE_KEY,JSON.stringify(items.slice(-100)));render()}
-function route(raw){const text=clean(raw),q=text.toLowerCase();if(!text)return;transcript.textContent='“'+text+'”';if(/hva.*(gjøre|nå)|neste|mission|oppgave/.test(q))return reply(deriveNow(load()).action);if(/friksjon/.test(q)){openDrawer('friction');return reply('Åpner friksjon.')}if(/signal/.test(q)){openDrawer('signals');return reply('Åpner signaler.')}if(/execution|jarvis|loq/.test(q)){openDrawer('execution');return reply('Åpner execution.')}if(/prosjekt|exit|saksfremgang|high priority/.test(q)){openDrawer('projects');return reply('Åpner prosjekter.')}if(/decision|beslutning/.test(q)){openDrawer('decisions');return reply('Åpner beslutninger.')}if(/arkiv|archive/.test(q)&&!/fang|husk/.test(q)){openDrawer('archive');return reply('Åpner arkivet.')}if(/(fang|husk)/.test(q)){const p=text.replace(/^.*?(fang|husk)(s+dette)?[:;,s-]*/i,'').trim();if(p){capture(p);return reply('Fanget.')}return reply('Si hva jeg skal fange.')}reply('Kommandoen er forstått, men krever Mímir orchestrator før execution.')}
-const form=$('[data-command-form]'),input=$('[data-command-input]');form.addEventListener('submit',e=>{e.preventDefault();route(input.value);input.value=''});
+const SUPABASE_URL='https://awcgroilvvisccdsoewk.supabase.co', SUPABASE_KEY='sb_publishable_RP19ChzerZ5TAMHBuwnZvQ_kK9Dcmp2';
+const sb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
+const response=$('[data-mimir-response]'),transcript=$('[data-transcript]'),panel=$('[data-voice-panel]'),mic=$('[data-mic]'),state=$('[data-voice-state]'),audio=$('[data-realtime-audio]'),cloudState=$('[data-cloud-state]');
+let rt={pc:null,dc:null,stream:null,active:false,connecting:false},session=null;
 
-const panel=$('[data-voice-panel]'),mic=$('[data-mic]'),state=$('[data-voice-state]'),SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,finalText='';
-if(SR){rec=new SR();rec.lang='nb-NO';rec.interimResults=true;rec.continuous=false;rec.onstart=()=>{speechSynthesis?.cancel();finalText='';panel.classList.add('listening');state.textContent='LISTENING';transcript.textContent='…'};rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const h=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=(finalText?' ':'')+h;else interim+=h}transcript.textContent='“'+(finalText||interim)+'”'};rec.onend=()=>{panel.classList.remove('listening');state.textContent='IDLE';if(finalText)route(finalText)};rec.onerror=e=>{panel.classList.remove('listening');state.textContent='VOICE ERROR';response.textContent=e.error}}
-else{state.textContent='TEXT ONLY';mic.disabled=true}
-mic.addEventListener('click',()=>{if(rec)try{rec.start()}catch{}});$('[data-voice]').addEventListener('click',()=>mic.click());
+async function refreshSession(){if(!sb)return null;const {data}=await sb.auth.getSession();session=data.session||null;if(cloudState)cloudState.textContent=session?'CLOUD':'LOCAL';return session}
+refreshSession();sb?.auth.onAuthStateChange((_e,s)=>{session=s;if(cloudState)cloudState.textContent=s?'CLOUD':'LOCAL'});
+
+function stopRealtime(){try{rt.dc?.close()}catch{}try{rt.pc?.close()}catch{}try{rt.stream?.getTracks().forEach(t=>t.stop())}catch{}rt={pc:null,dc:null,stream:null,active:false,connecting:false};panel.classList.remove('listening');state.textContent='IDLE'}
+function eventText(ev){return ev?.transcript||ev?.text||ev?.delta||''}
+function handleRealtimeEvent(e){let ev;try{ev=JSON.parse(e.data)}catch{return}
+ if(ev.type==='input_audio_buffer.speech_started'){panel.classList.add('listening');state.textContent='LISTENING';transcript.textContent='…'}
+ if(ev.type==='conversation.item.input_audio_transcription.completed'&&ev.transcript){transcript.textContent='“'+ev.transcript+'”'}
+ if((ev.type==='response.output_audio_transcript.delta'||ev.type==='response.audio_transcript.delta')&&eventText(ev)){response.textContent=(response.dataset.live||'')+eventText(ev);response.dataset.live=response.textContent}
+ if(ev.type==='response.created'){response.dataset.live='';state.textContent='MÍMIR'}
+ if(ev.type==='response.done'){state.textContent='LISTENING';delete response.dataset.live}
+ if(ev.type==='error'){console.error('Mímir Realtime',ev);state.textContent='VOICE ERROR'}
+}
+async function startRealtime(){
+ if(rt.active){stopRealtime();return}
+ if(rt.connecting)return;rt.connecting=true;state.textContent='CONNECTING';
+ try{
+   const s=session||await refreshSession();if(!s)throw new Error('Digitwin cloud login required');
+   const tokenRes=await fetch(SUPABASE_URL+'/functions/v1/mimir-realtime-token',{method:'POST',headers:{Authorization:'Bearer '+s.access_token,apikey:SUPABASE_KEY,'Content-Type':'application/json'}});
+   if(!tokenRes.ok)throw new Error('Voice session '+tokenRes.status);
+   const secret=await tokenRes.json();const ephemeral=secret.value||secret.client_secret?.value;if(!ephemeral)throw new Error('No realtime client secret');
+   const pc=new RTCPeerConnection();const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+   stream.getTracks().forEach(track=>pc.addTrack(track,stream));pc.ontrack=e=>{audio.srcObject=e.streams[0];audio.play().catch(()=>{})};
+   const dc=pc.createDataChannel('oai-events');dc.addEventListener('message',handleRealtimeEvent);dc.addEventListener('open',()=>{rt.active=true;rt.connecting=false;panel.classList.add('listening');state.textContent='LISTENING';response.textContent='Mímir er klar.'});dc.addEventListener('close',stopRealtime);
+   const offer=await pc.createOffer();await pc.setLocalDescription(offer);
+   const ans=await fetch('https://api.openai.com/v1/realtime/calls',{method:'POST',headers:{Authorization:'Bearer '+ephemeral,'Content-Type':'application/sdp'},body:offer.sdp});
+   if(!ans.ok)throw new Error('Realtime WebRTC '+ans.status);await pc.setRemoteDescription({type:'answer',sdp:await ans.text()});rt={pc,dc,stream,active:false,connecting:true};
+ }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?'Kunne ikke starte Realtime voice.':'Logg inn i Digitwin-cloud først.'}
+}
+function capture(text){const items=captures();items.push({id:crypto.randomUUID?.()||String(Date.now()),text,createdAt:new Date().toISOString(),status:'captured'});localStorage.setItem(CAPTURE_KEY,JSON.stringify(items.slice(-100)));render()}
+function route(raw){const text=clean(raw),q=text.toLowerCase();if(!text)return;transcript.textContent='“'+text+'”';if(/hva.*(gjøre|nå)|neste|mission|oppgave/.test(q)){response.textContent=deriveNow(load()).action;return}if(/friksjon/.test(q)){openDrawer('friction');return}if(/signal/.test(q)){openDrawer('signals');return}if(/execution|jarvis|loq/.test(q)){openDrawer('execution');return}if(/prosjekt|exit|saksfremgang|high priority/.test(q)){openDrawer('projects');return}if(/decision|beslutning/.test(q)){openDrawer('decisions');return}if(/arkiv|archive/.test(q)&&!/fang|husk/.test(q)){openDrawer('archive');return}if(/(fang|husk)/.test(q)){const p=text.replace(/^.*?(fang|husk)(\\s+dette)?[:;,\\s-]*/i,'').trim();if(p){capture(p);response.textContent='Fanget.';return}}response.textContent='Send dette til Mímir via voice eller Digitwin orchestrator.'}
+const form=$('[data-command-form]'),input=$('[data-command-input]');form.addEventListener('submit',e=>{e.preventDefault();route(input.value);input.value=''});
+mic.addEventListener('click',startRealtime);$('[data-voice]').addEventListener('click',startRealtime);
 window.addEventListener('storage',render);
 })();
 (()=>{const fi=document.querySelector('[data-focus-input]');const input=document.querySelector('[data-command-input]');fi?.addEventListener('click',()=>input?.focus());window.addEventListener('keydown',e=>{if(e.altKey&&e.code==='Space'){e.preventDefault();document.querySelector('[data-voice]')?.click()}})})();
