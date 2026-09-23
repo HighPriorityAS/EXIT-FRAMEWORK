@@ -15,19 +15,21 @@
 
   <section class="tracer" aria-hidden="true"><i></i><i></i><i></i></section>
 
-  <section class="now" aria-labelledby="now-title">
-    <div class="now-meta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span></div>
-    <p class="eyebrow">NOW // ONE USEFUL MOVE</p>
-    <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
-    <p class="now-detail" data-now-detail>State → priority → bounded action → evidence.</p>
-    <div class="now-actions"><a class="primary" href="control-room.html">OPEN CONTROL ROOM <span>→</span></a><button class="ghost" type="button" data-voice>◉ TALK TO MÍMIR</button></div>
-  </section>
+  <section class="cockpit">
+    <section class="now" aria-labelledby="now-title">
+      <div class="now-meta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span></div>
+      <p class="eyebrow">NOW // ONE USEFUL MOVE</p>
+      <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
+      <p class="now-detail" data-now-detail>State → priority → bounded action → evidence.</p>
+      <div class="now-actions"><button class="primary" type="button" data-voice>◉ TALK TO MÍMIR</button><a class="ghost" href="control-room.html">CONTROL ROOM <span>→</span></a></div>
+    </section>
 
-  <section class="hud-grid">
+    <section class="hud-grid">
     <article class="panel friction"><p class="eyebrow">ACTIVE FRICTION</p><h2 data-friction>No active friction named.</h2><p data-friction-next>Nothing needs to be manufactured.</p></article>
     <article class="panel execution"><div class="panel-head"><p class="eyebrow">EXECUTION</p><span class="node-state"><i></i> HP-JARVIS-01</span></div><h2 data-exec-title>Execution node provisioned.</h2><p data-exec-detail>Live node state is kept in Digitwin. This HUD does not expose a public cross-project status channel.</p><a class="panel-link" href="https://www.highpriority.no/command" target="_blank" rel="noreferrer">OPEN DIGITWIN ↗</a></article>
     <article class="panel evidence"><p class="eyebrow">LAST EVIDENCE</p><h2 data-last>No check-in yet.</h2><p data-last-detail>Leave enough context for the next return.</p></article>
     <article class="panel signals"><div class="panel-head"><p class="eyebrow">SIGNALS</p><span>QUIET BY DEFAULT</span></div><h2>Only surface what changes the mission.</h2><p>Noise does not earn screen space.</p></article>
+    </section>
   </section>
 
   <section class="voice" data-voice-panel>
