@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="hud-status">
-      <span><i class="status-dot"></i> <b data-cloud-state>LOCAL</b></span>
+      <button class="cloud-chip" type="button" data-cloud-auth><i class="status-dot"></i> <b data-cloud-state>LOCAL</b></button>
       <span>SYNCED</span>
       <span data-capacity>CAPACITY: —</span>
       <span data-date>—</span>
@@ -113,6 +113,15 @@
 </main>
 
 <div class="scrim" data-scrim hidden></div>
+<div class="auth-modal" data-auth-modal hidden>
+  <form class="auth-box" data-auth-form>
+    <div class="auth-head"><div><p>EXIT OS // CLOUD</p><h2>Connect Mímir</h2></div><button type="button" data-auth-close aria-label="Lukk">×</button></div>
+    <p class="auth-copy">Sign in to Digitwin to unlock secure Realtime voice and cloud context.</p>
+    <label><span>EMAIL</span><input type="email" data-auth-email required autocomplete="email" placeholder="you@example.com"></label>
+    <button class="auth-submit" type="submit">SEND MAGIC LINK →</button>
+    <small data-auth-status>One-time link. No password required.</small>
+  </form>
+</div>
 <aside class="drawer" data-drawer aria-hidden="true">
   <div class="drawer-head">
     <div><p data-drawer-kicker>EXIT OS</p><h2 data-drawer-title>Panel</h2></div>
