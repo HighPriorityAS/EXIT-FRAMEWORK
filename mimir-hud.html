@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070807"><meta name="robots" content="noindex,nofollow">
+<title>Mímir HUD — Exit OS</title>
+<link rel="stylesheet" href="mimir-hud.css">
+</head>
+<body>
+<main class="hud" id="main">
+  <header class="hud-head">
+    <div><p class="eyebrow">EXIT OS // MÍMIR HUD</p><p class="sub">Strategic control. Human freedom.</p></div>
+    <div class="system"><i></i><span>RUNTIME</span><strong data-clock>--:--</strong></div>
+  </header>
+
+  <section class="tracer" aria-hidden="true"><i></i><i></i><i></i></section>
+
+  <section class="now" aria-labelledby="now-title">
+    <div class="now-meta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span></div>
+    <p class="eyebrow">NOW // ONE USEFUL MOVE</p>
+    <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
+    <p class="now-detail" data-now-detail>State → priority → bounded action → evidence.</p>
+    <div class="now-actions"><a class="primary" href="control-room.html">OPEN CONTROL ROOM <span>→</span></a><button class="ghost" type="button" data-voice>◉ TALK TO MÍMIR</button></div>
+  </section>
+
+  <section class="hud-grid">
+    <article class="panel friction"><p class="eyebrow">ACTIVE FRICTION</p><h2 data-friction>No active friction named.</h2><p data-friction-next>Nothing needs to be manufactured.</p></article>
+    <article class="panel execution"><div class="panel-head"><p class="eyebrow">EXECUTION</p><span class="node-state"><i></i> HP-JARVIS-01</span></div><h2>Execution muscle connected.</h2><p>Bounded PREPARE work can run on the Lenovo LOQ when the node is online.</p></article>
+    <article class="panel evidence"><p class="eyebrow">LAST EVIDENCE</p><h2 data-last>No check-in yet.</h2><p data-last-detail>Leave enough context for the next return.</p></article>
+    <article class="panel signals"><div class="panel-head"><p class="eyebrow">SIGNALS</p><span>QUIET BY DEFAULT</span></div><h2>Only surface what changes the mission.</h2><p>Noise does not earn screen space.</p></article>
+  </section>
+
+  <section class="voice" data-voice-panel>
+    <div class="voice-state"><i data-voice-dot></i><div><p class="eyebrow">VOICE // PUSH TO TALK</p><strong data-voice-state>IDLE</strong></div></div>
+    <p class="transcript" data-transcript>“Mímir, what should I do now?”</p>
+    <button class="mic" type="button" data-mic aria-label="Start voice input"><span>●</span> HOLD / TAP TO SPEAK</button>
+    <p class="voice-note" data-voice-note>Speech stays in the browser until you choose to act.</p>
+  </section>
+
+  <footer><span>EXIT OS / HUMAN-IN-THE-LOOP</span><span>READ → PREPARE → APPROVE → EXECUTE</span></footer>
+</main>
+<script src="mimir-hud.js" defer></script>
+</body></html>
