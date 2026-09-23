@@ -30,13 +30,13 @@ $$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{const c=b.dataset.cm
 const SUPABASE_URL='https://awcgroilvvisccdsoewk.supabase.co', SUPABASE_KEY='sb_publishable_RP19ChzerZ5TAMHBuwnZvQ_kK9Dcmp2';
 const sb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
 const response=$('[data-mimir-response]'),transcript=$('[data-transcript]'),panel=$('[data-voice-panel]'),mic=$('[data-mic]'),state=$('[data-voice-state]'),audio=$('[data-realtime-audio]'),cloudState=$('[data-cloud-state]'),cloudTrigger=$('[data-cloud-trigger]'),authDialog=$('[data-auth-dialog]'),authForm=$('[data-auth-form]'),authEmail=$('[data-auth-email]'),authStatus=$('[data-auth-status]'),authClose=$('[data-auth-close]');
-let rt={pc:null,dc:null,stream:null,active:false,connecting:false},session=null;
+let rt={pc:null,dc:null,stream:null,active:false,connecting:false},session=null; const VOICE_RESUME_KEY='mimir_voice_resume_v1';
 
 function paintCloud(){if(cloudState)cloudState.textContent=session?'CLOUD':'LOCAL';if(cloudTrigger)cloudTrigger.classList.toggle('connected',!!session)}
 async function refreshSession(){if(!sb)return null;const {data,error}=await sb.auth.getSession();if(error)console.error('Mímir auth',error);session=data.session||null;paintCloud();return session}
-function openAuth(){if(!authDialog)return;authStatus.textContent='';authDialog.showModal();setTimeout(()=>authEmail?.focus(),0)}
+function openAuth(fromVoice=false){if(!authDialog)return;if(fromVoice)localStorage.setItem(VOICE_RESUME_KEY,'1');authStatus.textContent='';authDialog.showModal();setTimeout(()=>authEmail?.focus(),0)}
 function closeAuth(){authDialog?.close()}
-refreshSession();sb?.auth.onAuthStateChange((_e,s)=>{session=s;paintCloud();if(session&&authDialog?.open){authStatus.textContent='CONNECTED';setTimeout(closeAuth,450)}})
+refreshSession();sb?.auth.onAuthStateChange((_e,s)=>{session=s;paintCloud();if(session&&authDialog?.open){authStatus.textContent='CONNECTED';setTimeout(closeAuth,450)}if(session&&localStorage.getItem(VOICE_RESUME_KEY)==='1'){localStorage.removeItem(VOICE_RESUME_KEY);setTimeout(()=>startRealtime(),650)}})
 cloudTrigger?.addEventListener('click',()=>session?null:openAuth());
 authClose?.addEventListener('click',closeAuth);
 authDialog?.addEventListener('click',e=>{if(e.target===authDialog)closeAuth()});
@@ -56,7 +56,7 @@ async function startRealtime(){
  if(rt.active){stopRealtime();return}
  if(rt.connecting)return;rt.connecting=true;state.textContent='CONNECTING';
  try{
-   const s=session||await refreshSession();if(!s){rt.connecting=false;state.textContent='LOGIN REQUIRED';response.textContent='Koble Mímir til cloud først.';openAuth();return}
+   const s=session||await refreshSession();if(!s){rt.connecting=false;state.textContent='LOGIN REQUIRED';response.textContent='Koble Mímir til cloud først.';openAuth(true);return}
    const tokenRes=await fetch(SUPABASE_URL+'/functions/v1/mimir-realtime-token',{method:'POST',headers:{Authorization:'Bearer '+s.access_token,apikey:SUPABASE_KEY,'Content-Type':'application/json'}});
    if(!tokenRes.ok)throw new Error('Voice session '+tokenRes.status);
    const secret=await tokenRes.json();const ephemeral=secret.value||secret.client_secret?.value;if(!ephemeral)throw new Error('No realtime client secret');
@@ -66,7 +66,7 @@ async function startRealtime(){
    const offer=await pc.createOffer();await pc.setLocalDescription(offer);
    const ans=await fetch('https://api.openai.com/v1/realtime/calls',{method:'POST',headers:{Authorization:'Bearer '+ephemeral,'Content-Type':'application/sdp'},body:offer.sdp});
    if(!ans.ok)throw new Error('Realtime WebRTC '+ans.status);await pc.setRemoteDescription({type:'answer',sdp:await ans.text()});rt={pc,dc,stream,active:false,connecting:true};
- }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?('Voice error // '+(err?.message||'ukjent feil')):'Logg inn i Digitwin-cloud først.';if(!session)openAuth()}
+ }catch(err){console.error(err);stopRealtime();state.textContent=session?'VOICE ERROR':'LOGIN REQUIRED';response.textContent=session?('Voice error // '+(err?.message||'ukjent feil')):'Logg inn i Digitwin-cloud først.';if(!session)openAuth(true)}
 }
 function capture(text){const items=captures();items.push({id:crypto.randomUUID?.()||String(Date.now()),text,createdAt:new Date().toISOString(),status:'captured'});localStorage.setItem(CAPTURE_KEY,JSON.stringify(items.slice(-100)));render()}
 function route(raw){const text=clean(raw),q=text.toLowerCase();if(!text)return;transcript.textContent='“'+text+'”';if(/hva.*(gjøre|nå)|neste|mission|oppgave/.test(q)){response.textContent=deriveNow(load()).action;return}if(/friksjon/.test(q)){openDrawer('friction');return}if(/signal/.test(q)){openDrawer('signals');return}if(/execution|jarvis|loq/.test(q)){openDrawer('execution');return}if(/prosjekt|exit|saksfremgang|high priority/.test(q)){openDrawer('projects');return}if(/decision|beslutning/.test(q)){openDrawer('decisions');return}if(/arkiv|archive/.test(q)&&!/fang|husk/.test(q)){openDrawer('archive');return}if(/(fang|husk)/.test(q)){const p=text.replace(/^.*?(fang|husk)(\\s+dette)?[:;,\\s-]*/i,'').trim();if(p){capture(p);response.textContent='Fanget.';return}}response.textContent='Send dette til Mímir via voice eller Digitwin orchestrator.'}
