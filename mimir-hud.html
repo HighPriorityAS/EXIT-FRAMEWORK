@@ -25,16 +25,23 @@
 
   <section class="hud-grid">
     <article class="panel friction"><p class="eyebrow">ACTIVE FRICTION</p><h2 data-friction>No active friction named.</h2><p data-friction-next>Nothing needs to be manufactured.</p></article>
-    <article class="panel execution"><div class="panel-head"><p class="eyebrow">EXECUTION</p><span class="node-state"><i></i> HP-JARVIS-01</span></div><h2>Execution muscle connected.</h2><p>Bounded PREPARE work can run on the Lenovo LOQ when the node is online.</p></article>
+    <article class="panel execution"><div class="panel-head"><p class="eyebrow">EXECUTION</p><span class="node-state"><i></i> HP-JARVIS-01</span></div><h2 data-exec-title>Execution node provisioned.</h2><p data-exec-detail>Live node state is kept in Digitwin. This HUD does not expose a public cross-project status channel.</p><a class="panel-link" href="https://www.highpriority.no/command" target="_blank" rel="noreferrer">OPEN DIGITWIN ↗</a></article>
     <article class="panel evidence"><p class="eyebrow">LAST EVIDENCE</p><h2 data-last>No check-in yet.</h2><p data-last-detail>Leave enough context for the next return.</p></article>
     <article class="panel signals"><div class="panel-head"><p class="eyebrow">SIGNALS</p><span>QUIET BY DEFAULT</span></div><h2>Only surface what changes the mission.</h2><p>Noise does not earn screen space.</p></article>
   </section>
 
   <section class="voice" data-voice-panel>
     <div class="voice-state"><i data-voice-dot></i><div><p class="eyebrow">VOICE // PUSH TO TALK</p><strong data-voice-state>IDLE</strong></div></div>
-    <p class="transcript" data-transcript>“Mímir, what should I do now?”</p>
-    <button class="mic" type="button" data-mic aria-label="Start voice input"><span>●</span> HOLD / TAP TO SPEAK</button>
-    <p class="voice-note" data-voice-note>Speech stays in the browser until you choose to act.</p>
+    <div class="voice-copy">
+      <p class="transcript" data-transcript>“Mímir, hva bør jeg gjøre nå?”</p>
+      <p class="mimir-response" data-mimir-response>Ready when you are.</p>
+    </div>
+    <button class="mic" type="button" data-mic aria-label="Start voice input"><span>●</span> TAP TO SPEAK</button>
+    <form class="command-form" data-command-form>
+      <label for="mimir-command">TYPE COMMAND</label>
+      <div><input id="mimir-command" data-command-input autocomplete="off" placeholder="Hva bør jeg gjøre nå?"><button type="submit">RUN →</button></div>
+    </form>
+    <p class="voice-note" data-voice-note>Voice recognition is provided by your browser and may use its speech service. Commands remain approval-gated.</p>
   </section>
 
   <footer><span>EXIT OS / HUMAN-IN-THE-LOOP</span><span>READ → PREPARE → APPROVE → EXECUTE</span></footer>
