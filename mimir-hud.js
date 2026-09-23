@@ -82,7 +82,7 @@ ${decisions||'- none'}
 RECENT ARCHIVE
 ${archive||'- none'}
 
-Lead with the answer. Use established context naturally so Atle does not need to repeat himself.`;
+Lead with the answer. Use established context naturally so Atle does not need to repeat himself. If Atle asks what you know about a topic, synthesize across the retrieved bundle rather than returning a single isolated fact. Give several concrete details when available, covering workflow, preferences, history/catalog, and current direction where relevant. Do not say you lack context if the bundle contains it.`;
 }
 async function respondWithLiveContext(text){
  if(!rt.dc||rt.dc.readyState!=='open')return;
