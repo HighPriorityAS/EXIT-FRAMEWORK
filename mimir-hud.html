@@ -1,54 +1,123 @@
 <!doctype html>
 <html lang="no">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#060705"><meta name="robots" content="noindex,nofollow">
-<title>Mímir HUD v2 — Exit OS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<meta name="robots" content="noindex,nofollow">
+<title>Mímir HUD v2.1 — Exit OS</title>
 <link rel="stylesheet" href="mimir-hud.css">
 </head>
 <body>
-<main class="hud" id="main">
-  <header class="topbar">
-    <div class="brand"><span class="sig"></span><div><p>EXIT OS // MÍMIR</p><small>Strategic control. Human freedom.</small></div></div>
-    <div class="topmeta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span><span data-clock>--:--</span></div>
+<main class="hud-shell" id="main">
+  <header class="hud-topbar">
+    <div class="hud-brand">
+      <span class="mark">✶</span>
+      <div>
+        <p>EXIT OS // MÍMIR</p>
+        <small>Strategic control. Human freedom.</small>
+      </div>
+    </div>
+    <div class="hud-status">
+      <span><i class="status-dot"></i> ONLINE</span>
+      <span>SYNCED</span>
+      <span data-capacity>CAPACITY: —</span>
+      <span data-date>—</span>
+      <span data-clock>--:--</span>
+      <b class="avatar">AS</b>
+    </div>
   </header>
 
-  <section class="main-grid">
-    <section class="now-card" aria-labelledby="now-title">
-      <div class="now-kicker"><span>NOW</span><b>01</b></div>
-      <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
-      <p data-now-detail>State → priority → bounded action → evidence.</p>
-      <div class="now-actions">
-        <button class="talk-primary" data-voice><span>●</span> TALK TO MÍMIR</button>
-        <button class="ghost" data-open="projects">PROJECTS</button>
-        <a class="ghost" href="control-room.html">DEEP OPS ↗</a>
+  <section class="hero-zone">
+    <article class="today-card hud-panel">
+      <div class="panel-title"><span>⌜⌟ TODAY</span><button data-open="projects">→</button></div>
+      <div class="today-body">
+        <div class="checkmark">✓</div>
+        <h2 data-today-title>Define the next right action.</h2>
+        <p data-today-detail>One bounded move. Then reassess.</p>
+        <div class="chips">
+          <span>HIGH LEVERAGE</span><span>EXIT</span><span>&lt; 10 MIN</span>
+        </div>
       </div>
-      <div class="tracers" aria-hidden="true"><i></i><i></i><i></i></div>
+    </article>
+
+    <section class="now-core">
+      <div class="orbit" aria-hidden="true"></div>
+      <p class="core-kicker">HUMAN // SYSTEM // AUTONOMY</p>
+      <h1>NOW</h1>
+      <h2 data-now>Start the next right action.</h2>
+      <p class="core-note" data-now-detail>I’ve got you, Atle.</p>
+      <button class="talk-btn" data-voice><span class="wave">▮▯▮▯▮</span><strong>TALK TO MÍMIR</strong><small>ALT + SPACE</small></button>
+      <div class="core-actions">
+        <button data-focus-input>⌨ TYPE</button>
+        <button data-palette>⌕ COMMAND <small>CTRL + K</small></button>
+        <button data-open="execution">ϟ QUICK ACTIONS</button>
+      </div>
     </section>
 
-    <section class="tiles" aria-label="Operational system">
-      <button class="tile" data-open="friction"><span>FRICTION</span><strong data-friction-count>0</strong><small data-friction-short>Clear</small></button>
-      <button class="tile" data-open="signals"><span>SIGNALS</span><strong data-signal-count>0</strong><small>Quiet by default</small></button>
-      <button class="tile" data-open="execution"><span>EXECUTION</span><strong data-exec-count>01</strong><small>HP-JARVIS-01</small></button>
-      <button class="tile" data-open="decisions"><span>DECISIONS</span><strong data-decision-count>0</strong><small>Pending / recent</small></button>
-      <button class="tile" data-open="archive"><span>ARCHIVE</span><strong data-archive-count>0</strong><small>Recent captures</small></button>
-      <button class="tile" data-open="projects"><span>PROJECTS</span><strong>03</strong><small>Exit / HP / Saks</small></button>
-    </section>
+    <article class="system-card hud-panel">
+      <div class="panel-title"><span>SYSTEM STATE</span><button data-open="signals">→</button></div>
+      <div class="system-bars">
+        <div><span>FOCUS</span><b><i style="--p:72%"></i></b><strong>72%</strong></div>
+        <div><span>ENERGY</span><b><i style="--p:58%"></i></b><strong>58%</strong></div>
+        <div><span>EXECUTION</span><b><i style="--p:68%"></i></b><strong>68%</strong></div>
+        <div><span>RECOVERY</span><b><i style="--p:76%"></i></b><strong>76%</strong></div>
+      </div>
+      <blockquote>“Discipline is freedom.”<small>— EXIT OS</small></blockquote>
+    </article>
   </section>
 
-  <section class="voicebar" data-voice-panel>
-    <button class="voice-dot" data-mic aria-label="Snakk med Mímir"><i></i><span data-voice-state>IDLE</span></button>
-    <div class="voice-copy"><p data-transcript>“Hva bør jeg gjøre nå?”</p><small data-mimir-response>Mímir ready.</small></div>
-    <form data-command-form><input data-command-input aria-label="Mímir command" autocomplete="off" placeholder="Type command…"><button>RUN</button></form>
-    <button class="palette-btn" data-palette aria-label="Open command palette">⌘K</button>
+  <section class="tile-row" aria-label="Operational system">
+    <button class="op-tile" data-open="friction"><span>◉ FRICTION</span><b data-friction-count>0</b><strong data-friction-short>Clear</strong><small>See what’s in the way.</small><i>→</i></button>
+    <button class="op-tile" data-open="signals"><span>⌁ SIGNALS</span><b data-signal-count>0</b><strong>Relevant only</strong><small>Opportunities & updates.</small><i>→</i></button>
+    <button class="op-tile" data-open="execution"><span>⚙ EXECUTION</span><b>3</b><strong>LOQ online</strong><small>View and manage jobs.</small><i>→</i></button>
+    <button class="op-tile" data-open="projects"><span>▦ PROJECTS</span><b>3</b><strong>Exit / HP / Saks</strong><small>Status and next actions.</small><i>→</i></button>
+    <button class="op-tile" data-open="decisions"><span>▤ DECISIONS</span><b data-decision-count>0</b><strong>Review</strong><small>Pending / recent.</small><i>→</i></button>
+    <button class="op-tile" data-open="archive"><span>◫ ARCHIVE</span><b data-archive-count>0</b><strong>Memory</strong><small>At your fingertips.</small><i>→</i></button>
   </section>
 
-  <footer><span>READ → PREPARE → APPROVE → EXECUTE</span><span>EXIT OS / V2</span></footer>
+  <section class="bottom-strip">
+    <article class="recent-panel">
+      <header><span>◷ RECENT</span></header>
+      <ul data-recent>
+        <li><span>Reviewed HR27 abstract</span><time>17:12</time></li>
+        <li><span>Saksfremgang: SEO pages live</span><time>15:03</time></li>
+        <li><span>Logged: Recovery Diaries</span><time>12:44</time></li>
+      </ul>
+    </article>
+    <article class="mimir-panel">
+      <header><span>⌁ MÍMIR</span></header>
+      <p data-mimir-response>“Small steps, consistent direction, big outcomes.”</p>
+    </article>
+    <article class="links-panel">
+      <header><span>↗ QUICK LINKS</span></header>
+      <nav>
+        <a href="control-room.html">Control Room</a>
+        <a href="/">Exit Framework</a>
+        <a href="https://saksfremgang.no">Saksfremgang</a>
+        <a href="https://highpriority.no/command">High Priority</a>
+      </nav>
+    </article>
+  </section>
+
+  <section class="voice-rail" data-voice-panel>
+    <button class="voice-state" data-mic><i></i><span data-voice-state>IDLE</span></button>
+    <p data-transcript>“Hva bør jeg gjøre nå?”</p>
+    <form data-command-form>
+      <input data-command-input autocomplete="off" placeholder="Type to Mímir…">
+      <button>RUN</button>
+    </form>
+  </section>
+
+  <footer class="hud-footer"><span>LOW CAPACITY SYSTEMS FOR HIGH PRIORITY OUTCOMES.</span><span>V2.1.0 // CHAOS.EXIT.COM</span></footer>
 </main>
 
 <div class="scrim" data-scrim hidden></div>
 <aside class="drawer" data-drawer aria-hidden="true">
-  <div class="drawer-head"><div><p class="drawer-eyebrow" data-drawer-kicker>EXIT OS</p><h2 data-drawer-title>Panel</h2></div><button data-close aria-label="Close">×</button></div>
+  <div class="drawer-head">
+    <div><p data-drawer-kicker>EXIT OS</p><h2 data-drawer-title>Panel</h2></div>
+    <button data-close aria-label="Lukk">×</button>
+  </div>
   <div class="drawer-body" data-drawer-body></div>
 </aside>
 
@@ -67,4 +136,5 @@
 </div>
 
 <script src="mimir-hud.js" defer></script>
-</body></html>
+</body>
+</html>
