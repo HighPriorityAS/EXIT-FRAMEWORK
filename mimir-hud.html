@@ -1,50 +1,70 @@
 <!doctype html>
-<html lang="en">
+<html lang="no">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#070807"><meta name="robots" content="noindex,nofollow">
-<title>Mímir HUD — Exit OS</title>
+<meta name="theme-color" content="#060705"><meta name="robots" content="noindex,nofollow">
+<title>Mímir HUD v2 — Exit OS</title>
 <link rel="stylesheet" href="mimir-hud.css">
 </head>
 <body>
 <main class="hud" id="main">
-  <header class="hud-head">
-    <div><p class="eyebrow">EXIT OS // MÍMIR HUD</p><p class="sub">Strategic control. Human freedom.</p></div>
-    <div class="system"><i></i><span>RUNTIME</span><strong data-clock>--:--</strong></div>
+  <header class="topbar">
+    <div class="brand"><span class="sig"></span><div><p>EXIT OS // MÍMIR</p><small>Strategic control. Human freedom.</small></div></div>
+    <div class="topmeta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span><span data-clock>--:--</span></div>
   </header>
 
-  <section class="tracer" aria-hidden="true"><i></i><i></i><i></i></section>
+  <section class="main-grid">
+    <section class="now-card" aria-labelledby="now-title">
+      <div class="now-kicker"><span>NOW</span><b>01</b></div>
+      <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
+      <p data-now-detail>State → priority → bounded action → evidence.</p>
+      <div class="now-actions">
+        <button class="talk-primary" data-voice><span>●</span> TALK TO MÍMIR</button>
+        <button class="ghost" data-open="projects">PROJECTS</button>
+        <a class="ghost" href="control-room.html">DEEP OPS ↗</a>
+      </div>
+      <div class="tracers" aria-hidden="true"><i></i><i></i><i></i></div>
+    </section>
 
-  <section class="now" aria-labelledby="now-title">
-    <div class="now-meta"><span data-capacity>CAPACITY // —</span><span data-phase>PHASE // —</span></div>
-    <p class="eyebrow">NOW // ONE USEFUL MOVE</p>
-    <h1 id="now-title" data-now>Restore Exit state to calculate the next move.</h1>
-    <p class="now-detail" data-now-detail>State → priority → bounded action → evidence.</p>
-    <div class="now-actions"><a class="primary" href="control-room.html">OPEN CONTROL ROOM <span>→</span></a><button class="ghost" type="button" data-voice>◉ TALK TO MÍMIR</button></div>
+    <section class="tiles" aria-label="Operational system">
+      <button class="tile" data-open="friction"><span>FRICTION</span><strong data-friction-count>0</strong><small data-friction-short>Clear</small></button>
+      <button class="tile" data-open="signals"><span>SIGNALS</span><strong data-signal-count>0</strong><small>Quiet by default</small></button>
+      <button class="tile" data-open="execution"><span>EXECUTION</span><strong data-exec-count>01</strong><small>HP-JARVIS-01</small></button>
+      <button class="tile" data-open="decisions"><span>DECISIONS</span><strong data-decision-count>0</strong><small>Pending / recent</small></button>
+      <button class="tile" data-open="archive"><span>ARCHIVE</span><strong data-archive-count>0</strong><small>Recent captures</small></button>
+      <button class="tile" data-open="projects"><span>PROJECTS</span><strong>03</strong><small>Exit / HP / Saks</small></button>
+    </section>
   </section>
 
-  <section class="hud-grid">
-    <article class="panel friction"><p class="eyebrow">ACTIVE FRICTION</p><h2 data-friction>No active friction named.</h2><p data-friction-next>Nothing needs to be manufactured.</p></article>
-    <article class="panel execution"><div class="panel-head"><p class="eyebrow">EXECUTION</p><span class="node-state"><i></i> HP-JARVIS-01</span></div><h2 data-exec-title>Execution node provisioned.</h2><p data-exec-detail>Live node state is kept in Digitwin. This HUD does not expose a public cross-project status channel.</p><a class="panel-link" href="https://www.highpriority.no/command" target="_blank" rel="noreferrer">OPEN DIGITWIN ↗</a></article>
-    <article class="panel evidence"><p class="eyebrow">LAST EVIDENCE</p><h2 data-last>No check-in yet.</h2><p data-last-detail>Leave enough context for the next return.</p></article>
-    <article class="panel signals"><div class="panel-head"><p class="eyebrow">SIGNALS</p><span>QUIET BY DEFAULT</span></div><h2>Only surface what changes the mission.</h2><p>Noise does not earn screen space.</p></article>
+  <section class="voicebar" data-voice-panel>
+    <button class="voice-dot" data-mic aria-label="Snakk med Mímir"><i></i><span data-voice-state>IDLE</span></button>
+    <div class="voice-copy"><p data-transcript>“Hva bør jeg gjøre nå?”</p><small data-mimir-response>Mímir ready.</small></div>
+    <form data-command-form><input data-command-input aria-label="Mímir command" autocomplete="off" placeholder="Type command…"><button>RUN</button></form>
+    <button class="palette-btn" data-palette aria-label="Open command palette">⌘K</button>
   </section>
 
-  <section class="voice" data-voice-panel>
-    <div class="voice-state"><i data-voice-dot></i><div><p class="eyebrow">VOICE // PUSH TO TALK</p><strong data-voice-state>IDLE</strong></div></div>
-    <div class="voice-copy">
-      <p class="transcript" data-transcript>“Mímir, hva bør jeg gjøre nå?”</p>
-      <p class="mimir-response" data-mimir-response>Ready when you are.</p>
-    </div>
-    <button class="mic" type="button" data-mic aria-label="Start voice input"><span>●</span> TAP TO SPEAK</button>
-    <form class="command-form" data-command-form>
-      <label for="mimir-command">TYPE COMMAND</label>
-      <div><input id="mimir-command" data-command-input autocomplete="off" placeholder="Hva bør jeg gjøre nå?"><button type="submit">RUN →</button></div>
-    </form>
-    <p class="voice-note" data-voice-note>Voice recognition is provided by your browser and may use its speech service. Commands remain approval-gated.</p>
-  </section>
-
-  <footer><span>EXIT OS / HUMAN-IN-THE-LOOP</span><span>READ → PREPARE → APPROVE → EXECUTE</span></footer>
+  <footer><span>READ → PREPARE → APPROVE → EXECUTE</span><span>EXIT OS / V2</span></footer>
 </main>
+
+<div class="scrim" data-scrim hidden></div>
+<aside class="drawer" data-drawer aria-hidden="true">
+  <div class="drawer-head"><div><p class="drawer-eyebrow" data-drawer-kicker>EXIT OS</p><h2 data-drawer-title>Panel</h2></div><button data-close aria-label="Close">×</button></div>
+  <div class="drawer-body" data-drawer-body></div>
+</aside>
+
+<div class="palette" data-palette-panel hidden>
+  <div class="palette-box">
+    <div class="palette-head"><span>COMMAND PALETTE</span><button data-palette-close>ESC</button></div>
+    <input data-palette-input autocomplete="off" placeholder="Open projects, show friction, what now…">
+    <div class="palette-list">
+      <button data-cmd="what-now">WHAT NOW?<span>→</span></button>
+      <button data-cmd="open-friction">OPEN FRICTION<span>F</span></button>
+      <button data-cmd="open-execution">OPEN EXECUTION<span>E</span></button>
+      <button data-cmd="open-projects">OPEN PROJECTS<span>P</span></button>
+      <button data-cmd="open-archive">OPEN ARCHIVE<span>A</span></button>
+    </div>
+  </div>
+</div>
+
 <script src="mimir-hud.js" defer></script>
 </body></html>

@@ -1,35 +1,6 @@
 const { test, expect } = require('@playwright/test');
 test.use({ baseURL: 'http://127.0.0.1:4173' });
-
-async function seed(page) {
-  await page.goto('/mimir-hud.html');
-  await page.evaluate(() => localStorage.setItem('exit_control_sprint_v1', JSON.stringify({
-    startedAt: new Date().toISOString().slice(0,10),
-    baseline: 5,
-    priority: 'Protect focus',
-    protect: 'Recovery',
-    checkins: [],
-    reviews: [],
-    controlRoom: { activeFriction: { statement: 'Too many open loops', nextAction: 'Close one loop', status: 'active' } }
-  })));
-  await page.reload();
-}
-
-for (const width of [390, 768, 1440]) {
-  test('Mimir HUD renders at ' + width, async ({ page }) => {
-    await page.setViewportSize({ width, height: 900 });
-    await seed(page);
-    await expect(page.locator('[data-now]')).toContainText("Set today's operating state");
-    await expect(page.locator('[data-friction]')).toHaveText('Too many open loops');
-    await expect(page.locator('[data-command-input]')).toBeVisible();
-    await expect(page.locator('[data-mic]')).toBeVisible();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
-  });
-}
-
-test('Mimir HUD ships bounded command routes', async ({ page }) => {
-  await page.goto('/mimir-hud.html');
-  const source = await page.locator('script[src="mimir-hud.js"]').getAttribute('src');
-  expect(source).toBe('mimir-hud.js');
-  await expect(page.locator('[data-exec-title]')).toContainText('provisioned');
-});
+async function seed(page){await page.goto('/mimir-hud.html');await page.evaluate(()=>localStorage.setItem('exit_control_sprint_v1',JSON.stringify({startedAt:new Date().toISOString().slice(0,10),baseline:5,checkins:[],signals:[{text:'Deadline moved',urgency:80,status:'new'}],decisions:[{text:'Keep scope narrow'}],controlRoom:{activeFriction:{statement:'Too many open loops',nextAction:'Close one loop',status:'active'}}})));await page.reload()}
+for(const vp of [{width:390,height:844},{width:768,height:900},{width:1440,height:900}])test('HUD v2 no-scroll '+vp.width,async({page})=>{await page.setViewportSize(vp);await seed(page);await expect(page.locator('[data-now]')).toBeVisible();await expect(page.locator('.tile')).toHaveCount(6);await expect(page.locator('[data-mic]')).toBeVisible();const m=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,sh:document.documentElement.scrollHeight,ch:document.documentElement.clientHeight}));expect(m.sw-m.cw).toBeLessThanOrEqual(1);expect(m.sh-m.ch).toBeLessThanOrEqual(1)});
+test('tiles open overlay drawers',async({page})=>{await seed(page);await page.locator('[data-open="friction"]').click();await expect(page.locator('[data-drawer]')).toHaveClass(/open/);await expect(page.locator('[data-drawer-body]')).toContainText('Too many open loops');await page.locator('[data-close]').click();await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/)});
+test('command palette opens project drawer',async({page})=>{await page.goto('/mimir-hud.html');await page.locator('[data-palette]').click();await expect(page.locator('[data-palette-panel]')).toBeVisible();await page.locator('[data-cmd="open-projects"]').click();await expect(page.locator('[data-drawer-body]')).toContainText('HIGH PRIORITY')});
