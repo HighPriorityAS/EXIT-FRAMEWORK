@@ -38,9 +38,17 @@ test('attention and commands reach their working surfaces', async ({page}) => {
   await seed(page);
   await page.locator('[data-open="friction"]').click();
   await expect(page.locator('[data-drawer-body]')).toContainText('Too many open loops');
+  await expect(page.locator('[data-close]')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('[data-close]')).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/);
+  await expect(page.locator('[data-open="friction"]')).toBeFocused();
   await page.locator('[data-palette]').click();
+  await expect(page.locator('[data-palette-input]')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('[data-cmd="open-archive"]')).toBeFocused();
   await page.locator('[data-cmd="what-now"]').click();
   await expect(page.locator('[data-mimir-response]')).toBeVisible();
   await page.locator('[data-command-input]').fill('fang dette: Minste steg fungerer');
