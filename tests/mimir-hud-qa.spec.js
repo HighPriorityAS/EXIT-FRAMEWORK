@@ -5,3 +5,17 @@ for(const vp of [{width:390,height:844},{width:768,height:900},{width:1440,heigh
 test('drawer and palette are mutually exclusive and dismissible',async({page})=>{await seed(page);await page.locator('[data-open="friction"]').first().click();await expect(page.locator('[data-drawer]')).toHaveClass(/open/);await page.locator('[data-palette]').click();await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/);await expect(page.locator('[data-palette-panel]')).toBeVisible();await page.keyboard.press('Escape');await expect(page.locator('[data-palette-panel]')).toBeHidden();await page.locator('[data-open="projects"]').first().click();await page.locator('[data-scrim]').click({position:{x:2,y:2}});await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/)});
 test('command palette command opens correct drawer',async({page})=>{await page.goto('/mimir-hud.html');await page.locator('[data-palette]').click();await page.locator('[data-cmd="open-projects"]').click();await expect(page.locator('[data-drawer-body]')).toContainText('HIGH PRIORITY')});
 test('realtime voice is wired without exposing secret',async({page})=>{await page.goto('/mimir-hud.html');const src=await page.locator('script[src="mimir-hud.js"]').getAttribute('src');expect(src).toBeTruthy();const body=await page.locator('body').textContent();expect(body).not.toContain('OPENAI_API_KEY');await expect(page.locator('[data-realtime-audio]')).toHaveCount(1);await expect(page.locator('[data-voice]')).toBeVisible()});
+
+test('talk button opens cloud auth when session is missing',async({page})=>{
+  await page.goto('/mimir-hud.html');
+  await page.locator('[data-voice]').click();
+  await expect(page.locator('[data-auth-dialog]')).toBeVisible();
+  await expect(page.locator('[data-voice-state]')).toHaveText('LOGIN REQUIRED');
+});
+test('cloud status is an interactive auth control',async({page})=>{
+  await page.goto('/mimir-hud.html');
+  await page.locator('[data-cloud-trigger]').click();
+  await expect(page.locator('[data-auth-dialog]')).toBeVisible();
+  await page.locator('[data-auth-close]').click();
+  await expect(page.locator('[data-auth-dialog]')).not.toBeVisible();
+});
