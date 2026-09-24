@@ -4,6 +4,8 @@
   const empty = document.querySelector('[data-cr-empty]');
   const status = document.querySelector('[data-cr-status]');
   const logForm = document.querySelector('[data-cr-log-form]');
+  const logWorkspace = document.querySelector('[data-cr-log-workspace]');
+  const logOpen = document.querySelector('[data-cr-log-open]');
   const frictionForm = document.querySelector('[data-cr-friction-form]');
   if (!runtime || !empty || !status || !logForm || !frictionForm) return;
 
@@ -258,9 +260,12 @@
   const openLog = () => {
     fillLog();
     logStatus.textContent = '';
-    document.querySelector('#control-room-log')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    logForm.querySelector('input[name="state"]')?.focus({ preventScroll: true });
+    if (logWorkspace) logWorkspace.open = true;
+    logWorkspace?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    window.setTimeout(() => logForm.querySelector('input[name="state"]')?.focus({ preventScroll: true }), 0);
   };
+
+  logOpen?.addEventListener('click', openLog);
 
   primary.addEventListener('click', () => {
     const actionMode = primary.dataset.mode;
