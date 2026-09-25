@@ -1110,3 +1110,39 @@
   .evidence-photo{display:none}
   .portal-scene-mask{background:linear-gradient(180deg,rgba(9,10,9,.08) 0 30%,rgba(9,10,9,.48) 41%,#090a09 49% 100%)}
 }
+
+
+/* v30.2 — no Post-it/workshop aesthetic. Evidence = archive, traces, records. */
+.evidence-note,.evidence-note-a,.evidence-note-b{display:none!important}
+.portal-evidence-field{
+  background:
+    radial-gradient(circle at 31% 18%,rgba(232,225,213,.035),transparent 17%),
+    radial-gradient(circle at 68% 61%,rgba(201,145,46,.035),transparent 15%),
+    linear-gradient(90deg,rgba(4,5,4,.30),rgba(4,5,4,.07) 74%,rgba(4,5,4,.24)),
+    repeating-linear-gradient(0deg,transparent 0 31px,rgba(232,225,213,.013) 32px),
+    #090a09;
+}
+.evidence-photo{
+  border-color:rgba(232,225,213,.065);
+  opacity:.56;
+  mix-blend-mode:screen;
+}
+.evidence-photo::after{
+  content:"ARCHIVE / OBSERVATION / TRACE";
+  position:absolute;
+  left:10px;
+  bottom:8px;
+  color:rgba(232,225,213,.34);
+  font:6px/1.2 var(--mono);
+  letter-spacing:.14em;
+}
+.evidence-signal,.evidence-log,.evidence-checks,.evidence-system,.evidence-chart,.evidence-map{
+  border-radius:0;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+.evidence-signal{transform:rotate(-.25deg)}
+.evidence-log{transform:rotate(.35deg)}
+.evidence-checks{transform:rotate(-.18deg)}
+.evidence-chart{transform:rotate(.22deg)}
+.evidence-map{transform:rotate(-.16deg)}
