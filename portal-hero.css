@@ -1146,3 +1146,41 @@
 .evidence-checks{transform:rotate(-.18deg)}
 .evidence-chart{transform:rotate(.22deg)}
 .evidence-map{transform:rotate(-.16deg)}
+
+
+/* v30.3 hard mobile containment */
+@media (max-width:899px){
+  .portal-header,.portal-header-inner,.portal-hero,.portal-evidence-field,.portal-copy,.portal-hero-title,.portal-hero-lead,.portal-hero-actions,.portal-stage-rail{
+    max-width:100vw;
+    box-sizing:border-box;
+  }
+  .portal-hero{width:100vw;contain:layout paint}
+  .portal-header{width:100vw;overflow:hidden}
+  .portal-evidence-field{width:100vw;overflow:hidden}
+  .portal-copy{
+    left:22px!important;
+    right:22px!important;
+    width:calc(100vw - 44px)!important;
+    max-width:calc(100vw - 44px)!important;
+  }
+  .portal-hero-title{
+    width:100%;
+    max-width:100%;
+    font-size:clamp(36px,11.4vw,52px)!important;
+    letter-spacing:-.05em;
+  }
+  .portal-hero-title span,.portal-hero-title em{
+    max-width:100%;
+    white-space:normal!important;
+  }
+  .portal-hero-lead{width:100%;max-width:100%}
+  .portal-hero-actions{width:100%;max-width:100%}
+  .portal-cta{max-width:100%;box-sizing:border-box}
+  .portal-stage-rail{width:auto;max-width:none}
+}
+@media (max-width:899px) and (orientation:portrait){
+  .portal-hero{min-height:100svh;height:100svh}
+  .portal-copy{top:43%!important;transform:none!important}
+  .portal-scene-art{top:80px;left:-18%;width:136%;height:34%}
+  .portal-stage-rail{bottom:14px}
+}
