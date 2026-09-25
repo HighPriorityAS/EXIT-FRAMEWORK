@@ -49,6 +49,16 @@
   background-color:#000;
 }
 
+.portal-hero::before{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0 0 auto;
+  height:180px;
+  pointer-events:none;
+  background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.98) 22%,rgba(0,0,0,.82) 45%,rgba(0,0,0,.38) 72%,rgba(0,0,0,0) 100%);
+}
+
 .portal-hero-art{
   position:absolute;
   top:88px;
