@@ -23,10 +23,11 @@
 .home .header-row{
   position:absolute;
   top:0;
-  left:var(--gutter);
-  right:var(--gutter);
+  left:0;
+  right:0;
   width:auto;
   max-width:none;
+  margin-inline:var(--gutter);
   min-height:104px;
   z-index:21;
   pointer-events:auto;
