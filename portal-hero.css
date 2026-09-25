@@ -919,3 +919,69 @@
   .portal-control-axis::after{animation:none}
   .portal-cta{transition:none}
 }
+
+
+/* v29 fidelity patch: restore photographic materiality while keeping UI/system layers live. */
+.home{--seam-x:46.1%;}
+.portal-scene-art{
+  position:absolute;
+  z-index:0;
+  top:0;
+  bottom:0;
+  left:-8%;
+  width:108%;
+  height:100%;
+  max-width:none;
+  object-fit:cover;
+  object-position:center center;
+  filter:saturate(.72) contrast(1.06) brightness(.72);
+  pointer-events:none;
+  user-select:none;
+}
+.portal-scene-mask{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(5,6,5,.20) 0 30%,transparent 39%,rgba(9,10,9,.08) 43%,rgba(9,10,9,.54) 49%,rgba(9,10,9,.94) 56%,#090a09 63% 100%),
+    linear-gradient(180deg,rgba(9,10,9,.38) 0 9%,transparent 18% 74%,rgba(9,10,9,.48) 91% 100%);
+}
+.portal-grid{z-index:2;opacity:.16}
+.portal-evidence-field{
+  z-index:3;
+  background:
+    linear-gradient(90deg,rgba(5,6,5,.46),rgba(5,6,5,.17) 48%,rgba(5,6,5,.04)),
+    repeating-linear-gradient(0deg,transparent 0 31px,rgba(232,225,213,.018) 32px);
+  border-right:0;
+  filter:none;
+}
+.portal-evidence-field::after{background:linear-gradient(90deg,rgba(0,0,0,.03),transparent 60%,rgba(0,0,0,.35));box-shadow:none}
+.evidence-fragment{background:rgba(7,8,7,.54);border-color:rgba(232,225,213,.095);box-shadow:0 18px 40px rgba(0,0,0,.18);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px)}
+.evidence-photo{display:none}
+.evidence-scratches{opacity:.13}
+.portal-vignette{z-index:4}
+.portal-control-axis{z-index:5}
+.portal-copy{left:57.2%;top:49.5%;width:min(40.5%,740px)}
+.portal-hero-title{font-size:clamp(64px,5.8vw,108px);line-height:.92}
+.portal-hero-title em{color:#d7a13b}
+.portal-eyebrow{margin-bottom:22px}
+.portal-hero-lead{margin-top:24px;max-width:620px}
+.portal-cta{background:rgba(8,9,8,.38);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.portal-cta-primary{background:#e5ddcf;color:#10110f}
+.portal-stage-rail{bottom:86px}
+
+@media(max-width:1180px){
+  .home{--seam-x:46%}
+  .portal-scene-art{left:-10%;width:112%}
+  .portal-copy{left:54.5%;width:43%}
+}
+@media(max-width:899px){
+  .home{--seam-x:58%}
+  .portal-scene-art{top:62px;left:-39%;width:154%;height:43%;object-fit:cover;object-position:center 56%;filter:saturate(.72) contrast(1.08) brightness(.74)}
+  .portal-scene-mask{background:linear-gradient(180deg,rgba(9,10,9,.08) 0 30%,rgba(9,10,9,.48) 41%,#090a09 49% 100%)}
+  .portal-evidence-field{height:35%;background:linear-gradient(180deg,rgba(5,6,5,.12),rgba(5,6,5,.28) 76%,transparent);opacity:.72}
+  .evidence-signal,.evidence-log,.evidence-checks,.evidence-note,.evidence-system,.evidence-chart,.evidence-map{opacity:.58}
+  .portal-copy{top:44%;left:20px;right:20px;width:auto}
+  .portal-hero-title{font-size:clamp(43px,12.6vw,66px)}
+}
