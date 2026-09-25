@@ -119,7 +119,8 @@ if '--decode' in sys.argv:
         im.load()
         if im.size!=(768,806) or im.format!='WEBP': errors.append('Incorrect mobile hero dimensions/format')
 
-# Current hero asset: both layouts contain the same complete artwork.
+# Historical clean artwork remains in the repository for provenance, but the v28
+# homepage no longer flattens the hero into one image.
 clean_image=ROOT/'assets/exit-portal-clean-v26.webp'
 if hashlib.sha256(clean_image.read_bytes()).hexdigest()!='eb36596042d2ffcf2c4251ce8d2e5927c7e68770b3155832f57d7529dd8cf3cd': errors.append('Clean hero SHA-256 changed')
 if '--decode' in sys.argv:
@@ -137,20 +138,45 @@ pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adj
 if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
-# Homepage is a deliberate single-screen threshold: hero + exactly two entry paths.
+# Homepage v28 is a deliberate single-screen operating field:
+# live navigation + evidence field + continuous control axis + two entry paths.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
-for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Protocol','portal-hero.css?v=27'):
+for required in (
+    '<section class="portal-hero"',
+    '<h1 class="portal-hero-title" id="hero-title">',
+    'Strategic control,',
+    'human freedom.',
+    'Run the Chaos Audit',
+    'Explore the Framework',
+    'CHAOS',
+    'CONVICTION',
+    'CONTROL',
+    'portal-hero.css?v=28',
+    'aria-label="Primary navigation"',
+):
     if required not in text: errors.append(f'Homepage missing {required}')
-for forbidden in ('class="principle-rail"','class="launch-section"','<footer class="site-footer"','aria-label="Primary navigation"'):
-    if forbidden in text: errors.append(f'Portal homepage contains below-fold/navigation content: {forbidden}')
+for forbidden in (
+    '<img class="portal-hero-art"',
+    'class="launch-section"',
+    '<footer class="site-footer"',
+):
+    if forbidden in text: errors.append(f'Portal homepage contains flattened/below-fold content: {forbidden}')
+
 portal_css=(ROOT/'portal-hero.css').read_text(encoding='utf-8')
-for required in ('.home{','overflow:hidden','height:100svh'):
-    if required not in portal_css: errors.append(f'Portal no-scroll contract missing: {required}')
+for required in (
+    '.home{',
+    'overflow:hidden',
+    'height:100svh',
+    '--seam-x:',
+    '.portal-control-axis',
+    '.portal-evidence-field',
+    '.portal-principles',
+):
+    if required not in portal_css: errors.append(f'Portal v28 contract missing: {required}')
+
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'background-image' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
-# DOM creation is allowed for the favicon enhancement only. Brand artwork remains declared in HTML.
-# Network integration remains explicit and must not be introduced through the shared site shell.
 if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
 if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mismatch')
 
@@ -166,4 +192,4 @@ if '--release' in sys.argv:
         errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {len(pages)} public pages; local routes and anchors; approved stylesheets; H1s; exact framework method; research boundary; desktop hero SHA-256 {actual}; mobile hero SHA-256 {mobile_actual}'+('; full pixel decode' if '--decode' in sys.argv else ''))
+print(f'PASS: {len(pages)} public pages; local routes and anchors; active design system; H1s; exact framework method; research boundary; preserved historical hero assets'+('; full pixel decode' if '--decode' in sys.argv else ''))
