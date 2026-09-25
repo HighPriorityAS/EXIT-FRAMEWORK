@@ -125,7 +125,7 @@
   min-height:72px;
   padding:18px 26px;
   border:1px solid rgba(234,223,205,.62);
-  background:rgba(4,5,5,.62);
+  background:rgba(0,0,0,.62);
   backdrop-filter:blur(3px);
   -webkit-backdrop-filter:blur(3px);
   color:var(--paper);
@@ -137,7 +137,7 @@
 }
 
 .portal-hero .portal-cta-primary{border-color:#d8a34d;color:#e7b866}
-.portal-hero .portal-cta:hover{border-color:var(--paper);color:var(--paper);background:rgba(4,5,5,.82);transform:translateY(-1px)}
+.portal-hero .portal-cta:hover{border-color:var(--paper);color:var(--paper);background:rgba(0,0,0,.82);transform:translateY(-1px)}
 .portal-hero .portal-cta-primary:hover{border-color:var(--amber);background:var(--amber);color:var(--ink)}
 
 @media(max-width:899px){
@@ -192,7 +192,7 @@
     padding:14px 18px;
     font-size:clamp(8px,2.4vw,10px);
     letter-spacing:.16em;
-    background:rgba(4,5,5,.7);
+    background:rgba(0,0,0,.7);
     backdrop-filter:blur(2px);
     -webkit-backdrop-filter:blur(2px);
   }
