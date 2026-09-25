@@ -3,6 +3,7 @@
   height:100vh;
   height:100svh;
   overflow:hidden;
+  background:#000;
 }
 
 .home main{
@@ -15,7 +16,7 @@
   height:112px;
   z-index:20;
   border:0;
-  background:linear-gradient(180deg,rgba(4,5,5,.8) 0%,rgba(4,5,5,.24) 68%,rgba(4,5,5,0) 100%);
+  background:linear-gradient(180deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.24) 68%,rgba(0,0,0,0) 100%);
   pointer-events:none;
 }
 
@@ -45,7 +46,7 @@
   height:100vh;
   height:100svh;
   overflow:hidden;
-  background-color:#040505;
+  background-color:#000;
 }
 
 .portal-hero-art{
@@ -142,7 +143,7 @@
 @media(max-width:899px){
   .home .site-header{
     height:98px;
-    background:linear-gradient(180deg,rgba(4,5,5,.92) 0%,rgba(4,5,5,.36) 72%,rgba(4,5,5,0) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.36) 72%,rgba(0,0,0,0) 100%);
   }
 
   .home .header-row{
