@@ -985,3 +985,128 @@
   .portal-copy{top:44%;left:20px;right:20px;width:auto}
   .portal-hero-title{font-size:clamp(43px,12.6vw,66px)}
 }
+
+
+/* v30 fidelity patch: evidence wall first; portal asset supplies only subject/light/materiality. */
+.portal-scene-art{
+  left:-8%;
+  width:108%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  transform:scale(.78);
+  transform-origin:50% 73%;
+  filter:saturate(.68) contrast(1.08) brightness(.72);
+  opacity:.96;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0 33%,rgba(0,0,0,.12) 36%,#000 41%,#000 52%,rgba(0,0,0,.38) 56%,transparent 61%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0 33%,rgba(0,0,0,.12) 36%,#000 41%,#000 52%,rgba(0,0,0,.38) 56%,transparent 61%,transparent 100%);
+}
+.portal-scene-mask{
+  background:
+    linear-gradient(90deg,rgba(5,6,5,.16) 0 39%,transparent 44% 50%,rgba(9,10,9,.68) 55%,rgba(9,10,9,.97) 61%,#090a09 69% 100%),
+    linear-gradient(180deg,rgba(9,10,9,.38) 0 9%,transparent 18% 74%,rgba(9,10,9,.42) 92% 100%);
+}
+.portal-evidence-field{
+  background:
+    linear-gradient(90deg,rgba(4,5,4,.36),rgba(4,5,4,.08) 72%,rgba(4,5,4,.22)),
+    repeating-linear-gradient(0deg,transparent 0 31px,rgba(232,225,213,.015) 32px),
+    #090a09;
+}
+.evidence-fragment{
+  background:rgba(7,8,7,.44);
+  border-color:rgba(232,225,213,.075);
+  box-shadow:0 15px 36px rgba(0,0,0,.20);
+}
+.evidence-note{
+  background:rgba(224,215,197,.58);
+}
+.evidence-photo{
+  display:block;
+  position:absolute;
+  z-index:1;
+  overflow:hidden;
+  border:1px solid rgba(232,225,213,.08);
+  background-repeat:no-repeat;
+  background-size:cover;
+  filter:grayscale(1) sepia(.14) contrast(1.22) brightness(.46);
+  opacity:.63;
+  mix-blend-mode:screen;
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
+.evidence-photo::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(232,225,213,.05),transparent 18% 72%,rgba(0,0,0,.28)),
+    repeating-linear-gradient(90deg,transparent 0 5px,rgba(232,225,213,.025) 6px,transparent 7px 11px);
+}
+.photo-a{
+  left:16%;top:2%;width:31%;height:24%;
+  background-image:url("assets/hero-chaos-control-v14.webp");
+  background-position:center 34%;
+  transform:rotate(.45deg);
+}
+.photo-b{
+  left:1%;top:31%;width:34%;height:26%;
+  background-image:url("assets/exit-framework-hero-source.jpg");
+  background-position:36% 44%;
+  transform:rotate(-.7deg);
+}
+.photo-c{
+  left:43%;top:8%;width:31%;height:24%;
+  background-image:url("assets/hero-silhouette-locked-v21.webp");
+  background-position:center 32%;
+  transform:rotate(-.45deg);
+}
+.photo-d{
+  left:8%;bottom:9%;width:27%;height:24%;
+  background-image:url("assets/hero-silhouette-desktop-v18.webp");
+  background-position:center 48%;
+  transform:rotate(.5deg);
+}
+.photo-e{
+  left:36%;bottom:4%;width:31%;height:23%;
+  background-image:url("assets/hero-desktop-v8.webp");
+  background-position:64% 53%;
+  transform:rotate(-.35deg);
+}
+.photo-f{
+  left:65%;top:37%;width:25%;height:24%;
+  background-image:url("assets/exit-vortex.webp");
+  background-position:center;
+  transform:rotate(.65deg);
+  opacity:.48;
+}
+.evidence-signal{z-index:4;left:3.5%;top:7%;width:20%}
+.evidence-log{z-index:4;left:5.5%;bottom:22%;width:23%}
+.evidence-checks{z-index:4;left:34%;top:28%;width:24%}
+.evidence-note{z-index:5}
+.evidence-note-a{left:23%;top:19%}
+.evidence-note-b{left:63%;bottom:18%}
+.evidence-system{z-index:5;left:3%;bottom:4%;width:28%}
+.evidence-chart{z-index:4;left:35%;bottom:6%;width:29%}
+.evidence-map{z-index:4;left:62%;top:45%;width:27%}
+.portal-control-axis .axis-core{
+  opacity:.72;
+  box-shadow:0 0 4px rgba(236,186,87,.30);
+}
+.axis-glow{width:34px;opacity:.66}
+.portal-copy{left:56.8%;width:min(39.2%,720px)}
+.portal-hero-title{font-size:clamp(62px,5.55vw,104px)}
+.portal-side-notes{right:2.5%}
+
+@media(max-width:1180px){
+  .portal-scene-art{transform:scale(.82);transform-origin:50% 69%}
+}
+@media(max-width:899px){
+  .portal-scene-art{
+    top:62px;left:-27%;width:154%;height:43%;
+    transform:none;
+    -webkit-mask-image:none;
+    mask-image:none;
+    opacity:1;
+  }
+  .evidence-photo{display:none}
+  .portal-scene-mask{background:linear-gradient(180deg,rgba(9,10,9,.08) 0 30%,rgba(9,10,9,.48) 41%,#090a09 49% 100%)}
+}
