@@ -139,7 +139,7 @@ if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Ex
 
 # Homepage is a deliberate single-screen threshold: hero + exactly two entry paths.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
-for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Framework','portal-hero.css?v=27'):
+for required in ('<section class="portal-hero"','<h1 class="portal-sr-only" id="hero-title">Exit Framework</h1>','Run the Chaos Audit','Explore the Protocol','portal-hero.css?v=27'):
     if required not in text: errors.append(f'Homepage missing {required}')
 for forbidden in ('class="principle-rail"','class="launch-section"','<footer class="site-footer"','aria-label="Primary navigation"'):
     if forbidden in text: errors.append(f'Portal homepage contains below-fold/navigation content: {forbidden}')

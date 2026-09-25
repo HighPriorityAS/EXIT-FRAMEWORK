@@ -21,9 +21,13 @@ Sprint and Control Room remain local-first. The canonical browser key is `exit_c
 
 The browser uses only the Supabase publishable key. Never add secret/service-role credentials to this repository.
 
-## Launch boundary
+## Open-core boundary
 
-Checkout and the Founder collection form are inactive. There are no payment or CRM requests. Launch updates link explicitly to the established Substack list. No reservation, payment or research participation is implied. `launch-config.js` remains an inert record of the previous integration configuration and is not loaded.
+EXIT Core is public: the method, 30-Day Control Sprint and Control Room do not require payment. EXIT Language v1.0 is versioned in `EXIT-LANGUAGE-v1.0.md` and exposed through `lexicon.html`.
+
+Founder 100 remains a limited premium founding layer around the open protocol. Its scarcity must come from provenance, participation and tangible founder value, not access to the core method.
+
+Human Autonomy Study remains structurally separate. Research participation is not sold.
 
 ## Release
 
