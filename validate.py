@@ -152,11 +152,14 @@ for required in (
     'CONVICTION',
     'CONTROL',
     'portal-hero.css?v=28',
+    '<img class="portal-scene-art"',
+    'assets/exit-portal-clean-v26.webp',
     'aria-label="Primary navigation"',
 ):
     if required not in text: errors.append(f'Homepage missing {required}')
 for forbidden in (
     '<img class="portal-hero-art"',
+    'class="portal-subject"',
     'class="launch-section"',
     '<footer class="site-footer"',
 ):
