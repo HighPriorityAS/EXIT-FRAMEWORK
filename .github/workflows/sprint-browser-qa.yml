@@ -5,6 +5,10 @@ on:
     branches: ["main"]
     paths:
       - "30-day-control-sprint.html"
+      - "framework.html"
+      - "lexicon.html"
+      - "founders.html"
+      - "faq.html"
       - "30-day-control-sprint.js"
       - "control-room.html"
       - "control-room.js"
