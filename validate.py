@@ -151,7 +151,7 @@ for required in (
     'CHAOS',
     'CONVICTION',
     'CONTROL',
-    'portal-hero.css?v=31',
+    'portal-hero.css?v=33',
     '<img class="portal-scene-art"',
     'assets/exit-portal-clean-v26.webp',
     'aria-label="Primary navigation"',
