@@ -5,7 +5,7 @@ async function clear(page){await page.goto('/app/');await page.evaluate(()=>loca
 async function noOverflow(page){expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(1)}
 async function setControlPoint(page,{state='loaded',action='Close one bounded task',control='5',protect='none',friction='' }={}){
   await page.getByRole('button',{name:new RegExp(state,'i')}).click();
-  if(protect!=='none')await page.locator(`input[name="protect"][value="${protect}"]`).check();
+  if(protect!=='none')await page.locator(`input[name="protect"][value="${protect}"] + span`).click();
   await page.locator('#next-action').fill(action);
   await page.locator('#control-rating').fill(control);
   if(friction)await page.locator('#active-friction').fill(friction);
