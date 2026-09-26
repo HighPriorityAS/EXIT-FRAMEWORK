@@ -1,0 +1,25 @@
+name: EXIT Mobile App browser QA
+on:
+  pull_request:
+    paths: ['app/**','exit-state.js','tests/mobile-app-qa.spec.js','.github/workflows/mobile-app-browser-qa.yml']
+  push:
+    branches: [main]
+    paths: ['app/**','exit-state.js','tests/mobile-app-qa.spec.js','.github/workflows/mobile-app-browser-qa.yml']
+jobs:
+  mobile-app-browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install --no-save @playwright/test@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Serve site
+        run: python -m http.server 4173 > /tmp/exit-http.log 2>&1 &
+      - name: Run app QA
+        run: npx playwright test tests/mobile-app-qa.spec.js

@@ -1,0 +1,1 @@
+{"id":"/app/","name":"EXIT — Control Surface","short_name":"EXIT","description":"State before story. One control point at a time.","start_url":"/app/","scope":"/app/","display":"standalone","orientation":"portrait-primary","background_color":"#070807","theme_color":"#070807","icons":[{"src":"../assets/exit-mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
