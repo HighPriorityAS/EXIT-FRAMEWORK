@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070807">
+  <meta name="description" content="EXIT App v0 — a low-capacity control surface for state, one control point and re-entry.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="EXIT">
+  <link rel="canonical" href="https://chaosexit.com/app/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="../assets/exit-mark.svg">
+  <title>EXIT — Control Surface</title>
+  <link rel="stylesheet" href="app.css?v=20260926-v0">
+</head>
+<body data-state="unset">
+<a class="skip-link" href="#main">Skip to control surface</a>
+<div class="app-shell">
+  <header class="app-header">
+    <a class="app-brand" href="../index.html" aria-label="Exit Framework home">
+      <img src="../assets/exit-mark.svg" alt="" width="38" height="38">
+      <span><strong>EXIT</strong><small>CONTROL SURFACE / V0</small></span>
+    </a>
+    <div class="app-header-actions">
+      <button class="install-button" type="button" data-install hidden>INSTALL</button>
+      <a class="sync-link" href="../account.html?from=app" data-sync-status>Local first</a>
+    </div>
+  </header>
+
+  <main id="main" class="app-main">
+    <section class="reentry-banner" data-reentry hidden>
+      <span>RE-ENTRY</span>
+      <p data-reentry-copy>Nothing to repay. Start from what is true now.</p>
+    </section>
+
+    <section class="current-panel" data-current hidden aria-live="polite">
+      <div class="panel-index"><span>CURRENT CONTROL POINT</span><span data-current-date></span></div>
+      <div class="current-state-line">
+        <span class="state-dot" aria-hidden="true"></span>
+        <strong data-current-state></strong>
+        <span data-current-status></span>
+      </div>
+      <h1 data-current-action></h1>
+      <div class="status-actions" aria-label="Update action status">
+        <button type="button" data-status="completed">DONE</button>
+        <button type="button" data-status="changed">CHANGED</button>
+        <button type="button" data-status="not_completed">NOT DONE</button>
+      </div>
+      <button class="text-button" type="button" data-adjust>Adjust state or action</button>
+    </section>
+
+    <section class="state-panel" data-capture aria-labelledby="state-title">
+      <p class="eyebrow">STATE BEFORE STORY</p>
+      <h1 id="state-title">What state are you in?</h1>
+      <p class="state-intro">Choose the operating condition. EXIT will reduce the control surface with you.</p>
+
+      <div class="state-grid" role="group" aria-label="Operating state">
+        <button type="button" data-state-choice="stable">
+          <span>01</span><strong>STABLE</strong><small>Usable capacity</small>
+        </button>
+        <button type="button" data-state-choice="loaded">
+          <span>02</span><strong>LOADED</strong><small>Reduce the surface</small>
+        </button>
+        <button type="button" data-state-choice="chaos">
+          <span>03</span><strong>CHAOS</strong><small>Stabilize first</small>
+        </button>
+      </div>
+
+      <form class="action-form" data-action-form hidden>
+        <div class="mode-copy">
+          <p data-mode-kicker>CONTROL POINT</p>
+          <h2 data-mode-title>Choose one move.</h2>
+          <p data-mode-detail></p>
+        </div>
+        <label for="next-action">
+          <span data-action-label>One next action</span>
+          <textarea id="next-action" name="action" rows="3" maxlength="180" required autocomplete="off" placeholder="Make it smaller until it is realistic."></textarea>
+        </label>
+        <button class="primary-action" type="submit" data-save-action>SET CONTROL POINT →</button>
+        <p class="form-status" data-form-status aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="secondary-panel" data-secondary>
+      <div class="panel-index"><span>RECENT EVIDENCE</span><span>MAX 5</span></div>
+      <div class="history-list" data-history>
+        <p class="empty-history" data-history-empty>No evidence yet. One honest control point is enough to start.</p>
+      </div>
+    </section>
+
+    <section class="app-rule" data-rule>
+      <span>RUNTIME RULE</span>
+      <p data-rule-copy>Control is the ability to choose the next useful action, not the ability to force a perfect day.</p>
+    </section>
+  </main>
+
+  <nav class="app-nav" aria-label="EXIT app navigation">
+    <a href="../control-room.html"><span>CONTROL ROOM</span><small>Full operating picture</small></a>
+    <a href="../framework.html"><span>PROTOCOL</span><small>EXIT Core</small></a>
+    <a href="../account.html?from=app"><span>ACCOUNT</span><small>Optional sync</small></a>
+  </nav>
+</div>
+
+<script src="../exit-state.js" defer></script>
+<script src="app.js?v=20260926-v0" defer></script>
+</body>
+</html>
