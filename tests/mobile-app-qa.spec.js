@@ -32,7 +32,7 @@ for(const width of [390,430,768]) test('v1 core flow '+width,async({page})=>{
 test('quick capture and history summary',async({page})=>{
   await clear(page);await setControlPoint(page,{state:'stable',action:'Finish one review',control:'7',protect:'rest'});
   await page.getByRole('button',{name:/Capture/i}).click();
-  await page.locator('input[name="type"][value="decision"]').check();
+  await page.locator('input[name="type"][value="decision"] + span').click();
   await page.locator('#capture-text').fill('Remove notifications until the review is done');
   await page.getByRole('button',{name:/CAPTURE →/i}).click();
   await page.getByRole('button',{name:/HISTORY/i}).click();
