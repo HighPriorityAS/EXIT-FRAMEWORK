@@ -172,7 +172,7 @@ for required in (
     'height:100svh',
     '.portal-principles',
 ):
-    if required not in portal_css: errors.append(f'Portal v28 contract missing: {required}')
+    if required not in portal_css: errors.append(f'Portal image contract missing: {required}')
 
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
