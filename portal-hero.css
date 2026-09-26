@@ -1282,3 +1282,166 @@
     gap:10%;
   }
 }
+
+
+/* v33 — keep the proven live overlay fixed; align only the approved scene underneath. */
+.portal-hero{
+  position:relative;
+  height:100svh;
+  min-height:100svh;
+  overflow:hidden;
+  background:#050606;
+}
+.portal-scene-art{
+  position:absolute;
+  z-index:0;
+  top:0;
+  bottom:0;
+  left:0;
+  width:108%;
+  height:100%;
+  max-width:none;
+  object-fit:cover;
+  object-position:center center;
+  transform:none;
+  filter:none;
+  opacity:1;
+  -webkit-mask-image:none;
+  mask-image:none;
+  pointer-events:none;
+  user-select:none;
+}
+.portal-scene-mask{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,#050606 0 7.6%,rgba(5,6,6,.96) 8.4%,transparent 12% 78%,rgba(5,6,6,.82) 85%,#050606 91% 100%),
+    linear-gradient(90deg,transparent 0 51.5%,rgba(5,6,6,.42) 54%,rgba(5,6,6,.93) 58%,#050606 62% 100%);
+}
+.portal-grid{z-index:2;opacity:.08}
+.portal-vignette{z-index:2}
+.portal-header{
+  z-index:10;
+  background:#050606!important;
+  border:0!important;
+}
+.portal-header::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  transform:translateX(-.5px);
+  background:linear-gradient(180deg,rgba(201,145,46,.18),rgba(232,186,87,.68),rgba(201,145,46,.22));
+  box-shadow:0 0 10px rgba(201,145,46,.20);
+  pointer-events:none;
+}
+.portal-copy{
+  z-index:5;
+  left:57.2%;
+  top:49.5%;
+  width:min(40.5%,740px);
+  transform:translateY(-50%);
+}
+.portal-copy>.portal-eyebrow,
+.portal-copy>.portal-hero-title,
+.portal-copy>.portal-hero-lead{
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  padding:0!important;
+  margin-left:0!important;
+  overflow:visible!important;
+  clip:auto!important;
+  white-space:normal!important;
+}
+.portal-eyebrow{margin-bottom:22px!important}
+.portal-hero-title{font-size:clamp(64px,5.8vw,108px)!important;line-height:.92}
+.portal-hero-title em{color:#d7a13b}
+.portal-hero-lead{margin-top:24px!important;max-width:620px}
+.portal-hero-actions{
+  position:static;
+  width:auto;
+  height:auto;
+  margin-top:32px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  pointer-events:auto;
+}
+.portal-cta,
+.portal-cta-primary,
+.portal-cta-secondary{
+  width:auto;
+  height:auto;
+  min-height:58px;
+  padding:0 28px;
+  margin:0;
+  border:1px solid rgba(232,225,213,.24)!important;
+  color:var(--portal-paper)!important;
+  box-shadow:none!important;
+}
+.portal-cta-primary{
+  background:#e5ddcf!important;
+  color:#10110f!important;
+}
+.portal-cta-secondary{
+  background:rgba(8,9,8,.38)!important;
+}
+.portal-wordmark,
+.portal-nav a,
+.portal-header-meta>span,
+.portal-menu-toggle>span{
+  color:inherit!important;
+  text-shadow:none!important;
+  font-size:inherit!important;
+  line-height:inherit!important;
+}
+.portal-wordmark::before,.portal-wordmark::after,
+.portal-nav a::before,.portal-nav a::after,
+.portal-menu-toggle::before,.portal-menu-toggle::after{content:none!important}
+.portal-side-notes,.portal-stage-rail,.portal-principles{display:flex!important}
+.portal-stage-rail{display:block!important;z-index:6}
+.portal-principles{display:grid!important;z-index:6}
+
+@media(max-width:1180px){
+  .portal-scene-art{width:108%}
+  .portal-copy{left:55%;width:42%}
+}
+@media(max-width:899px){
+  .portal-header{background:#050606!important}
+  .portal-header::after{display:none}
+  .portal-scene-art{
+    top:74px;
+    left:-8%;
+    width:116%;
+    height:38%;
+    object-fit:cover;
+    object-position:43% 52%;
+  }
+  .portal-scene-mask{
+    background:linear-gradient(180deg,rgba(5,6,6,.12) 0 29%,rgba(5,6,6,.60) 39%,#050606 49% 100%);
+  }
+  .portal-grid,.portal-vignette{opacity:.05}
+  .portal-copy{
+    left:22px;
+    right:22px;
+    top:43%;
+    width:auto;
+    transform:none;
+  }
+  .portal-hero-title{font-size:clamp(38px,12vw,54px)!important}
+  .portal-hero-lead{font-size:15px;line-height:1.36}
+  .portal-hero-lead br{display:none}
+  .portal-hero-actions{
+    margin-top:20px;
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .portal-cta{width:100%;min-height:49px}
+  .portal-side-notes,.portal-principles{display:none!important}
+  .portal-stage-rail{left:22px;right:22px;bottom:16px}
+}
