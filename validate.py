@@ -34,7 +34,7 @@ CORE_MANIFEST_FILES = (
     'assets/exit-portal-mobile-clean-v23.svg',
     'assets/exit-portal-approved-desktop-v24.webp',
     'assets/exit-portal-approved-mobile-v24.webp',
-    'assets/exit-portal-clean-v26.webp',
+    'assets/exit-hero-approved-v31.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -151,7 +151,7 @@ for required in (
     'CHAOS',
     'CONVICTION',
     'CONTROL',
-    'portal-hero.css?v=29',
+    'portal-hero.css?v=31',
     '<img class="portal-scene-art"',
     'assets/exit-portal-clean-v26.webp',
     'aria-label="Primary navigation"',
@@ -170,12 +170,9 @@ for required in (
     '.home{',
     'overflow:hidden',
     'height:100svh',
-    '--seam-x:',
-    '.portal-control-axis',
-    '.portal-evidence-field',
     '.portal-principles',
 ):
-    if required not in portal_css: errors.append(f'Portal v28 contract missing: {required}')
+    if required not in portal_css: errors.append(f'Portal image contract missing: {required}')
 
 css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
