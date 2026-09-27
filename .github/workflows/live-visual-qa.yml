@@ -1,0 +1,98 @@
+name: Live visual QA
+
+on:
+  workflow_run:
+    workflows: ["Deploy Exit Framework to GitHub Pages"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Wait for production and capture visual QA
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent "https://chaosexit.com/?visual-qa=${GITHUB_RUN_ID}" | grep -q 'portal-hero.css?v=35'; then
+              break
+            fi
+            if [ "$i" = "30" ]; then
+              echo "Production did not expose expected hero version in time."
+              exit 1
+            fi
+            sleep 5
+          done
+
+          mkdir -p qa-live
+          node <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const base = 'https://chaosexit.com/?visual-qa=' + Date.now();
+
+            const desktop = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+            await desktop.goto(base, { waitUntil: 'networkidle' });
+            await desktop.screenshot({ path: 'qa-live/desktop-1440x900.png', fullPage: false });
+
+            const primary = desktop.locator('.portal-cta-primary');
+            await primary.hover();
+            await desktop.screenshot({ path: 'qa-live/desktop-hover-1440x900.png', fullPage: false });
+
+            const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+            await mobile.goto(base, { waitUntil: 'networkidle' });
+            await mobile.screenshot({ path: 'qa-live/mobile-390x844.png', fullPage: false });
+
+            const metrics = {
+              capturedAt: new Date().toISOString(),
+              url: await desktop.url(),
+              title: await desktop.title(),
+              desktop: {
+                viewport: await desktop.evaluate(() => ({ width: innerWidth, height: innerHeight })),
+                hero: await desktop.locator('.portal-hero').boundingBox(),
+                primaryCTA: await primary.boundingBox(),
+                secondaryCTA: await desktop.locator('.portal-cta-secondary').boundingBox(),
+                wordmark: await desktop.locator('.portal-wordmark').boundingBox()
+              },
+              mobile: {
+                viewport: await mobile.evaluate(() => ({ width: innerWidth, height: innerHeight })),
+                hero: await mobile.locator('.portal-hero').boundingBox(),
+                primaryCTA: await mobile.locator('.portal-cta-primary').boundingBox(),
+                secondaryCTA: await mobile.locator('.portal-cta-secondary').boundingBox(),
+                wordmark: await mobile.locator('.portal-wordmark').boundingBox()
+              }
+            };
+            require('fs').writeFileSync('qa-live/metrics.json', JSON.stringify(metrics, null, 2));
+            await browser.close();
+          })().catch(err => { console.error(err); process.exit(1); });
+          JS
+
+      - name: Publish screenshots to qa/live branch
+        run: |
+          git config user.name "exit-visual-qa"
+          git config user.email "actions@users.noreply.github.com"
+          cp -R qa-live /tmp/qa-live
+          git switch --orphan qa-live-output
+          git rm -rf . >/dev/null 2>&1 || true
+          cp -R /tmp/qa-live/* .
+          git add desktop-1440x900.png desktop-hover-1440x900.png mobile-390x844.png metrics.json
+          git commit -m "Live visual QA for ${{ github.event.workflow_run.head_sha }}"
+          git push origin HEAD:qa/live --force
