@@ -138,7 +138,7 @@ pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adj
 if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
-# Homepage v34 is a deliberate single-screen operating field:
+# Homepage v35 preserves the approved v31 single-screen mockup with live interaction overlays:
 # live navigation + evidence field + continuous control axis + two entry paths.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
 for required in (
@@ -151,7 +151,7 @@ for required in (
     'CHAOS',
     'CONVICTION',
     'CONTROL',
-    'portal-hero.css?v=34',
+    'portal-hero.css?v=35',
     '<img class="portal-scene-art"',
     'assets/exit-hero-approved-v31.webp',
     'aria-label="Primary navigation"',
