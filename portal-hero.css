@@ -1284,259 +1284,110 @@
 }
 
 
-/* v33 — keep the proven live overlay fixed; align only the approved scene underneath. */
-.portal-hero{
-  position:relative;
-  height:100svh;
-  min-height:100svh;
-  overflow:hidden;
-  background:#050606;
-}
-.portal-scene-art{
-  position:absolute;
-  z-index:0;
-  top:0;
-  bottom:0;
-  left:0;
-  width:108%;
-  height:100%;
-  max-width:none;
-  object-fit:cover;
-  object-position:center center;
-  transform:none;
-  filter:none;
-  opacity:1;
-  -webkit-mask-image:none;
-  mask-image:none;
-  pointer-events:none;
-  user-select:none;
-}
-.portal-scene-mask{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:
-    linear-gradient(180deg,#050606 0 7.6%,rgba(5,6,6,.96) 8.4%,transparent 12% 78%,rgba(5,6,6,.82) 85%,#050606 91% 100%),
-    linear-gradient(90deg,transparent 0 51.5%,rgba(5,6,6,.42) 54%,rgba(5,6,6,.93) 58%,#050606 62% 100%);
-}
-.portal-grid{z-index:2;opacity:.08}
-.portal-vignette{z-index:2}
-.portal-header{
-  z-index:10;
-  background:#050606!important;
-  border:0!important;
-}
-.portal-header::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  bottom:0;
-  width:1px;
-  transform:translateX(-.5px);
-  background:linear-gradient(180deg,rgba(201,145,46,.18),rgba(232,186,87,.68),rgba(201,145,46,.22));
-  box-shadow:0 0 10px rgba(201,145,46,.20);
-  pointer-events:none;
-}
-.portal-copy{
-  z-index:5;
-  left:57.2%;
-  top:49.5%;
-  width:min(40.5%,740px);
-  transform:translateY(-50%);
-}
-.portal-copy>.portal-eyebrow,
-.portal-copy>.portal-hero-title,
-.portal-copy>.portal-hero-lead{
-  position:static!important;
-  width:auto!important;
-  height:auto!important;
-  padding:0!important;
-  margin-left:0!important;
-  overflow:visible!important;
-  clip:auto!important;
-  white-space:normal!important;
-}
-.portal-eyebrow{margin-bottom:22px!important}
-.portal-hero-title{font-size:clamp(64px,5.8vw,108px)!important;line-height:.92}
-.portal-hero-title em{color:#d7a13b}
-.portal-hero-lead{margin-top:24px!important;max-width:620px}
-.portal-hero-actions{
-  position:static;
-  width:auto;
-  height:auto;
-  margin-top:32px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-  pointer-events:auto;
-}
-.portal-cta,
-.portal-cta-primary,
-.portal-cta-secondary{
-  width:auto;
-  height:auto;
-  min-height:58px;
-  padding:0 28px;
-  margin:0;
-  border:1px solid rgba(232,225,213,.24)!important;
-  color:var(--portal-paper)!important;
-  box-shadow:none!important;
-}
-.portal-cta-primary{
-  background:#e5ddcf!important;
-  color:#10110f!important;
-}
-.portal-cta-secondary{
-  background:rgba(8,9,8,.38)!important;
-}
-.portal-wordmark,
-.portal-nav a,
-.portal-header-meta>span,
-.portal-menu-toggle>span{
-  color:inherit!important;
-  text-shadow:none!important;
-  font-size:inherit!important;
-  line-height:inherit!important;
-}
-.portal-wordmark::before,.portal-wordmark::after,
-.portal-nav a::before,.portal-nav a::after,
-.portal-menu-toggle::before,.portal-menu-toggle::after{content:none!important}
-.portal-side-notes,.portal-stage-rail,.portal-principles{display:flex!important}
-.portal-stage-rail{display:block!important;z-index:6}
-.portal-principles{display:grid!important;z-index:6}
-
-@media(max-width:1180px){
-  .portal-scene-art{width:108%}
-  .portal-copy{left:55%;width:42%}
-}
-@media(max-width:899px){
-  .portal-header{background:#050606!important}
-  .portal-header::after{display:none}
-  .portal-scene-art{
-    top:74px;
-    left:-8%;
-    width:116%;
-    height:38%;
-    object-fit:cover;
-    object-position:43% 52%;
-  }
-  .portal-scene-mask{
-    background:linear-gradient(180deg,rgba(5,6,6,.12) 0 29%,rgba(5,6,6,.60) 39%,#050606 49% 100%);
-  }
-  .portal-grid,.portal-vignette{opacity:.05}
+/* v35 — preserve the approved v31 mockup exactly; improve interaction only. */
+@media(min-width:900px){
+  /* Use the same cover-sized coordinate plane for the scene and CTA hitboxes.
+     This makes the clickable area track the baked buttons at any desktop aspect ratio. */
+  .portal-scene-art,
   .portal-copy{
-    left:22px;
-    right:22px;
-    top:43%;
-    width:auto;
-    transform:none;
+    inset:auto;
+    left:50%;
+    top:50%;
+    width:max(100vw,calc(100svh * 1.7761989343));
+    height:max(100svh,calc(100vw / 1.7761989343));
+    transform:translate(-50%,-50%);
   }
-  .portal-hero-title{font-size:clamp(38px,12vw,54px)!important}
-  .portal-hero-lead{font-size:15px;line-height:1.36}
-  .portal-hero-lead br{display:none}
+  .portal-scene-art{
+    object-fit:fill;
+    object-position:center;
+  }
   .portal-hero-actions{
-    margin-top:20px;
-    grid-template-columns:1fr;
-    gap:9px;
+    left:57.7%;
+    top:58.44%;
+    width:32.2%;
+    height:6.05%;
+    grid-template-columns:1fr 1fr;
+    gap:3.4%;
   }
-  .portal-cta{width:100%;min-height:49px}
-  .portal-side-notes,.portal-principles{display:none!important}
-  .portal-stage-rail{left:22px;right:22px;bottom:16px}
 }
 
-
-/* v34 — premium interaction + canonical wordmark polish. */
-.portal-wordmark{
-  gap:15px;
-  align-items:center;
-}
-.portal-wordmark-exit-logo{
-  display:block;
-  width:82px;
-  height:auto;
-  flex:0 0 auto;
-  color:var(--portal-amber);
-  overflow:visible;
-}
-.portal-wordmark-framework{
-  color:var(--portal-paper)!important;
-  font-size:17px!important;
-  line-height:1!important;
-  letter-spacing:.18em;
-}
-
-/* The live CTA box is the hit target. Hide the baked mockup CTA beneath it more decisively. */
-.portal-scene-mask{
-  background:
-    linear-gradient(180deg,#050606 0 7.6%,rgba(5,6,6,.96) 8.4%,transparent 12% 78%,rgba(5,6,6,.82) 85%,#050606 91% 100%),
-    linear-gradient(90deg,transparent 0 49.2%,rgba(5,6,6,.34) 51.5%,rgba(5,6,6,.88) 54.5%,#050606 58% 100%);
-}
-
-.portal-hero-actions{
-  align-items:stretch;
-}
+/* Exact invisible links over the baked CTA boxes; amber feedback is drawn on top. */
 .portal-cta,
 .portal-cta-primary,
 .portal-cta-secondary{
   box-sizing:border-box;
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
   cursor:pointer;
-  transition:
-    transform .18s ease,
-    border-color .18s ease,
-    background-color .18s ease,
-    color .18s ease,
-    box-shadow .18s ease!important;
+  transition:box-shadow .16s ease,background-color .16s ease,transform .16s ease!important;
 }
 .portal-cta:hover,
 .portal-cta:focus-visible{
-  transform:translateY(-1px)!important;
-  border-color:var(--portal-amber)!important;
+  transform:none!important;
+  background:rgba(201,145,46,.035)!important;
   box-shadow:
-    0 0 0 1px rgba(201,145,46,.50),
-    0 0 22px rgba(201,145,46,.13)!important;
+    inset 0 0 0 2px rgba(218,166,67,.96),
+    0 0 18px rgba(201,145,46,.20)!important;
   outline:none;
 }
-.portal-cta-primary:hover,
-.portal-cta-primary:focus-visible{
-  background:#d9b466!important;
-  color:#10110f!important;
+
+/* Replace only the baked top-left wordmark; keep the rest of the approved header artwork untouched. */
+.portal-wordmark{
+  left:2.25%;
+  top:0;
+  width:auto;
+  min-width:305px;
+  height:72px;
+  padding:0 22px 0 0;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:var(--portal-amber)!important;
+  isolation:isolate;
+  overflow:visible;
 }
-.portal-cta-secondary:hover,
-.portal-cta-secondary:focus-visible{
-  background:rgba(201,145,46,.075)!important;
-  color:var(--portal-paper)!important;
+.portal-wordmark::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-42px;
+  right:-22px;
+  top:0;
+  bottom:0;
+  background:linear-gradient(90deg,#050606 0 88%,rgba(5,6,6,.96) 94%,transparent 100%);
+  pointer-events:none;
 }
-.portal-cta span{
-  transition:transform .18s ease,color .18s ease;
+.portal-wordmark-exit-logo{
+  display:block;
+  width:108px;
+  height:auto;
+  flex:0 0 auto;
+  color:#d39a2d;
 }
-.portal-cta:hover span,
-.portal-cta:focus-visible span{
-  transform:translateX(3px);
-  color:var(--portal-amber);
+.portal-wordmark-framework{
+  display:block;
+  color:#eadfcd!important;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:15px!important;
+  font-weight:400;
+  line-height:1!important;
+  letter-spacing:.22em;
+  white-space:nowrap;
 }
 
-/* Remove unnecessary 8% desktop overscale. This cannot create missing source detail,
-   but it reduces interpolation/compression softness until a higher-resolution scene is available. */
-@media(min-width:900px){
-  .portal-scene-art{
-    width:100%;
-    image-rendering:auto;
-  }
+/* All other live header text remains invisible; the approved mockup supplies it visually. */
+.portal-nav a,
+.portal-header-meta>span,
+.portal-menu-toggle>span{
+  color:transparent!important;
+  text-shadow:none!important;
 }
 
 @media(max-width:899px){
   .portal-wordmark{
+    left:3%;
+    min-width:218px;
+    height:64px;
     gap:9px;
   }
-  .portal-wordmark-exit-logo{
-    width:61px;
-  }
-  .portal-wordmark-framework{
-    font-size:12px!important;
-  }
+  .portal-wordmark-exit-logo{width:78px}
+  .portal-wordmark-framework{font-size:11px!important;letter-spacing:.17em}
 }
