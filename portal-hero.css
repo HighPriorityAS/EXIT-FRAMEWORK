@@ -1445,3 +1445,98 @@
   .portal-side-notes,.portal-principles{display:none!important}
   .portal-stage-rail{left:22px;right:22px;bottom:16px}
 }
+
+
+/* v34 — premium interaction + canonical wordmark polish. */
+.portal-wordmark{
+  gap:15px;
+  align-items:center;
+}
+.portal-wordmark-exit-logo{
+  display:block;
+  width:82px;
+  height:auto;
+  flex:0 0 auto;
+  color:var(--portal-amber);
+  overflow:visible;
+}
+.portal-wordmark-framework{
+  color:var(--portal-paper)!important;
+  font-size:17px!important;
+  line-height:1!important;
+  letter-spacing:.18em;
+}
+
+/* The live CTA box is the hit target. Hide the baked mockup CTA beneath it more decisively. */
+.portal-scene-mask{
+  background:
+    linear-gradient(180deg,#050606 0 7.6%,rgba(5,6,6,.96) 8.4%,transparent 12% 78%,rgba(5,6,6,.82) 85%,#050606 91% 100%),
+    linear-gradient(90deg,transparent 0 49.2%,rgba(5,6,6,.34) 51.5%,rgba(5,6,6,.88) 54.5%,#050606 58% 100%);
+}
+
+.portal-hero-actions{
+  align-items:stretch;
+}
+.portal-cta,
+.portal-cta-primary,
+.portal-cta-secondary{
+  box-sizing:border-box;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  cursor:pointer;
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease!important;
+}
+.portal-cta:hover,
+.portal-cta:focus-visible{
+  transform:translateY(-1px)!important;
+  border-color:var(--portal-amber)!important;
+  box-shadow:
+    0 0 0 1px rgba(201,145,46,.50),
+    0 0 22px rgba(201,145,46,.13)!important;
+  outline:none;
+}
+.portal-cta-primary:hover,
+.portal-cta-primary:focus-visible{
+  background:#d9b466!important;
+  color:#10110f!important;
+}
+.portal-cta-secondary:hover,
+.portal-cta-secondary:focus-visible{
+  background:rgba(201,145,46,.075)!important;
+  color:var(--portal-paper)!important;
+}
+.portal-cta span{
+  transition:transform .18s ease,color .18s ease;
+}
+.portal-cta:hover span,
+.portal-cta:focus-visible span{
+  transform:translateX(3px);
+  color:var(--portal-amber);
+}
+
+/* Remove unnecessary 8% desktop overscale. This cannot create missing source detail,
+   but it reduces interpolation/compression softness until a higher-resolution scene is available. */
+@media(min-width:900px){
+  .portal-scene-art{
+    width:100%;
+    image-rendering:auto;
+  }
+}
+
+@media(max-width:899px){
+  .portal-wordmark{
+    gap:9px;
+  }
+  .portal-wordmark-exit-logo{
+    width:61px;
+  }
+  .portal-wordmark-framework{
+    font-size:12px!important;
+  }
+}
