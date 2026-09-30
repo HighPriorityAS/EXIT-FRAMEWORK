@@ -35,7 +35,6 @@ CORE_MANIFEST_FILES = (
     'assets/exit-portal-approved-desktop-v24.webp',
     'assets/exit-portal-approved-mobile-v24.webp',
     'assets/exit-hero-approved-v36.webp',
-    'assets/exit-hero-approved-v36.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -151,7 +150,7 @@ for required in (
     'Explore the Framework',
     'portal-hero.css?v=36',
     '<img class="portal-scene-art"',
-    'assets/exit-hero-approved-v31.webp',
+    'assets/exit-hero-approved-v36.webp',
     'aria-label="Primary navigation"',
 ):
     if required not in text: errors.append(f'Homepage missing {required}')
