@@ -34,7 +34,8 @@ CORE_MANIFEST_FILES = (
     'assets/exit-portal-mobile-clean-v23.svg',
     'assets/exit-portal-approved-desktop-v24.webp',
     'assets/exit-portal-approved-mobile-v24.webp',
-    'assets/exit-hero-approved-v31.webp',
+    'assets/exit-hero-approved-v36.webp',
+    'assets/exit-hero-approved-v36.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -138,7 +139,7 @@ pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adj
 if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
-# Homepage v35 preserves the approved v31 single-screen mockup with live interaction overlays:
+# Homepage v36 preserves the approved train-station single-screen mockup with live interaction overlays:
 # live navigation + evidence field + continuous control axis + two entry paths.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
 for required in (
@@ -148,7 +149,7 @@ for required in (
     'human freedom.',
     'Run the Chaos Audit',
     'Explore the Framework',
-    'portal-hero.css?v=35',
+    'portal-hero.css?v=36',
     '<img class="portal-scene-art"',
     'assets/exit-hero-approved-v31.webp',
     'aria-label="Primary navigation"',
