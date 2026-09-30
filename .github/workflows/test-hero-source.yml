@@ -1,0 +1,24 @@
+name: Test hero source
+on:
+  push:
+    branches: ["feat/hero-v37-hires"]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Canva source
+        run: |
+          set -euxo pipefail
+          THUMB='https://media.canva.com/v2/image-resize/format:JPG/height:92/quality:75/uri:ifs%3A%2F%2FM%2Fad5109a9-dfe8-4632-981a-9df80c3ee83c/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAAFueCXiDQCZu6__Rxq17kf4IaTEcTb5k0B1b04hg07NJ&exp=1790813256&osig=AAAAAAAAAAAAAAAAAAAAABM1wMrM9YYoxmobozGWoDk7iNDMPatuKuU7FYHAnapa&signer=media-rpc&x-canva-quality=thumbnail'
+          HIRES='https://media.canva.com/v2/image-resize/format:WEBP/height:855/quality:95/uri:ifs%3A%2F%2FM%2Fad5109a9-dfe8-4632-981a-9df80c3ee83c/watermark:F/width:1840?csig=AAAAAAAAAAAAAAAAAAAAAFueCXiDQCZu6__Rxq17kf4IaTEcTb5k0B1b04hg07NJ&exp=1790813256&osig=AAAAAAAAAAAAAAAAAAAAABM1wMrM9YYoxmobozGWoDk7iNDMPatuKuU7FYHAnapa&signer=media-rpc'
+          curl -fL "$THUMB" -o thumb.jpg
+          file thumb.jpg
+          curl -fL "$HIRES" -o hires.webp
+          file hires.webp
+          python - <<'PY'
+          from PIL import Image
+          for p in ('thumb.jpg','hires.webp'):
+              im=Image.open(p); print(p, im.size, im.format)
+          PY
