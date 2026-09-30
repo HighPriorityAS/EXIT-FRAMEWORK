@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   build:
-    if: ${{ hashFiles('.hero-v37/part-08') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test -f .hero-v37/part-08
           cat .hero-v37/part-* > /tmp/hero.b64
           test "$(wc -c < /tmp/hero.b64)" -eq 168808
           base64 -d /tmp/hero.b64 > assets/exit-hero-approved-v37.webp
