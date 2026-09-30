@@ -148,7 +148,7 @@ for required in (
     'human freedom.',
     'Run the Chaos Audit',
     'Explore the Framework',
-    'portal-hero.css?v=36',
+    'portal-hero.css?v=37',
     '<img class="portal-scene-art"',
     'assets/exit-hero-approved-v37.webp',
     'aria-label="Primary navigation"',

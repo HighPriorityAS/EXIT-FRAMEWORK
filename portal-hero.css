@@ -1393,7 +1393,7 @@
 }
 
 
-/* v36 — train-station portal approved 2026-09-30 */
+/* v37 — full 1840×855 station frame; preserve full composition without center crop. */
 .site-header.portal-header{
   display:none!important;
 }
@@ -1401,8 +1401,8 @@
 @media(min-width:900px){
   .portal-scene-art,
   .portal-copy{
-    width:max(100vw,calc(100svh * 1.7777777778));
-    height:max(100svh,calc(100vw / 1.7777777778));
+    width:max(100vw,calc(100svh * 2.1520467836));
+    height:max(100svh,calc(100vw / 2.1520467836));
   }
 
   .portal-hero-actions{
