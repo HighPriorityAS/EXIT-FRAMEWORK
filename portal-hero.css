@@ -1391,3 +1391,25 @@
   .portal-wordmark-exit-logo{width:78px}
   .portal-wordmark-framework{font-size:11px!important;letter-spacing:.17em}
 }
+
+
+/* v36 — train-station portal approved 2026-09-30 */
+.site-header.portal-header{
+  display:none!important;
+}
+
+@media(min-width:900px){
+  .portal-scene-art,
+  .portal-copy{
+    width:max(100vw,calc(100svh * 1.7777777778));
+    height:max(100svh,calc(100vw / 1.7777777778));
+  }
+
+  .portal-hero-actions{
+    left:58.45%;
+    top:57.45%;
+    width:31.9%;
+    height:5.9%;
+    gap:2.8%;
+  }
+}
