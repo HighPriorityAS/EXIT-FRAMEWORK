@@ -29,7 +29,7 @@
     "lexicon.html": "3459821b25fef148bf3d38641ae37fa7102ade0b61a88566ca9dd1d00d8d58d4",
     "founders.html": "325185031a4c5971534472e01c2f05297722a9f9fc1c6f3ab4ce340a51be8ed4",
     "about.html": "dc165be10d7938b0afc15b0944b00e3dbccd9d748319e0c3c5f58ae1601f09f6",
-    "index.html": "4e16cb18f0f315316a0a43a8b4300deeb492c91c2e865d2c1db9590f787d3d13",
+    "index.html": "1bce2007de36f7c28b1cbff3cd0c9ff1d91b932515ffef765f117d0567bf4fd7",
     "articles.html": "aed89b7ad5df8ded3681ef20745d6a8dfacd2b6ff057726131f226d9776d708a",
     "applications.html": "4bfdbb9344a7d19bea41038c83649af164ba2300a2060b93cf55bb632aed6af0",
     "membership.html": "9cdec2f6f07201fab7257565358e3d240fa7e5ba2e60fdd9cf439e5e9e2915ac",
@@ -43,7 +43,7 @@
     "articles/environment-shapes-outcome.html": "f0a98848bfb5a091052982eef6f19dfdb8da871f927a1340dfd8f0280861e717",
     "articles/chaos-is-not-random.html": "7a05f506620c14b7eef0b4e136e3b5e02551990f48fce238857f6a20c9c6d0cc",
     "styles.css": "3989c40cf6075b9b52f49f2e9440d5ba37d5d0a1583d2306bfe71d37f0306044",
-    "portal-hero.css": "2a0f81b48c5e347e2cbdfcc297fb79548a4a2065f24c062f3367335b13fd6a8b",
+    "portal-hero.css": "acc452a2f981b59f1775365798829fc648ec4961e44493d52944c513b45dd469",
     "launch-loop.css": "986ed5f6d34ca59d29fb8ef4ce7cb6a480419ede51c4305347bcdfceb91f9642",
     "site.js": "423de1477b60af10eee67a407ea127437d92f5e19222450c009a54af70ba1c33",
     "launch-config.js": "68f4d2618dfcb1bfcb7b4506dad1d0158025674bb70b19e006b8a2cf13e78764",
@@ -68,7 +68,7 @@
     "assets/exit-mark.svg": "3dbb21fb1f90b8da7df2cc2b035ea0a25639189c49130d71a8f08c4cc8578a39",
     "assets/ibm-plex-mono-regular.ttf": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46"
   },
-  "site_sha256": "05d9414f7c312c6be807354e4fe18e0354e4a53eab21a14a009dcf4b96253f1d",
+  "site_sha256": "dc37a26c7a63a3a0a0b0663b0f5d8970e5f6c27a69f67c3704bd0855d90a1798",
   "active_hero_sha256": "0e722d149e2a7426cb29322c6b1233f58485f038eae734ccd678eeefea4d5080",
   "active_hero_dimensions": [
     1672,
@@ -86,10 +86,16 @@
   "font_enlargement_200_percent": {
     "width": 390,
     "overflow": false,
-    "vertical_scroll": "available"
+    "vertical_scroll": "available",
+    "hero_height": 1838.171875
   },
   "console_errors": [],
   "console_note": "Browser extension metadata errors excluded; no site errors observed",
-  "visual_check": "Person, amber threshold, editorial headline and CTA placement inspected at all six widths",
-  "source_note": "Original attached master 1672x941; text and UI removed with image editing, no upscaling. Responsive WebP at 1672 and 1088 pixels."
+  "visual_check": "v39 inspected at all six widths: person and amber threshold remain visible; darker right field retains city and reflection detail; sans first line and italic amber second line remain unbroken.",
+  "source_note": "Original attached master 1672x941; text and UI removed with image editing, no upscaling. Responsive WebP at 1672 and 1088 pixels.",
+  "typography": {
+    "first_line": "Arial/Helvetica, weight 600",
+    "human_freedom": "Times serif, italic amber",
+    "supporting_copy_and_ctas": "Arial/Helvetica"
+  }
 }
