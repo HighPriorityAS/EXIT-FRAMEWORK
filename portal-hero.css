@@ -1786,3 +1786,10 @@
     font-size:1rem;
   }
 }
+
+
+/* v41 — readability patch: dim the full photographic hero by 13%.
+   Text and controls remain unaffected. */
+.portal-hero[data-scene="final"] .portal-scene-art{
+  filter:brightness(.87);
+}
