@@ -1613,3 +1613,176 @@
     gap:2.8%;
   }
 }
+
+
+/* v40 — LOCKED APPROVED MOCKUP
+   The supplied rainy-city asset remains the full-bleed scene.
+   This final patch only aligns live typography, darkness and CTA geometry to the approved 1672×941 mockup. */
+.portal-hero[data-scene="final"]{
+  --hero-display:Iowan Old Style,Baskerville,Georgia,"Times New Roman",serif;
+  background:#050606;
+}
+.portal-hero[data-scene="final"] .portal-scene-art{
+  inset:0;
+  width:100%;
+  height:100%;
+  transform:none;
+  object-fit:cover;
+  object-position:50% 50%;
+  filter:none;
+  opacity:1;
+}
+.portal-hero[data-scene="final"]::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:linear-gradient(
+    90deg,
+    transparent 0 49.5%,
+    rgba(4,6,7,.10) 56%,
+    rgba(4,6,7,.27) 68%,
+    rgba(4,6,7,.40) 100%
+  );
+  pointer-events:none;
+}
+.portal-hero[data-scene="final"] .portal-copy{
+  position:absolute;
+  z-index:4;
+  left:59.1%;
+  right:2.8%;
+  top:46.2%;
+  width:auto;
+  height:auto;
+  transform:translateY(-50%);
+  pointer-events:auto;
+}
+.portal-hero[data-scene="final"] .portal-hero-title{
+  margin:0;
+  max-width:none;
+  color:#f4f1e9;
+  font-family:var(--hero-display);
+  font-size:clamp(3.25rem,4.8vw,5.6rem);
+  font-weight:400;
+  line-height:.95;
+  letter-spacing:-.052em;
+  text-wrap:initial;
+  -webkit-font-smoothing:antialiased;
+}
+.portal-hero[data-scene="final"] .portal-hero-title span,
+.portal-hero[data-scene="final"] .portal-hero-title em{
+  display:block;
+}
+.portal-hero[data-scene="final"] .portal-hero-title em{
+  margin-top:.055em;
+  color:#efb21a;
+  font-family:var(--hero-display);
+  font-size:1.15em;
+  font-weight:400;
+  font-style:italic;
+  line-height:.92;
+  letter-spacing:-.045em;
+}
+.portal-hero[data-scene="final"] .portal-copy>.portal-hero-lead{
+  margin-top:1.55rem!important;
+  max-width:36rem;
+  color:rgba(244,241,233,.90);
+  font-family:var(--hero-display);
+  font-size:clamp(1rem,1.2vw,1.32rem);
+  font-weight:400;
+  line-height:1.42;
+  letter-spacing:-.012em;
+}
+.portal-hero[data-scene="final"] .portal-hero-lead strong{
+  color:inherit;
+  font-weight:400;
+}
+.portal-hero[data-scene="final"] .portal-hero-actions{
+  position:static;
+  width:min(29.9vw,31.25rem);
+  height:auto;
+  margin:1.55rem 0 0;
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:.75rem;
+  transform:none;
+}
+.portal-hero[data-scene="final"] .portal-cta{
+  width:100%;
+  min-width:0;
+  height:3.125rem;
+  min-height:3.125rem;
+  padding:0 1.15rem;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.8rem;
+  border:1px solid rgba(244,241,233,.58)!important;
+  border-radius:0;
+  background:rgba(4,6,7,.10)!important;
+  color:#f4f1e9!important;
+  font-family:var(--hero-display);
+  font-size:clamp(.92rem,1.02vw,1.08rem);
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-.012em;
+  white-space:nowrap;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.portal-hero[data-scene="final"] .portal-cta-primary{
+  background:#f4f1e9!important;
+  border-color:#f4f1e9!important;
+  color:#111310!important;
+}
+.portal-hero[data-scene="final"] .portal-cta:hover{
+  transform:none!important;
+}
+.portal-hero[data-scene="final"] .portal-cta-primary:hover{
+  background:#e8e1d5!important;
+  border-color:#e8e1d5!important;
+  color:#111310!important;
+}
+.portal-hero[data-scene="final"] .portal-cta-secondary:hover{
+  background:rgba(244,241,233,.08)!important;
+  border-color:#f4f1e9!important;
+  color:#f4f1e9!important;
+}
+
+@media(max-width:899px){
+  .portal-hero[data-scene="final"]::after{display:none}
+  .portal-hero[data-scene="final"] .portal-scene-art{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:40% center;
+  }
+  .portal-hero[data-scene="final"] .portal-copy{
+    left:auto;
+    right:auto;
+    top:auto;
+    width:100%;
+    transform:none;
+  }
+  .portal-hero[data-scene="final"] .portal-hero-title{
+    font-size:clamp(2.55rem,10.6vw,4.5rem);
+    line-height:.96;
+  }
+  .portal-hero[data-scene="final"] .portal-copy>.portal-hero-lead{
+    margin-top:1.05rem!important;
+    font-size:1.08rem;
+    line-height:1.38;
+  }
+  .portal-hero[data-scene="final"] .portal-hero-actions{
+    width:100%;
+    margin-top:1.15rem;
+    grid-template-columns:1fr;
+    gap:.625rem;
+  }
+  .portal-hero[data-scene="final"] .portal-cta{
+    width:100%;
+    height:3.125rem;
+    font-size:1rem;
+  }
+}
