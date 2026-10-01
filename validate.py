@@ -140,7 +140,7 @@ pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adj
 if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
-# Homepage v41 uses the approved rainy-city scene with visible HTML typography and CTAs.
+# Homepage v42 uses the approved rainy-city scene with visible HTML typography and CTAs.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
 for required in (
     '<section class="portal-hero"',
@@ -149,7 +149,7 @@ for required in (
     'human freedom.',
     'Run the Chaos Audit',
     'Explore the Framework',
-    'portal-hero.css?v=41',
+    'portal-hero.css?v=42',
     '<img class="portal-scene-art"',
     'assets/exit-hero-final-1672.webp',
     'data-scene="final"',
