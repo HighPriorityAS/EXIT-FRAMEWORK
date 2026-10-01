@@ -1,27 +1,26 @@
-# EXIT homepage hero v31 — design QA
+# EXIT homepage hero v38 — design QA
 
-## Source visual truth
-- Approved hero image: strategisk_kontroll_menneskelig_frihet.png from the current conversation.
-- Repository scene asset: assets/exit-hero-approved-v31.webp, cropped directly from the approved image to preserve the evidence wall, subject, amber portal and materiality.
+Approved visual: Strategisk kontroll i regnbyen (1).png, 1672 × 941.
+The clean scene removes only baked text and CTA artwork. Figure, threshold,
+commuters, transport, perspective and reflections retain the approved composition.
+Highest source resolution is retained; responsive WebP files are 1672 × 941
+and 1088 × 612. No upscaling, new fonts, dependencies or hero JavaScript.
 
-## Implementation
-- Branch: hero-approved-image-v31
-- The hero no longer reconstructs the visual source with evidence cards, Post-its, CSS drawings, inline SVG subject art or a synthetic control-axis scene.
-- Header, headline, lead, CTAs, stage rail and principles remain live HTML.
+The headline, supporting copy and both CTAs are visible HTML. The headline uses
+a system editorial serif; human freedom. is italic amber. Removed metadata is absent.
+Desktop keeps the narrative on the left and text in the calm right field.
+Mobile keeps the complete figure and threshold above the copy, with a short
+edge fade into the existing background. The existing header remains as before.
 
-## Findings history
-1. v28 — blocked: CSS/SVG reconstruction materially diverged from the approved source.
-2. v29/v30 — blocked: legacy portal artwork and reconstructed evidence UI remained dominant.
-3. v31 — source image is now the visual scene. Remaining gate is browser-rendered desktop/mobile comparison.
+Browser-rendered views inspected: 390, 430, 768, 1024, 1440 and 1920 CSS pixels.
+No horizontal overflow. Person and threshold remain visible. Both CTA routes
+were clicked on desktop and mobile and their destination headings verified.
+A 200% font enlargement check at 390 preserves all content with vertical scrolling.
+The first 430px screenshot was captured before its image loaded; waiting for
+load and recapturing confirmed the image rendered correctly.
 
-## Required fidelity surfaces
-- Typography: live editorial headline retained.
-- Layout: desktop scene left / live copy right; portrait mobile scene above copy; landscape scene left / copy right.
-- Color: source image carries the approved obsidian/cream/amber treatment.
-- Image fidelity: direct crop of approved source; no proxy reconstruction.
-- Copy: canonical EXIT copy remains live.
+Validation: python validate.py --decode --release. Checks all 28 public routes,
+anchors, image dimensions and full pixel decode, method order, H1s, research
+boundaries and the source fingerprint. Other product source files are untouched.
 
-## Final gate
-Browser-rendered desktop and mobile screenshots must be compared against the source before production merge.
-
-final result: blocked
+Result: passed. Screenshots are separate review artifacts, not published site files.

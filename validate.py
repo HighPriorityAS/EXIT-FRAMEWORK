@@ -35,6 +35,8 @@ CORE_MANIFEST_FILES = (
     'assets/exit-portal-approved-desktop-v24.webp',
     'assets/exit-portal-approved-mobile-v24.webp',
     'assets/exit-hero-approved-v37.webp',
+    'assets/exit-hero-final-1672.webp',
+    'assets/exit-hero-final-1088.webp',
     'assets/exit-mark.svg',
     'assets/ibm-plex-mono-regular.ttf',
 )
@@ -138,8 +140,7 @@ pattern=r'\d\d / (Stabilize|Observe|Separate|Choose|Execute|Measure|Document|Adj
 if re.findall(pattern,loop_text)!=['Stabilize','Observe','Separate','Choose','Execute','Measure','Document','Adjust']:
     errors.append('framework.html: method order changed')
 
-# Homepage v36 preserves the approved train-station single-screen mockup with live interaction overlays:
-# live navigation + evidence field + continuous control axis + two entry paths.
+# Homepage v38 uses the approved rainy-city scene with visible HTML typography and CTAs.
 text=(ROOT/'index.html').read_text(encoding='utf-8')
 for required in (
     '<section class="portal-hero"',
@@ -148,9 +149,10 @@ for required in (
     'human freedom.',
     'Run the Chaos Audit',
     'Explore the Framework',
-    'portal-hero.css?v=37',
+    'portal-hero.css?v=38',
     '<img class="portal-scene-art"',
-    'assets/exit-hero-approved-v37.webp',
+    'assets/exit-hero-final-1672.webp',
+    'data-scene="final"',
     'aria-label="Primary navigation"',
 ):
     if required not in text: errors.append(f'Homepage missing {required}')
@@ -159,8 +161,15 @@ for forbidden in (
     'class="portal-subject"',
     'class="launch-section"',
     '<footer class="site-footer"',
+    '<p class="portal-eyebrow">',
 ):
     if forbidden in text: errors.append(f'Portal homepage contains flattened/below-fold content: {forbidden}')
+
+if '--decode' in sys.argv:
+    for name, size in (('exit-hero-final-1672.webp', (1672, 941)), ('exit-hero-final-1088.webp', (1088, 612))):
+        with Image.open(ROOT/'assets'/name) as im:
+            im.load()
+            if im.size != size or im.format != 'WEBP': errors.append(f'Incorrect final hero dimensions/format: {name}')
 
 portal_css=(ROOT/'portal-hero.css').read_text(encoding='utf-8')
 for required in (
@@ -179,7 +188,7 @@ if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mi
 
 if '--release' in sys.argv:
     report=json.loads((ROOT/'qa-results.json').read_text())
-    if report.get('result')!='passed' or report.get('widths')!=[390,430,768,1440]: errors.append('Mandatory browser QA has not passed')
+    if report.get('result')!='passed' or report.get('widths')!=[390,430,768,1024,1440,1920]: errors.append('Mandatory browser QA has not passed')
     if report.get('image_sha256')!=EXPECTED: errors.append('Browser QA references different desktop artwork')
     if report.get('mobile_image_sha256')!=EXPECTED_MOBILE: errors.append('Browser QA references different mobile artwork')
     if report.get('site_sha256')!=site_digest():
