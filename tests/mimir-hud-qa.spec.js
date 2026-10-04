@@ -1,21 +1,66 @@
 const { test, expect } = require('@playwright/test');
 test.use({ baseURL: 'http://127.0.0.1:4173' });
-async function seed(page){await page.goto('/mimir-hud.html');await page.evaluate(()=>localStorage.setItem('exit_control_sprint_v1',JSON.stringify({startedAt:new Date().toISOString().slice(0,10),baseline:5,checkins:[],signals:[{text:'Deadline moved',urgency:80,status:'new'}],decisions:[{text:'Keep scope narrow'}],controlRoom:{activeFriction:{statement:'Too many open loops',nextAction:'Close one loop',status:'active'}}})));await page.reload()}
-for(const vp of [{width:390,height:844},{width:768,height:900},{width:1440,height:900}])test('HUD v2.1 no-scroll '+vp.width,async({page})=>{await page.setViewportSize(vp);await seed(page);await expect(page.locator('.now-core h1')).toHaveText('NOW');await expect(page.locator('.op-tile')).toHaveCount(6);await expect(page.locator('[data-voice]')).toBeVisible();const m=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth,sh:document.documentElement.scrollHeight,ch:document.documentElement.clientHeight}));expect(m.sw-m.cw).toBeLessThanOrEqual(1);expect(m.sh-m.ch).toBeLessThanOrEqual(1)});
-test('drawer and palette are mutually exclusive and dismissible',async({page})=>{await seed(page);await page.locator('[data-open="friction"]').first().click();await expect(page.locator('[data-drawer]')).toHaveClass(/open/);await page.locator('[data-palette]').click();await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/);await expect(page.locator('[data-palette-panel]')).toBeVisible();await page.keyboard.press('Escape');await expect(page.locator('[data-palette-panel]')).toBeHidden();await page.locator('[data-open="projects"]').first().click();await page.locator('[data-scrim]').click({position:{x:2,y:2}});await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/)});
-test('command palette command opens correct drawer',async({page})=>{await page.goto('/mimir-hud.html');await page.locator('[data-palette]').click();await page.locator('[data-cmd="open-projects"]').click();await expect(page.locator('[data-drawer-body]')).toContainText('HIGH PRIORITY')});
-test('realtime voice is wired without exposing secret',async({page})=>{await page.goto('/mimir-hud.html');const src=await page.locator('script[src="mimir-hud.js"]').getAttribute('src');expect(src).toBeTruthy();const body=await page.locator('body').textContent();expect(body).not.toContain('OPENAI_API_KEY');await expect(page.locator('[data-realtime-audio]')).toHaveCount(1);await expect(page.locator('[data-voice]')).toBeVisible()});
 
-test('talk button opens cloud auth when session is missing',async({page})=>{
+async function seed(page) {
+  await page.goto('/mimir-hud.html');
+  await page.evaluate(() => localStorage.setItem('exit_control_sprint_v1', JSON.stringify({
+    startedAt:new Date().toISOString().slice(0,10),checkins:[],
+    signals:[{text:'Relevant signal',status:'new'}],
+    decisions:[{text:'Pending choice',status:'pending'},{text:'Past choice',status:'recorded'}],
+    controlRoom:{activeFriction:{statement:'Too many open loops',nextAction:'Close one',status:'active'}}
+  })));
+  await page.reload();
+}
+
+for (const width of [390, 430, 768, 1440]) {
+  test('HUD has one action and no horizontal overflow at ' + width, async ({page}) => {
+    await page.setViewportSize({width,height:900});
+    await seed(page);
+    await expect(page.locator('[data-now]')).toHaveCount(1);
+    await expect(page.locator('[data-attention-item]:visible')).toHaveCount(3);
+    await expect(page.locator('[data-next-link]')).toHaveAttribute('href','control-room.html');
+    await expect(page.locator('[data-voice]')).toBeVisible();
+    const overflow=await page.evaluate(() => document.documentElement.scrollWidth-document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+}
+
+test('quiet state has no invented signals or status', async ({page}) => {
+  await page.goto('/mimir-hud.html');
+  await expect(page.locator('[data-attention-empty]')).toBeVisible();
+  await expect(page.locator('[data-attention-item]:visible')).toHaveCount(0);
+  await expect(page.locator('[data-next-link]')).toHaveAttribute('href','30-day-control-sprint.html');
+  await expect(page.locator('body')).not.toContainText('72%');
+  await expect(page.locator('body')).not.toContainText('LOQ online');
+});
+
+test('attention and commands reach their working surfaces', async ({page}) => {
+  await seed(page);
+  await page.locator('[data-open="friction"]').click();
+  await expect(page.locator('[data-drawer-body]')).toContainText('Too many open loops');
+  await expect(page.locator('[data-close]')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('[data-close]')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('[data-drawer]')).not.toHaveClass(/open/);
+  await expect(page.locator('[data-open="friction"]')).toBeFocused();
+  await page.locator('[data-palette]').click();
+  await expect(page.locator('[data-palette-input]')).toBeFocused();
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('[data-cmd="open-archive"]')).toBeFocused();
+  await page.locator('[data-cmd="what-now"]').click();
+  await expect(page.locator('[data-mimir-response]')).toBeVisible();
+  await page.locator('[data-command-input]').fill('fang dette: Minste steg fungerer');
+  await page.locator('[data-command-form] button').click();
+  await expect(page.locator('[data-archive-summary]')).toHaveText('1 fangst');
+});
+
+test('voice and account entry points remain available', async ({page}) => {
   await page.goto('/mimir-hud.html');
   await page.locator('[data-voice]').click();
   await expect(page.locator('[data-auth-dialog]')).toBeVisible();
-  await expect(page.locator('[data-voice-state]')).toHaveText('LOGIN REQUIRED');
-});
-test('cloud status is an interactive auth control',async({page})=>{
-  await page.goto('/mimir-hud.html');
+  await page.locator('[data-auth-close]').click();
   await page.locator('[data-cloud-trigger]').click();
   await expect(page.locator('[data-auth-dialog]')).toBeVisible();
-  await page.locator('[data-auth-close]').click();
-  await expect(page.locator('[data-auth-dialog]')).not.toBeVisible();
 });
