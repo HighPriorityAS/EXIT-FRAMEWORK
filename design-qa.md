@@ -1,27 +1,15 @@
-# EXIT homepage hero v39 — design QA
+# EXIT homepage hero v43 — design QA
 
-Approved visual: Strategisk kontroll i regnbyen (1).png, 1672 × 941.
-The clean scene removes only baked text and CTA artwork. Figure, threshold,
-commuters, transport, perspective and reflections retain the approved composition.
-Highest source resolution is retained; responsive WebP files are 1672 × 941
-and 1088 × 612. No upscaling, new fonts, dependencies or hero JavaScript.
+The approved rainy-city artwork remains unchanged. Desktop retains the full-bleed scene, the original right-side copy field and both live CTAs.
 
-The headline, supporting copy and both CTAs are visible HTML. The first headline
-line, supporting copy and CTAs use the site's existing Arial/Helvetica family;
-human freedom. retains italic amber serif as the human accent. Removed metadata is absent.
-The calm desktop field is gently darkened from the threshold toward the right,
-with buildings, lights and wet reflections still visible. The mobile image is unchanged.
-Desktop keeps the narrative on the left and text in the calm right field.
-Mobile keeps the complete figure and threshold above the copy, with a short
-edge fade into the existing background. The existing header remains as before.
+At widths below 900 CSS pixels, v43 gives the artwork a bounded first row and places the live copy in the following row. The lower image edge fades into the existing dark field. The hero can grow vertically when the copy needs more room, so the headline and actions remain reachable.
 
-Browser-rendered views inspected: 390, 430, 768, 1024, 1440 and 1920 CSS pixels.
-No horizontal overflow. Person and threshold remain visible. Both CTA routes
-were clicked on desktop and mobile and their destination headings verified.
-A 200% font enlargement check at 390 preserves all content with vertical scrolling.
+Production QA ran in GitHub Actions Chromium with Playwright 1.55.0 on 2026-10-06:
 
-Validation: python validate.py --decode --release. Checks all 28 public routes,
-anchors, image dimensions and full pixel decode, method order, H1s, research
-boundaries and the source fingerprint. Other product source files are untouched.
+- **390 × 844 mobile:** the hero is 390 × 844. Both 50-pixel CTAs fit in the viewport; the secondary CTA ends at y=747. The full headline, supporting copy and both buttons are visible.
+- **1440 × 900 desktop:** the hero remains 1440 × 900, with the approved image composition and both CTAs intact.
+- The GitHub Pages launch validator passed, including full WebP decode and expected image dimensions.
 
-Result: passed. Screenshots are separate review artifacts, not published site files.
+Screenshots and viewport metrics are saved under `qa/live` on the repository's QA branch.
+
+Result: passed for the v43 mobile layout and desktop regression check.
