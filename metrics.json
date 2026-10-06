@@ -1,0 +1,55 @@
+{
+  "capturedAt": "2026-10-06T13:33:32.700Z",
+  "url": "https://chaosexit.com/?visual-qa=1791293609735",
+  "title": "Exit Framework — Strategic control, human freedom",
+  "desktop": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 900
+    },
+    "primaryCTA": {
+      "x": 851.03125,
+      "y": 511.6953125,
+      "width": 204.15625,
+      "height": 50
+    },
+    "secondaryCTA": {
+      "x": 1067.1875,
+      "y": 511.6953125,
+      "width": 214.375,
+      "height": 50
+    },
+    "wordmark": null
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hero": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "primaryCTA": {
+      "x": 21.4375,
+      "y": 637.03125,
+      "width": 347.125,
+      "height": 50
+    },
+    "secondaryCTA": {
+      "x": 21.4375,
+      "y": 697.03125,
+      "width": 347.125,
+      "height": 50
+    },
+    "wordmark": null
+  }
+}
