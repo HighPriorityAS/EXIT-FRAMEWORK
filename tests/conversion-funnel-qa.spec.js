@@ -13,6 +13,18 @@ for (const width of widths) {
   test('open EXIT core at ' + width + 'px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
 
+    await page.goto('/');
+    await expect(page.locator('.portal-hero-lead')).toContainText('A practical, open method for finding a workable next step when capacity is low.');
+    await expect(page.locator('.portal-hero-lead')).toContainText('System > motivation.');
+    await noOverflow(page);
+
+    await page.goto('/daily-mission.html');
+    await expect(page.getByText('Optional next step', { exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'See what holds up over time.' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Explore the 30-Day Control Sprint →' })).toHaveAttribute('data-source', 'daily_mission_end');
+    await expect(page.locator('body')).not.toContainText('You proved the loop for one day.');
+    await noOverflow(page);
+
     await page.goto('/framework.html');
     await expect(page.locator('#open-core')).toContainText('Founder status is scarce');
     await expect(page.getByRole('link', { name: /Run EXIT free/i })).toHaveAttribute('href', '30-day-control-sprint.html');
