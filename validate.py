@@ -82,6 +82,25 @@ class Page(HTMLParser):
 
 
 pages={p.resolve():Page(p) for p in public_html_paths()}
+# Launch 001: every editorial Field Note linked from the index must be discoverable.
+from xml.etree import ElementTree as ET
+try:
+    sitemap_locs = {
+        elem.text.strip()
+        for elem in ET.parse(ROOT / 'sitemap.xml').iter()
+        if elem.tag.rsplit('}', 1)[-1] == 'loc' and elem.text
+    }
+    article_index = pages[(ROOT / 'articles.html').resolve()]
+    for raw in article_index.refs:
+        uri = urlsplit(raw)
+        if uri.scheme or uri.netloc or not uri.path.startswith('articles/') or not uri.path.endswith('.html'):
+            continue
+        article_url = 'https://chaosexit.com/' + uri.path
+        if article_url not in sitemap_locs:
+            errors.append('sitemap.xml: listed Field Note missing ' + article_url)
+except (ET.ParseError, OSError) as exc:
+    errors.append('sitemap.xml: invalid or unreadable: ' + str(exc))
+
 for path,page in pages.items():
     rel=path.relative_to(ROOT).as_posix()
     if page.h1!=1: errors.append(f'{rel}: expected one H1')

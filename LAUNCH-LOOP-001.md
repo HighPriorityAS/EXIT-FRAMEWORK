@@ -13,6 +13,10 @@ The first launch optimization target is **audit completion**, not sales.
 - optional continuation to the existing Exit Framework Substack list
 
 ## Measurement model
+**Measurement status / 2026-10-08:** `launch-metrics.js` dispatches browser `exit:metric` events and can hand them to `window.dataLayer` or Plausible **if a provider is configured**. No collection endpoint or analytics provider is configured in this repository, so event hooks alone are **not** production conversion reporting. Connect a consent-appropriate, privacy-minimal provider and verify aggregate events before claiming measured completion rates. Do not collect Audit choices, categories or other sensitive data.
+
+The optional email continuation now uses a tracked outbound Substack link (`data-email-continue`) instead of an iframe; this records the attempted handoff, **not** confirmed Substack subscription.
+
 The browser emits privacy-minimal event hooks through `launch-metrics.js`.
 
 Events:
