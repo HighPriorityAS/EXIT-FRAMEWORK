@@ -184,7 +184,16 @@ css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
 if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
-if (ROOT/'CNAME').read_text().strip()!='chaosexit.com': errors.append('Domain mismatch')
+if (ROOT/'CNAME').read_text().strip()!='theexitmission.com': errors.append('Domain mismatch')
+
+site_config=json.loads((ROOT/'vercel.json').read_text())
+legacy_redirect=next((r for r in site_config.get('redirects',[]) if r.get('source')=='/:path*' and r.get('destination')=='https://theexitmission.com/:path*'),None)
+if not legacy_redirect or legacy_redirect.get('statusCode')!=301 or {'type':'host','value':r'chaosexit\.com'} not in legacy_redirect.get('has',[]):
+    errors.append('Legacy domain redirect must be a host-scoped 301 preserving the request path')
+if 'https://theexitmission.com/sitemap.xml' not in (ROOT/'robots.txt').read_text():
+    errors.append('Robots sitemap must use the canonical domain')
+if 'https://chaosexit.com' in (ROOT/'sitemap.xml').read_text():
+    errors.append('Sitemap contains a legacy canonical URL')
 
 if '--release' in sys.argv:
     report=json.loads((ROOT/'qa-results.json').read_text())

@@ -2,7 +2,7 @@ name: Live visual QA
 
 on:
   workflow_run:
-    workflows: ["Deploy Exit Framework to GitHub Pages"]
+    workflows: ["Deploy The Exit Mission to GitHub Pages"]
     types: [completed]
 
 permissions:
@@ -32,7 +32,7 @@ jobs:
       - name: Wait for production and capture visual QA
         run: |
           for i in {1..30}; do
-            if curl --fail --silent "https://chaosexit.com/?visual-qa=${GITHUB_RUN_ID}" | grep -q 'portal-hero.css?v=43'; then
+            if curl --fail --silent "https://theexitmission.com/?visual-qa=${GITHUB_RUN_ID}" | grep -q 'portal-hero.css?v=43'; then
               break
             fi
             if [ "$i" = "30" ]; then
@@ -47,7 +47,7 @@ jobs:
           const { chromium } = require('playwright');
           (async () => {
             const browser = await chromium.launch({ headless: true });
-            const base = 'https://chaosexit.com/?visual-qa=' + Date.now();
+            const base = 'https://theexitmission.com/?visual-qa=' + Date.now();
 
             const desktop = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
             await desktop.goto(base, { waitUntil: 'networkidle' });

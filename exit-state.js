@@ -365,7 +365,7 @@
   const signInWithEmail = async email => {
     await ready;
     if (!client) throw new Error('cloud_client_unavailable');
-    const redirectTo = 'https://chaosexit.com/account.html';
+    const redirectTo = new URL('/account.html', window.location.origin).href;
     const { error } = await client.auth.signInWithOtp({
       email,
       options: { emailRedirectTo: redirectTo, shouldCreateUser: true }
