@@ -1,6 +1,10 @@
-# Exit Framework
+# The Exit Mission
 
-Static editorial website at https://chaosexit.com. Production stays on GitHub Pages.
+Static editorial website at https://theexitmission.com. Production currently stays on GitHub Pages.
+
+## Canonical domain and legacy entry
+
+`https://theexitmission.com` is canonical. `vercel.json` contains a host-scoped permanent 301 from `chaosexit.com/*` that preserves paths and query strings. GitHub Pages does not activate that Vercel rule; keep the existing domain/DNS attachment until a Vercel deployment has the legacy domain mapped and the redirect has been verified.
 
 ## Local preview
 

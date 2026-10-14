@@ -13,7 +13,7 @@ window.EXIT_LAUNCH_CONFIG=Object.freeze({
   },
   crm:{
     provider:'substack',
-    fallbackUrl:'https://exitframework.substack.com/subscribe?utm_source=chaosexit&utm_medium=website&utm_campaign=exit_launch'
+    fallbackUrl:'https://exitframework.substack.com/subscribe?utm_source=theexitmission&utm_medium=website&utm_campaign=exit_launch'
   },
   social:{instagram:'',youtube:'',tiktok:'',linkedin:''}
 });
