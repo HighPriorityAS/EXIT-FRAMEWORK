@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#070807">
-  <meta name="description" content="EXIT App v1 — a low-capacity operating surface for state, control points, friction, re-entry and weekly control review.">
+  <meta name="description" content="The Exit Shift — a low-capacity operating surface for state, control points, friction, re-entry and weekly control review.">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="EXIT">
-  <link rel="canonical" href="https://chaosexit.com/app/">
+  <meta name="apple-mobile-web-app-title" content="Exit Shift">
+  <link rel="canonical" href="https://theexitmission.com/app/">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="../assets/exit-mark.svg">
-  <title>EXIT — Control Surface</title>
-  <link rel="stylesheet" href="app.css?v=20260926-v1">
+  <title>The Exit Shift — Control Room</title>
+  <link rel="stylesheet" href="app.css?v=20261015-shift">
 </head>
 <body data-state="unset" data-view="today">
 <a class="skip-link" href="#main">Skip to control surface</a>
 <div class="app-shell">
   <header class="app-header">
-    <a class="app-brand" href="../index.html" aria-label="Exit Framework home">
+    <a class="app-brand" href="../index.html" aria-label="The Exit Mission home">
       <img src="../assets/exit-mark.svg" alt="" width="38" height="38">
-      <span><strong>EXIT</strong><small>CONTROL SURFACE / V1</small></span>
+      <span><strong>THE EXIT SHIFT</strong><small>HIGH PRIORITY / CONTROL ROOM</small></span>
     </a>
     <div class="app-header-actions">
       <button class="install-button" type="button" data-install hidden>INSTALL</button>
@@ -36,6 +36,40 @@
     </section>
 
     <section class="view" data-view-panel="today">
+<section class="shift-sprint" data-shift-sprint aria-label="30-day sprint" hidden>
+  <div class="panel-index"><span>THE EXIT SHIFT / 30-DAY SPRINT</span><span data-shift-day>DAY 01 / 30</span></div>
+  <p data-shift-sprint-description>One constraint, one observable outcome. No missed-day debt.</p>
+  <form data-shift-setup hidden>
+    <label>Active constraint<input name="constraint" maxlength="120" required placeholder="What creates friction?"></label>
+    <label>Observable outcome<input name="outcome" maxlength="140" required placeholder="What should change?"></label>
+    <label>Protect the base<input name="protect" maxlength="120" required placeholder="Sleep, recovery or other essentials"></label>
+    <button class="primary-action" type="submit">START 30-DAY SPRINT</button>
+    <p class="form-status" data-shift-setup-status role="status"></p>
+  </form>
+  <button type="button" class="text-button" data-shift-start>Set sprint baseline →</button>
+</section>
+<section class="shift-voice" data-shift-voice aria-label="Exit Voice Operator">
+  <div class="panel-index"><span>EXIT VOICE OPERATOR</span><span>LOCAL / OPTIONAL</span></div>
+  <p data-voice-prompt aria-live="polite">Start a shift with one question at a time.</p>
+  <p data-voice-status role="status">Voice support depends on your browser. Text always works.</p>
+  <div class="shift-voice-controls">
+    <label for="shift-language">Voice language</label>
+    <select id="shift-language" data-voice-language><option value="en-US">English</option><option value="nb-NO">Norsk</option></select>
+    <button type="button" data-voice-start>START VOICE</button>
+    <button type="button" data-voice-mic>MIC</button>
+    <button type="button" data-voice-speak>READ ALOUD</button>
+  </div>
+  <form data-voice-form>
+    <label for="shift-answer">Your answer</label>
+    <textarea id="shift-answer" rows="2" maxlength="180" placeholder="Type or dictate one answer"></textarea>
+    <button class="primary-action" type="submit">NEXT →</button>
+  </form>
+  <div data-voice-confirm hidden>
+    <p data-voice-review></p>
+    <button type="button" class="primary-action" data-voice-save>CONFIRM & SAVE</button>
+    <button type="button" data-voice-cancel>EDIT</button>
+  </div>
+</section>
       <section class="control-overview" data-overview hidden>
         <article class="metric-card metric-card-main">
           <div class="panel-index"><span>CONTROL</span><span>SELF-REPORTED</span></div>
@@ -203,6 +237,7 @@
 </dialog>
 
 <script src="../exit-state.js" defer></script>
-<script src="app.js?v=20260926-v1" defer></script>
+<script src="app.js?v=20261015-shift" defer></script>
+<script src="shift.js?v=20261015" defer></script>
 </body>
 </html>
