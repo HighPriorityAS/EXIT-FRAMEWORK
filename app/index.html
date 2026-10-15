@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070807">
+  <meta name="description" content="EXIT App v1 — a low-capacity operating surface for state, control points, friction, re-entry and weekly control review.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="EXIT">
+  <link rel="canonical" href="https://chaosexit.com/app/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="../assets/exit-mark.svg">
+  <title>EXIT — Control Surface</title>
+  <link rel="stylesheet" href="app.css?v=20260926-v1">
+</head>
+<body data-state="unset" data-view="today">
+<a class="skip-link" href="#main">Skip to control surface</a>
+<div class="app-shell">
+  <header class="app-header">
+    <a class="app-brand" href="../index.html" aria-label="Exit Framework home">
+      <img src="../assets/exit-mark.svg" alt="" width="38" height="38">
+      <span><strong>EXIT</strong><small>CONTROL SURFACE / V1</small></span>
+    </a>
+    <div class="app-header-actions">
+      <button class="install-button" type="button" data-install hidden>INSTALL</button>
+      <a class="sync-link" href="../account.html?from=app" data-sync-status>Local first</a>
+    </div>
+  </header>
+
+  <main id="main" class="app-main">
+    <section class="reentry-banner" data-reentry hidden>
+      <span>RE-ENTRY</span>
+      <p data-reentry-copy>Nothing to repay. Start from what is true now.</p>
+    </section>
+
+    <section class="view" data-view-panel="today">
+      <section class="control-overview" data-overview hidden>
+        <article class="metric-card metric-card-main">
+          <div class="panel-index"><span>CONTROL</span><span>SELF-REPORTED</span></div>
+          <strong class="control-number"><span data-control-score>—</span><small>/10</small></strong>
+          <p data-control-trend>Set today's state to establish the signal.</p>
+        </article>
+        <article class="metric-card">
+          <div class="panel-index"><span>STATE</span><span data-overview-date></span></div>
+          <strong class="state-readout" data-overview-state>—</strong>
+          <p data-overview-protect>No protected base named.</p>
+        </article>
+      </section>
+
+      <section class="current-panel" data-current hidden aria-live="polite">
+        <div class="panel-index"><span>CURRENT CONTROL POINT</span><span data-current-date></span></div>
+        <div class="current-state-line">
+          <span class="state-dot" aria-hidden="true"></span>
+          <strong data-current-state></strong>
+          <span data-current-status></span>
+        </div>
+        <h1 data-current-action></h1>
+        <div class="current-meta">
+          <div><small>PROTECT</small><strong data-current-protect>—</strong></div>
+          <div><small>FRICTION</small><strong data-current-friction>None named</strong></div>
+        </div>
+        <div class="status-actions" aria-label="Update action status">
+          <button type="button" data-status="completed">DONE</button>
+          <button type="button" data-status="changed">CHANGED</button>
+          <button type="button" data-status="not_completed">NOT DONE</button>
+        </div>
+        <button class="text-button" type="button" data-adjust>Adjust state or action</button>
+      </section>
+
+      <section class="state-panel" data-capture aria-labelledby="state-title">
+        <p class="eyebrow">STATE BEFORE STORY</p>
+        <h1 id="state-title">What state are you in?</h1>
+        <p class="state-intro">Choose the operating condition. EXIT reduces the control surface with you.</p>
+
+        <div class="state-grid" role="group" aria-label="Operating state">
+          <button type="button" data-state-choice="stable">
+            <span>01</span><strong>STABLE</strong><small>Usable capacity</small>
+          </button>
+          <button type="button" data-state-choice="loaded">
+            <span>02</span><strong>LOADED</strong><small>Reduce the surface</small>
+          </button>
+          <button type="button" data-state-choice="chaos">
+            <span>03</span><strong>CHAOS</strong><small>Stabilize first</small>
+          </button>
+        </div>
+
+        <form class="action-form" data-action-form hidden>
+          <div class="mode-copy">
+            <p data-mode-kicker>CONTROL POINT</p>
+            <h2 data-mode-title>Choose one move.</h2>
+            <p data-mode-detail></p>
+          </div>
+
+          <fieldset class="protect-fieldset">
+            <legend>Protect first</legend>
+            <div class="protect-grid">
+              <label><input type="radio" name="protect" value="rest"><span>REST</span></label>
+              <label><input type="radio" name="protect" value="fuel"><span>FUEL</span></label>
+              <label><input type="radio" name="protect" value="environment"><span>ENVIRONMENT</span></label>
+              <label><input type="radio" name="protect" value="support"><span>SUPPORT</span></label>
+              <label><input type="radio" name="protect" value="essential"><span>ESSENTIAL</span></label>
+              <label><input type="radio" name="protect" value="none" checked><span>NONE</span></label>
+            </div>
+          </fieldset>
+
+          <label for="next-action">
+            <span data-action-label>One next action</span>
+            <textarea id="next-action" name="action" rows="3" maxlength="180" required autocomplete="off" placeholder="Make it smaller until it is realistic."></textarea>
+          </label>
+
+          <label for="active-friction">
+            <span>Active friction <small>optional</small></span>
+            <input id="active-friction" name="friction" maxlength="160" autocomplete="off" placeholder="One constraint. Not the whole situation.">
+          </label>
+
+          <label class="control-input" for="control-rating">
+            <span>Perceived control</span>
+            <div><strong><output data-control-output>5</output>/10</strong><small>Operational signal, not a clinical score.</small></div>
+            <input id="control-rating" name="control" type="range" min="0" max="10" step="1" value="5">
+          </label>
+
+          <button class="primary-action" type="submit">SET CONTROL POINT →</button>
+          <p class="form-status" data-form-status aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="protocol-card" data-protocol hidden>
+        <div class="panel-index"><span>CONTEXTUAL PROTOCOL</span><span data-protocol-code></span></div>
+        <h2 data-protocol-title></h2>
+        <p data-protocol-copy></p>
+        <a data-protocol-link href="../framework.html">Open protocol →</a>
+      </section>
+
+      <section class="app-rule" data-rule>
+        <span>RUNTIME RULE</span>
+        <p>Control is the ability to choose the next useful action, not the ability to force a perfect day.</p>
+      </section>
+    </section>
+
+    <section class="view" data-view-panel="history" hidden>
+      <section class="history-summary">
+        <div class="panel-index"><span>LAST 7 DAYS</span><span>OBSERVATION, NOT JUDGMENT</span></div>
+        <div class="summary-grid">
+          <article><small>AVG CONTROL</small><strong data-history-control>—</strong></article>
+          <article><small>KEPT / CHANGED</small><strong data-history-followthrough>—</strong></article>
+          <article><small>DOMINANT STATE</small><strong data-history-state>—</strong></article>
+        </div>
+        <p class="pattern-note" data-pattern-note>More evidence is needed before a useful pattern can be shown.</p>
+      </section>
+      <section class="secondary-panel">
+        <div class="panel-index"><span>CONTROL HISTORY</span><span>LAST 14</span></div>
+        <div class="history-list" data-history>
+          <p class="empty-history" data-history-empty>No evidence yet. One honest control point is enough to start.</p>
+        </div>
+      </section>
+      <section class="capture-log-panel">
+        <div class="panel-index"><span>QUICK CAPTURE</span><span>RECENT</span></div>
+        <div data-capture-log><p class="empty-history" data-capture-empty>No signals, frictions, decisions or observations captured yet.</p></div>
+      </section>
+    </section>
+
+    <section class="view" data-view-panel="review" hidden>
+      <section class="review-panel">
+        <p class="eyebrow">WEEKLY CONTROL REVIEW</p>
+        <h1>What actually changed control?</h1>
+        <p>Three minutes. No score-chasing. Keep what worked, remove what did not.</p>
+        <div class="review-status" data-review-status></div>
+        <form data-review-form>
+          <label>What increased control?<textarea name="increase" maxlength="240" rows="3" required></textarea></label>
+          <label>What created drift?<textarea name="drift" maxlength="240" rows="3" required></textarea></label>
+          <label>What should be removed or reduced?<textarea name="remove" maxlength="240" rows="3" required></textarea></label>
+          <label>Next week's control point<textarea name="next" maxlength="180" rows="3" required></textarea></label>
+          <button class="primary-action" type="submit">SAVE REVIEW →</button>
+          <p class="form-status" data-review-form-status aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <nav class="app-nav" aria-label="EXIT app navigation">
+    <button type="button" data-nav-view="today" aria-current="page"><span>TODAY</span><small>Control point</small></button>
+    <button type="button" data-nav-view="history"><span>HISTORY</span><small>Evidence</small></button>
+    <button class="capture-nav" type="button" data-open-capture><span>+</span><small>Capture</small></button>
+    <button type="button" data-nav-view="review"><span>REVIEW</span><small>Weekly</small></button>
+  </nav>
+</div>
+
+<dialog class="capture-dialog" data-capture-dialog>
+  <form method="dialog" data-quick-form>
+    <div class="dialog-head"><span>QUICK CAPTURE</span><button type="button" data-close-capture aria-label="Close quick capture">×</button></div>
+    <div class="capture-type-grid" role="group" aria-label="Capture type">
+      <label><input type="radio" name="type" value="signal" checked><span>SIGNAL</span></label>
+      <label><input type="radio" name="type" value="friction"><span>FRICTION</span></label>
+      <label><input type="radio" name="type" value="decision"><span>DECISION</span></label>
+      <label><input type="radio" name="type" value="observation"><span>OBSERVATION</span></label>
+    </div>
+    <label for="capture-text">One useful line<textarea id="capture-text" name="text" maxlength="220" rows="4" required></textarea></label>
+    <button class="primary-action" type="submit">CAPTURE →</button>
+    <p class="form-status" data-quick-status aria-live="polite"></p>
+  </form>
+</dialog>
+
+<script src="../exit-state.js" defer></script>
+<script src="app.js?v=20260926-v1" defer></script>
+</body>
+</html>
