@@ -72,3 +72,33 @@ test('migrates v0 without inventing a control score',async({page})=>{
   await page.evaluate(()=>{localStorage.removeItem('exit_app_v1');localStorage.setItem('exit_app_v0',JSON.stringify({version:1,entries:[{date:new Date().toISOString().slice(0,10),state:'stable',action:'Legacy action',status:'planned'}]}))});
   await page.reload();await expect(page.locator('[data-current-action]')).toHaveText('Legacy action');await expect(page.locator('[data-control-score]')).toHaveText('—');
 });
+
+test('Exit Shift local-first setup and confirmed voice control point',async({page})=>{
+  await clear(page);
+  await expect(page.getByText('THE EXIT SHIFT / 30-DAY SPRINT')).toBeVisible();
+  await page.locator('[data-shift-start]').click();
+  await page.locator('[data-shift-setup] input[name="constraint"]').fill('Overloaded mornings');
+  await page.locator('[data-shift-setup] input[name="outcome"]').fill('Choose one control point');
+  await page.locator('[data-shift-setup] input[name="protect"]').fill('Sleep and recovery');
+  await page.locator('[data-shift-setup] button[type="submit"]').click();
+  await expect(page.locator('[data-shift-day]')).toContainText('DAY 01 / 30');
+  await page.locator('[data-voice-start]').click();
+  await page.locator('#shift-answer').fill('loaded');
+  await page.locator('[data-voice-form] button[type="submit"]').click();
+  await expect(page.locator('[data-voice-prompt]')).toContainText('one bounded action');
+  await page.locator('#shift-answer').fill('Drink water and plan one appointment');
+  await page.locator('[data-voice-form] button[type="submit"]').click();
+  await page.locator('#shift-answer').fill('One planned appointment');
+  await page.locator('[data-voice-form] button[type="submit"]').click();
+  await expect(page.locator('[data-voice-confirm]')).toBeVisible();
+  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('exit_app_v1')||'null'))).toBeNull();
+  await page.locator('[data-voice-save]').click();
+  const saved=await page.evaluate(()=>({app:JSON.parse(localStorage.getItem('exit_app_v1')),sprint:JSON.parse(localStorage.getItem('exit_control_sprint_v1'))}));
+  expect(saved.app.entries[0].state).toBe('loaded');
+  expect(saved.app.entries[0].action).toBe('Drink water and plan one appointment');
+  expect(saved.app.captures[0].text).toContain('One planned appointment');
+  expect(saved.sprint.checkins[0].state).toBe('yellow');
+  await page.reload();
+  await expect(page.locator('[data-current-action]')).toContainText('Drink water and plan one appointment');
+  await noOverflow(page);
+});
