@@ -29,6 +29,7 @@ CORE_MANIFEST_FILES = (
     'exit-state.js',
     'account.js',
     'CNAME',
+    'assets/exit-mark.svg',
     'assets/exit-framework-hero-source.jpg',
     'assets/exit-portal-hero-v22.webp',
     'assets/exit-portal-mobile-clean-v23.svg',
