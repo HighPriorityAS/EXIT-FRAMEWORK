@@ -94,11 +94,11 @@ Check:
 **X**
 - Use a shorter thread rather than pasting the full article.
 - Core sequence:
-  1. My recovery problem
+  1. A recurring problem
   2. Chaos theory: small problems grow
   3. Complexity: the parts interact
   4. Cybernetics: feedback rebuilds control
-  5. Exit: stabilize -> observe -> act -> adjust
+  5. The Exit Mission: stabilize -> observe -> choose -> act -> adjust
   6. Free Chaos Audit
 
 **LinkedIn**
@@ -113,7 +113,7 @@ Do not mass-post the product, automate replies or cold-DM people from support co
 For recovery / addiction support communities:
 - read current subreddit rules before every promotional post
 - answer relevant discussions without links by default
-- disclose personal connection to Exit if the framework is mentioned
+- disclose personal connection to Exit if the Mission Plan is mentioned
 - link only where the community rules or moderators explicitly permit it
 - do not use giveaways or pilot places as a workaround around no-promotion rules
 - do not request vulnerable users to move into private DMs unless the community explicitly permits it

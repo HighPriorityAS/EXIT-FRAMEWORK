@@ -73,9 +73,9 @@ test('migrates v0 without inventing a control score',async({page})=>{
   await page.reload();await expect(page.locator('[data-current-action]')).toHaveText('Legacy action');await expect(page.locator('[data-control-score]')).toHaveText('—');
 });
 
-test('Exit Shift local-first setup and confirmed voice control point',async({page})=>{
+test('Mission local-first setup and confirmed voice control point',async({page})=>{
   await clear(page);
-  await expect(page.getByText('THE EXIT SHIFT / 30-DAY SPRINT')).toBeVisible();
+  await expect(page.getByText('YOUR MISSION / 30-DAY SPRINT')).toBeVisible();
   await page.locator('[data-shift-start]').click();
   await page.locator('[data-shift-setup] input[name="constraint"]').fill('Overloaded mornings');
   await page.locator('[data-shift-setup] input[name="outcome"]').fill('Choose one control point');

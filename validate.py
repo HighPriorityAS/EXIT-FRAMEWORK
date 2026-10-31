@@ -105,6 +105,7 @@ for path,page in pages.items():
     for im in page.images:
         if 'alt' not in im or not all(im.get(a) for a in ('width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
     if rel!='index.html' and 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
+    if 'Exit Framework' in path.read_text(encoding='utf-8') or 'EXIT FRAMEWORK' in path.read_text(encoding='utf-8'): errors.append(f'{rel}: deprecated brand copy')
 
 image=ROOT/'assets/exit-portal-approved-desktop-v24.webp'
 actual=hashlib.sha256(image.read_bytes()).hexdigest()
@@ -130,7 +131,7 @@ if '--decode' in sys.argv:
         im.load()
         if im.size!=(1672,941) or im.format!='WEBP': errors.append('Incorrect clean hero dimensions/format')
 
-# The full eight-step method lives inside the operating-loop section on framework.html.
+# Preserve framework.html as a stable URL; its visible name is Mission Plan.
 text=(ROOT/'framework.html').read_text(encoding='utf-8')
 import re
 loop_start=text.find('id="operating-loop"')
@@ -148,7 +149,7 @@ for required in (
     'Strategic control,',
     'human freedom.',
     'Run the Chaos Audit',
-    'Explore the Framework',
+    'Explore the Mission Plan',
     'portal-hero.css?v=43',
     '<img class="portal-scene-art"',
     'assets/exit-hero-final-1672.webp',
@@ -184,6 +185,22 @@ css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
 if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
+# Mission brand and decorative map contract.
+mission_map = ROOT / 'assets/mission-operations-map.svg'
+if not mission_map.exists(): errors.append('Mission planning map asset missing')
+else:
+    map_text = mission_map.read_text(encoding='utf-8')
+    if '<svg' not in map_text or 'viewBox=' not in map_text:
+        errors.append('Mission map does not contain an SVG viewBox')
+if 'mission-operations-map.svg' not in (ROOT/'styles.css').read_text(encoding='utf-8'):
+    errors.append('Mission operations map is not connected to interior pages')
+if 'mission-operations-map.svg' not in (ROOT/'portal-hero.css').read_text(encoding='utf-8'):
+    errors.append('Mission operations map is not connected to the homepage')
+for public_path in public_html_paths():
+    page_text = public_path.read_text(encoding='utf-8')
+    if 'Exit Framework' in page_text or 'EXIT FRAMEWORK' in page_text:
+        errors.append(f'{public_path.relative_to(ROOT)}: legacy brand remains')
+
 if (ROOT/'CNAME').read_text().strip()!='theexitmission.com': errors.append('Domain mismatch')
 
 site_config=json.loads((ROOT/'vercel.json').read_text())
@@ -207,4 +224,4 @@ if '--release' in sys.argv:
         errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {len(pages)} public pages; local routes and anchors; active design system; H1s; exact framework method; research boundary; preserved historical hero assets'+('; full pixel decode' if '--decode' in sys.argv else ''))
+print(f'PASS: {len(pages)} public pages; local routes and anchors; active design system; H1s; eight-step Mission Cycle; research boundary; preserved historical hero assets'+('; full pixel decode' if '--decode' in sys.argv else ''))

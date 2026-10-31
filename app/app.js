@@ -189,7 +189,7 @@
       card.hidden=false;code.textContent='MVD';title.textContent='Minimum Viable Day';copy.textContent='Protect the base, remove optional load and keep one promise small enough to be real.';link.href='../minimum-viable-day.html';link.textContent='Open Minimum Viable Day →';return;
     }
     if(entry.state==='loaded'){
-      card.hidden=false;code.textContent='REDUCE';title.textContent='Shrink the control surface';copy.textContent='Reduce decisions, name one active friction and keep the next move bounded.';link.href='../framework.html#operating-loop';link.textContent='Open operating loop →';return;
+      card.hidden=false;code.textContent='REDUCE';title.textContent='Shrink the control surface';copy.textContent='Reduce decisions, name one active friction and keep the next move bounded.';link.href='../framework.html#operating-loop';link.textContent='Open Mission Cycle →';return;
     }
     if(clean(entry.friction)){
       card.hidden=false;code.textContent='FRICTION';title.textContent='Remove before adding';copy.textContent='A named friction is now part of the operating picture. Prefer removing one constraint before adding another commitment.';link.href='../control-room.html';link.textContent='Open full Control Room →';return;
