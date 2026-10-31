@@ -1939,3 +1939,9 @@
     opacity:.11;
   }
 }
+
+/* Preserve contrast over the artwork without changing its composition. */
+.portal-hero[data-scene="final"] .portal-hero-title,
+.portal-hero[data-scene="final"] .portal-hero-lead{
+  text-shadow:0 2px 12px rgba(0,0,0,.95), 0 1px 3px #000;
+}
