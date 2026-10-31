@@ -69,6 +69,27 @@ jobs:
               if (!plan || !plan.includes('mission')) throw new Error('Mission Plan heading missing');
               if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)) throw new Error('Mission Plan horizontal overflow at ' + width);
               await page.screenshot({ path: 'qa-mission/plan-' + width + '.png', fullPage: false });
+              const menu = page.locator('#mobile-menu');
+              const toggle = page.getByRole('button', { name: /open menu/i });
+              await toggle.focus();
+              await page.keyboard.press('Enter');
+              if (await toggle.getAttribute('aria-expanded') !== 'true' || !await menu.isVisible()) throw new Error('Menu did not open with keyboard');
+              const links = menu.locator('a');
+              const labels = await links.allTextContents();
+              if (labels.join('|') !== 'Mission Plan|Control Room|Field Notes|About') throw new Error('Unexpected menu links: ' + labels);
+              const positions = await links.evaluateAll(nodes => nodes.map(n => ({y: Math.round(n.getBoundingClientRect().top), x: Math.round(n.getBoundingClientRect().left)})));
+              const rows = new Set(positions.map(p => p.y)).size;
+              if (rows !== (width >= 768 ? 1 : 2)) throw new Error('Menu has unexpected row count at ' + width + ': ' + JSON.stringify(positions));
+              const footer = await page.locator('.footer-grid nav a').evaluateAll(nodes => nodes.map(n => ({text:n.textContent.trim(), x:Math.round(n.getBoundingClientRect().left), y:Math.round(n.getBoundingClientRect().top)})));
+              if (footer.length !== 9 || new Set(footer.map(p => p.y)).size !== 3 || new Set(footer.map(p => p.x)).size !== 3) throw new Error('Footer is not a 3 by 3 grid at ' + width + ': ' + JSON.stringify(footer));
+              await page.keyboard.press('Escape');
+              if (await toggle.getAttribute('aria-expanded') !== 'false') throw new Error('Escape did not close menu');
+              await page.goto('http://127.0.0.1:4173/control-room.html', { waitUntil:'networkidle' });
+              const empty = page.locator('[data-cr-empty]');
+              for (const destination of ['chaos-audit.html','minimum-viable-day.html','daily-mission.html','30-day-control-sprint.html']) {
+                if (await empty.locator('a[href="' + destination + '"]').count() !== 1) throw new Error('Control Room missing entry: ' + destination);
+              }
+              if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)) throw new Error('Control Room horizontal overflow at ' + width);
               await page.close();
             }
             await browser.close();
