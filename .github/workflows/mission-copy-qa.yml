@@ -1,0 +1,85 @@
+name: Mission copy and visual smoke QA
+on:
+  pull_request:
+    paths:
+      - '**/*.html'
+      - '**/*.css'
+      - 'assets/mission-operations-map.svg'
+      - 'validate.py'
+      - '.github/workflows/mission-copy-qa.yml'
+permissions:
+  contents: read
+jobs:
+  mission-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate routes, assets, metadata and branding
+        run: |
+          python -m pip install Pillow==11.3.0
+          python validate.py --decode
+          python - <<'PY'
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+          ET.parse('assets/mission-operations-map.svg')
+          index = Path('index.html').read_text()
+          assert 'One mission. Your own way out.' in index
+          assert 'Explore the Mission Plan' in index
+          assert 'https://theexitmission.com/' in index
+          assert 'Exit Framework' not in index
+          print('PASS: canonical branding and valid operations-map SVG')
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser for visual smoke checks
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Check layout and capture screenshots
+        run: |
+          python -m http.server 4173 > /tmp/mission-site.log 2>&1 &
+          mkdir -p qa-mission
+          node <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            for (const width of [390, 768, 1440]) {
+              const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
+              await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle' });
+              const result = await page.evaluate(() => ({
+                title: document.title,
+                h1: document.querySelectorAll('h1').length,
+                horizontalOverflow: document.documentElement.scrollWidth > innerWidth + 2,
+                ctas: [...document.querySelectorAll('.portal-hero-actions a')].map(a => a.textContent.trim()),
+                backdrop: getComputedStyle(document.querySelector('.portal-copy'),'::before').backgroundImage
+              }));
+              if (result.h1 !== 1 || result.horizontalOverflow || result.ctas.length !== 2 || !result.backdrop.includes('mission-operations-map.svg')) {
+                throw new Error('Homepage QA failed at ' + width + 'px: ' + JSON.stringify(result));
+              }
+              await page.screenshot({ path: 'qa-mission/home-' + width + '.png' });
+              await page.goto('http://127.0.0.1:4173/framework.html', { waitUntil: 'networkidle' });
+              const plan = await page.locator('h1').textContent();
+              if (!plan || !plan.includes('mission')) throw new Error('Mission Plan heading missing');
+              if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)) throw new Error('Mission Plan horizontal overflow at ' + width);
+              await page.screenshot({ path: 'qa-mission/plan-' + width + '.png', fullPage: false });
+              await page.close();
+            }
+            await browser.close();
+            console.log('PASS: responsive mission smoke test at 390 / 768 / 1440');
+          })().catch(e => { console.error(e); process.exit(1); });
+          JS
+      - name: Upload visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mission-visual-screenshots
+          path: qa-mission/
+          retention-days: 7
+          if-no-files-found: ignore
