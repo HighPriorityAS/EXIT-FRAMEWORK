@@ -185,6 +185,22 @@ css=(ROOT/'styles.css').read_text(encoding='utf-8')
 js=(ROOT/'site.js').read_text(encoding='utf-8')
 if '!important' in css or 'data:image' in css: errors.append('Competing style/hero logic found')
 if 'fetch(' in js: errors.append('Unexpected network integration logic in site.js')
+# Mission brand and decorative map contract.
+mission_map = ROOT / 'assets/mission-operations-map.svg'
+if not mission_map.exists(): errors.append('Mission planning map asset missing')
+else:
+    map_text = mission_map.read_text(encoding='utf-8')
+    if '<svg' not in map_text or 'viewBox=' not in map_text:
+        errors.append('Mission map does not contain an SVG viewBox')
+if 'mission-operations-map.svg' not in (ROOT/'styles.css').read_text(encoding='utf-8'):
+    errors.append('Mission operations map is not connected to interior pages')
+if 'mission-operations-map.svg' not in (ROOT/'portal-hero.css').read_text(encoding='utf-8'):
+    errors.append('Mission operations map is not connected to the homepage')
+for public_path in public_html_paths():
+    page_text = public_path.read_text(encoding='utf-8')
+    if 'Exit Framework' in page_text or 'EXIT FRAMEWORK' in page_text:
+        errors.append(f'{public_path.relative_to(ROOT)}: legacy brand remains')
+
 if (ROOT/'CNAME').read_text().strip()!='theexitmission.com': errors.append('Domain mismatch')
 
 site_config=json.loads((ROOT/'vercel.json').read_text())
