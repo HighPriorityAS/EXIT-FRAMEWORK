@@ -148,7 +148,7 @@ for required in (
     '<h1 class="portal-hero-title" id="hero-title">',
     'Strategic control,',
     'human freedom.',
-    'Run the Chaos Audit',
+    'Find your next step',
     'Explore the Mission Plan',
     'portal-hero.css?v=43',
     '<img class="portal-scene-art"',
