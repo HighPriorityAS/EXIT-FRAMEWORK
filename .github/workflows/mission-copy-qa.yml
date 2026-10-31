@@ -70,7 +70,8 @@ jobs:
               if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2)) throw new Error('Mission Plan horizontal overflow at ' + width);
               await page.screenshot({ path: 'qa-mission/plan-' + width + '.png', fullPage: false });
               const menu = page.locator('#mobile-menu');
-              const toggle = page.getByRole('button', { name: /open menu/i });
+              const toggle = page.locator('.menu-toggle');
+              if (await toggle.getAttribute('aria-label') !== 'Open menu') throw new Error('Menu button missing accessible label');
               await toggle.focus();
               await page.keyboard.press('Enter');
               if (await toggle.getAttribute('aria-expanded') !== 'true' || !await menu.isVisible()) throw new Error('Menu did not open with keyboard');
