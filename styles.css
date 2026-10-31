@@ -479,3 +479,7 @@
     background-position:0 0,0 0,center,calc(100% + 315px) center;
   }
 }
+
+/* Compact Mission Cycle: details remain available on demand. */
+.mission-cycle-details summary{cursor:pointer;padding:1rem 0;color:var(--amber);font:12px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--rule)}
+.mission-cycle-details[open] .detail-grid{margin-top:2rem}

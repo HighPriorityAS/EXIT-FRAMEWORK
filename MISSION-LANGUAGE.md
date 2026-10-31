@@ -14,7 +14,7 @@
 
 ## Language and safeguards
 
-Speak to people as independent adults. Military/operations language describes planning, never control over other people. No artificial urgency, leader worship, secret levels, loyalty tests, clinical promises or unsupported science. Community contribution is opt-in. Criticism and departure require no permission. A successful user can walk away with the tools and no dependence on us.
+Speak to people as independent adults. Use civilian operations language: assess the situation, state before story, map pressure, protect the base, identify constraints, select a control point, execute a bounded move, review and adjust. Make unfamiliar terms concrete through the next action. Operations language describes planning, never control over other people; standing down and rest are valid decisions. No artificial urgency, leader worship, secret levels, loyalty tests, clinical promises or unsupported science. Community contribution is opt-in. Criticism and departure require no permission. A successful user can walk away with the tools and no dependence on us.
 
 Research participation is never sold. Human Autonomy Study remains organizationally and operationally separate, with its own recruitment, consent, privacy and governance. The Exit Mission does not diagnose or replace health care.
 
