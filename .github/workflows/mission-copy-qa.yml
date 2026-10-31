@@ -30,7 +30,7 @@ jobs:
           ET.parse('assets/mission-operations-map.svg')
           index = Path('index.html').read_text()
           assert 'One mission. Your own way out.' in index
-          assert 'Explore the Mission Plan' in index
+          assert 'Join the mission' in index
           assert 'https://theexitmission.com/' in index
           assert 'Exit Framework' not in index
           print('PASS: canonical branding and valid operations-map SVG')
@@ -60,7 +60,7 @@ jobs:
                 ctas: [...document.querySelectorAll('.portal-hero-actions a')].map(a => a.textContent.trim()),
                 backdrop: getComputedStyle(document.querySelector('.portal-copy'),'::before').backgroundImage
               }));
-              if (result.h1 !== 1 || result.horizontalOverflow || result.ctas.length !== 2 || !result.backdrop.includes('mission-operations-map.svg')) {
+              if (result.h1 !== 1 || result.horizontalOverflow || result.ctas.length !== 1 || !result.backdrop.includes('mission-operations-map.svg')) {
                 throw new Error('Homepage QA failed at ' + width + 'px: ' + JSON.stringify(result));
               }
               await page.screenshot({ path: 'qa-mission/home-' + width + '.png' });
