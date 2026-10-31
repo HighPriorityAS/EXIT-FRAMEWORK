@@ -1916,10 +1916,12 @@
   }
 }
 
-/* Operations-map layer stays behind the editorial copy and clickable CTAs. */
-.portal-copy{isolation:isolate;}
-.portal-copy::before{
+/* Operations-map layer: override the approved hero's older pseudo-background,
+   without moving the artwork, text, links or mobile layout. */
+.portal-hero[data-scene="final"] .portal-copy{isolation:isolate;}
+.portal-hero[data-scene="final"] .portal-copy::before{
   content:"";
+  display:block;
   position:absolute;
   inset:-13% -10% -18% -15%;
   background:url("assets/mission-operations-map.svg") center / contain no-repeat;
@@ -1930,7 +1932,8 @@
   z-index:-1;
 }
 @media(max-width:899px){
-  .portal-copy::before{
+  .portal-hero[data-scene="final"] .portal-copy::before{
+    display:block;
     inset:-4% -8% -14% -8%;
     background-size:cover;
     opacity:.11;
