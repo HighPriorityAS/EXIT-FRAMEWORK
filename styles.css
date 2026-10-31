@@ -483,3 +483,9 @@
 /* Compact Mission Cycle: details remain available on demand. */
 .mission-cycle-details summary{cursor:pointer;padding:1rem 0;color:var(--amber);font:12px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--rule)}
 .mission-cycle-details[open] .detail-grid{margin-top:2rem}
+
+/* Balanced navigation: four choices in the menu, nine in the footer. */
+.mobile-menu:not(.portal-mobile-menu){grid-template-columns:repeat(2,minmax(0,1fr))}
+.footer-grid nav{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px}
+@media(min-width:768px){.footer-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.9fr) minmax(0,1.2fr);gap:clamp(24px,3vw,55px)}}
+@media(max-width:767px){.footer-grid nav{gap:12px 10px}}
