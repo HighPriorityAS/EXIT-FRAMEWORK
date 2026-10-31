@@ -1,6 +1,6 @@
 # The Exit Mission
 
-Static editorial website at https://theexitmission.com. Production currently stays on GitHub Pages.
+Static editorial website at https://theexitmission.com. A legacy GitHub Pages workflow remains. Vercel has the custom domain attached; verify the deployment source before publishing.
 
 ## Canonical domain and legacy entry
 
@@ -25,11 +25,17 @@ Sprint and Control Room remain local-first. The canonical browser key is `exit_c
 
 The browser uses only the Supabase publishable key. Never add secret/service-role credentials to this repository.
 
+## Mission language and autonomy boundary
+
+The single public brand is **The Exit Mission**. The public method page is the **Mission Plan** (historical URL `framework.html` remains stable), and its eight steps are the **Mission Cycle**. **Control Room**, **Chaos Audit**, **Daily Mission**, and **Field Notes** are tools, not separate brands.
+
+**One mission. Your own way out.** Core tools remain free. Founder status is optional early-support recognition; founder numbers never imply rank, authority or research participation. Users are free to disagree, contribute, leave and use the method without depending on us. The full language guide is `MISSION-LANGUAGE.md`.
+
 ## Open-core boundary
 
-EXIT Core is public: the method, 30-Day Control Sprint and Control Room do not require payment. EXIT Language v1.0 is versioned in `EXIT-LANGUAGE-v1.0.md` and exposed through `lexicon.html`.
+The Mission Plan, Mission Cycle, 30-Day Control Sprint and Control Room do not require payment. EXIT Language v1.0 is versioned in `EXIT-LANGUAGE-v1.0.md` and exposed through `lexicon.html`.
 
-Founder 100 remains a limited premium founding layer around the open protocol. Its scarcity must come from provenance, participation and tangible founder value, not access to the core method.
+Founder 100 remains optional, limited early-support recognition. Numbering documents provenance and does not create a hierarchy, access to hidden methods or obligations.
 
 Human Autonomy Study remains structurally separate. Research participation is not sold.
 
