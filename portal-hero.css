@@ -1915,3 +1915,27 @@
     font-size:1rem;
   }
 }
+
+/* Operations-map layer: override the approved hero's older pseudo-background,
+   without moving the artwork, text, links or mobile layout. */
+.portal-hero[data-scene="final"] .portal-copy{isolation:isolate;}
+.portal-hero[data-scene="final"] .portal-copy::before{
+  content:"";
+  display:block;
+  position:absolute;
+  inset:-13% -10% -18% -15%;
+  background:url("assets/mission-operations-map.svg") center / contain no-repeat;
+  opacity:.21;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 24%,#000 78%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 24%,#000 78%,transparent 100%);
+  pointer-events:none;
+  z-index:-1;
+}
+@media(max-width:899px){
+  .portal-hero[data-scene="final"] .portal-copy::before{
+    display:block;
+    inset:-4% -8% -14% -8%;
+    background-size:cover;
+    opacity:.11;
+  }
+}

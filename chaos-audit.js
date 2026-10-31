@@ -38,7 +38,7 @@
     const pressureCopy = {
       capacity: ['Capacity instability', 'Your system looks most constrained by basic capacity right now. Protect the base before adding more load.'],
       obligations: ['Open-loop pressure', 'Unfinished practical obligations appear to be creating avoidable drag and background stress.'],
-      substance: ['Recovery instability', 'Substance use or recovery pressure appears to be the strongest current source of volatility.'],
+      substance: ['Recovery instability', 'You chose substance use or recovery pressure as the most pressing issue today.'],
       relationships: ['Relationship pressure', 'Conflict, isolation or relationship stress appears to be consuming a large share of available capacity.'],
       environment: ['Environmental instability', 'Your surroundings or practical living conditions appear to be making everything else harder.']
     };

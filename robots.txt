@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://chaosexit.com/sitemap.xml
+Sitemap: https://theexitmission.com/sitemap.xml

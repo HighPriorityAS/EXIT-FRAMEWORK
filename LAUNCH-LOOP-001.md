@@ -1,4 +1,4 @@
-# Exit Framework Launch Loop 001
+# The Exit Mission Launch Loop 001
 
 ## Objective
 Turn Post #001 into a measurable low-capacity path:
@@ -10,7 +10,9 @@ The first launch optimization target is **audit completion**, not sales.
 ## Live path after merge
 - `/articles/chaos-is-not-random.html`
 - `/chaos-audit.html`
-- optional continuation to the existing Exit Framework Substack list
+- optional continuation to the existing Substack list
+
+Legacy entry: `chaosexit.com/*` is configured for a Vercel 301 to the same path on `theexitmission.com`, preserving query parameters. Keep the old domain attached until a mapped deployment returns the expected redirect.
 
 ## Measurement model
 The browser emits privacy-minimal event hooks through `launch-metrics.js`.
@@ -80,7 +82,7 @@ Check:
 ## Distribution map
 
 ### Tier A — owned channels
-**chaosexit.com**
+**theexitmission.com**
 - Canonical full article.
 - Primary CTA: Chaos Audit.
 
@@ -92,11 +94,11 @@ Check:
 **X**
 - Use a shorter thread rather than pasting the full article.
 - Core sequence:
-  1. My recovery problem
+  1. A recurring problem
   2. Chaos theory: small problems grow
   3. Complexity: the parts interact
   4. Cybernetics: feedback rebuilds control
-  5. Exit: stabilize -> observe -> act -> adjust
+  5. The Exit Mission: stabilize -> observe -> choose -> act -> adjust
   6. Free Chaos Audit
 
 **LinkedIn**
@@ -111,7 +113,7 @@ Do not mass-post the product, automate replies or cold-DM people from support co
 For recovery / addiction support communities:
 - read current subreddit rules before every promotional post
 - answer relevant discussions without links by default
-- disclose personal connection to Exit if the framework is mentioned
+- disclose personal connection to Exit if the Mission Plan is mentioned
 - link only where the community rules or moderators explicitly permit it
 - do not use giveaways or pilot places as a workaround around no-promotion rules
 - do not request vulnerable users to move into private DMs unless the community explicitly permits it

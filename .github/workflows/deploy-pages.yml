@@ -1,4 +1,4 @@
-name: Deploy Exit Framework to GitHub Pages
+name: Deploy The Exit Mission to GitHub Pages
 on:
   push:
     branches: ["main"]
