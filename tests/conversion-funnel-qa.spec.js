@@ -14,8 +14,8 @@ for (const width of widths) {
     await page.setViewportSize({ width, height: 900 });
 
     await page.goto('/framework.html');
-    await expect(page.locator('#open-core')).toContainText('Founder status is scarce');
-    await expect(page.getByRole('link', { name: /Run EXIT free/i })).toHaveAttribute('href', '30-day-control-sprint.html');
+    await expect(page.locator('#open-core')).toContainText('Every essential tool remains open');
+    await expect(page.getByRole('link', { name: /Start your mission free/i })).toHaveAttribute('href', '30-day-control-sprint.html');
     await noOverflow(page);
 
     await page.goto('/control-sprint.html');
@@ -38,7 +38,7 @@ for (const width of widths) {
     await noOverflow(page);
 
     await page.goto('/founders.html');
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Never expanded');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('No one above anyone else');
     await expect(page.locator('body')).toContainText('100 means 100');
     await noOverflow(page);
   });
