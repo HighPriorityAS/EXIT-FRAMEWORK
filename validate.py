@@ -105,6 +105,7 @@ for path,page in pages.items():
     for im in page.images:
         if 'alt' not in im or not all(im.get(a) for a in ('width','height')): errors.append(f'{rel}: image lacks alt/dimensions')
     if rel!='index.html' and 'Research participation is not sold.' not in path.read_text(encoding='utf-8'): errors.append(f'{rel}: research boundary missing')
+    if 'Exit Framework' in path.read_text(encoding='utf-8') or 'EXIT FRAMEWORK' in path.read_text(encoding='utf-8'): errors.append(f'{rel}: deprecated brand copy')
 
 image=ROOT/'assets/exit-portal-approved-desktop-v24.webp'
 actual=hashlib.sha256(image.read_bytes()).hexdigest()
@@ -130,7 +131,7 @@ if '--decode' in sys.argv:
         im.load()
         if im.size!=(1672,941) or im.format!='WEBP': errors.append('Incorrect clean hero dimensions/format')
 
-# The full eight-step method lives inside the operating-loop section on framework.html.
+# Preserve framework.html as a stable URL; its visible name is Mission Plan.
 text=(ROOT/'framework.html').read_text(encoding='utf-8')
 import re
 loop_start=text.find('id="operating-loop"')
@@ -148,7 +149,7 @@ for required in (
     'Strategic control,',
     'human freedom.',
     'Run the Chaos Audit',
-    'Explore the Framework',
+    'Explore the Mission Plan',
     'portal-hero.css?v=43',
     '<img class="portal-scene-art"',
     'assets/exit-hero-final-1672.webp',
@@ -207,4 +208,4 @@ if '--release' in sys.argv:
         errors.append('Site changed after browser QA: '+', '.join(changed))
 if errors:
     print('\n'.join(errors));raise SystemExit(1)
-print(f'PASS: {len(pages)} public pages; local routes and anchors; active design system; H1s; exact framework method; research boundary; preserved historical hero assets'+('; full pixel decode' if '--decode' in sys.argv else ''))
+print(f'PASS: {len(pages)} public pages; local routes and anchors; active design system; H1s; eight-step Mission Cycle; research boundary; preserved historical hero assets'+('; full pixel decode' if '--decode' in sys.argv else ''))
