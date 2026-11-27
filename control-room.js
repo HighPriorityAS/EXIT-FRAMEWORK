@@ -27,7 +27,18 @@
   const phaseForDay = day => day <= 7 ? 'STABILIZE' : day <= 14 ? 'CONTROL' : day <= 21 ? 'EXECUTE' : 'AUTONOMY';
   const reviewCheckpoint = day => day >= 28 ? 4 : day >= 21 ? 3 : day >= 14 ? 2 : day >= 7 ? 1 : 0;
   const checkinForDay = (sprint, day = sprintDay(sprint)) => sprint.checkins.find(item => Number(item.day) === Number(day));
-  const latestCheckin = sprint => sprint.checkins.length ? [...sprint.checkins].sort((a, b) => Number(a.day) - Number(b.day)).at(-1) : null;
+  const runtimeCheckins = sprint => sprint.controlRoom?.runtimeCheckins || {};
+  const currentCheckin = sprint => sprint.completedAt
+    ? runtimeCheckins(sprint)[todayKey()]
+    : checkinForDay(sprint);
+  const latestSprintCheckin = sprint => sprint.checkins.length ? [...sprint.checkins].sort((a, b) => Number(a.day) - Number(b.day)).at(-1) : null;
+  const latestRuntimeCheckin = sprint => {
+    if (!sprint.completedAt) return null;
+    const entries = runtimeCheckins(sprint);
+    const latestDate = Object.keys(entries).filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)).sort().at(-1);
+    return entries[latestDate] || null;
+  };
+  const latestCheckin = sprint => latestRuntimeCheckin(sprint) || latestSprintCheckin(sprint);
   const currentRating = sprint => latestCheckin(sprint)?.control ?? sprint.baseline ?? 5;
   const reviewForWeek = (sprint, week) => (sprint.reviews || []).find(item => Number(item.week) === Number(week));
 
@@ -48,14 +59,15 @@
     };
   };
 
-  const load = () => {
+  const loadStored = () => {
     try {
-      const stored = window.ExitState?.load ? window.ExitState.load() : JSON.parse(localStorage.getItem(KEY) || 'null');
-      return normalize(stored);
+      return window.ExitState?.load ? window.ExitState.load() : JSON.parse(localStorage.getItem(KEY) || 'null');
     } catch {
       return null;
     }
   };
+
+  const load = () => normalize(loadStored());
 
   const save = sprint => {
     if (window.ExitState?.save) return window.ExitState.save(sprint);
@@ -103,6 +115,7 @@
   const logControl = logForm.elements.control;
   const logControlOutput = document.querySelector('[data-cr-control-output]');
   const logStatus = document.querySelector('[data-cr-log-status]');
+  const logHelp = document.querySelector('[data-cr-log-help]');
 
   const activeFriction = sprint => {
     const item = sprint.controlRoom?.activeFriction;
@@ -115,9 +128,9 @@
     const checkpoint = reviewCheckpoint(day);
     const reviewDue = checkpoint > 0 && !reviewForWeek(sprint, checkpoint);
 
-    if (sprint.completedAt && sprint.controlSystem) {
+    if (sprint.completedAt) {
       return {
-        action: sprint.controlSystem.priority || sprint.controlSystem.next30 || 'Run the Control System you installed.',
+        action: sprint.controlSystem?.priority || sprint.controlSystem?.next30 || 'Run the Control System you installed.',
         detail: 'The Sprint is complete. Use the rules that earned their place.',
         mode: 'log',
         label: 'Log current state →'
@@ -173,8 +186,7 @@
 
   const fillLog = () => {
     if (!data) return;
-    const day = sprintDay(data);
-    const current = checkinForDay(data, day);
+    const current = currentCheckin(data);
     const latest = latestCheckin(data);
     logForm.reset();
     logForm.elements.action.value = current?.action || activeFriction(data)?.nextAction || '';
@@ -208,7 +220,9 @@
     lastCard.hidden = !latest;
     lastEmpty.hidden = Boolean(latest);
     if (!latest) return;
-    lastMeta.textContent = `Day ${latest.day} · ${latest.date || 'recorded evidence'}`;
+    lastMeta.textContent = latest.day == null
+      ? `Runtime · ${latest.date}`
+      : `Day ${latest.day} · ${latest.date || 'recorded evidence'}`;
     lastAction.textContent = latest.action || 'No action text recorded.';
     lastNote.textContent = latest.note || 'No additional note. The action status is the evidence.';
     lastState.textContent = humanState(latest.state);
@@ -251,6 +265,9 @@
     primary.textContent = next.label;
     primary.dataset.mode = next.mode;
 
+    if (logHelp) logHelp.textContent = data.completedAt
+      ? 'Runtime check-ins stay separate from your completed Sprint and its summary.'
+      : 'Use the same daily evidence model as the Sprint. No second journal. No catch-up debt.';
     renderFriction();
     renderLast();
     fillLog();
@@ -346,27 +363,46 @@
       return;
     }
 
-    const fresh = load() || data;
-    const day = sprintDay(fresh);
+    const stored = loadStored();
+    const fresh = normalize(stored);
+    if (!fresh) {
+      logStatus.textContent = 'Could not find this Sprint. Reload before trying again.';
+      return;
+    }
+    const date = todayKey();
     const entry = {
-      date: todayKey(),
-      day,
+      date,
       state,
       action,
       mission,
       control: clampRating(logForm.elements.control.value),
       note: cleanText(logForm.elements.note.value)
     };
-    const existingIndex = fresh.checkins.findIndex(item => Number(item.day) === day);
-    if (existingIndex >= 0) fresh.checkins[existingIndex] = entry;
-    else fresh.checkins.push(entry);
-    fresh.checkins.sort((a, b) => Number(a.day) - Number(b.day));
+    let next;
+    if (fresh.completedAt) {
+      // Keep the completed Sprint exactly as persisted. Runtime edits only
+      // replace the entry for the same calendar date, never a Sprint day.
+      next = {
+        ...stored,
+        controlRoom: {
+          ...fresh.controlRoom,
+          runtimeCheckins: { ...runtimeCheckins(fresh), [date]: entry }
+        }
+      };
+    } else {
+      const day = sprintDay(fresh);
+      const sprintEntry = { ...entry, day };
+      const existingIndex = fresh.checkins.findIndex(item => Number(item.day) === day);
+      if (existingIndex >= 0) fresh.checkins[existingIndex] = sprintEntry;
+      else fresh.checkins.push(sprintEntry);
+      fresh.checkins.sort((a, b) => Number(a.day) - Number(b.day));
+      next = fresh;
+    }
 
-    if (!save(fresh)) {
+    if (!save(next)) {
       logStatus.textContent = 'Could not save locally. Nothing was sent.';
       return;
     }
-    data = fresh;
     render();
     logStatus.textContent = 'Saved locally. Context restored.';
   });

@@ -72,6 +72,16 @@
   let data = load();
   let setupStep = 0;
 
+  // A form left open in another tab is not permission to edit a closed Sprint.
+  const loadOpenSprint = () => {
+    const fresh = load();
+    if (fresh && !fresh.completedAt) return fresh;
+    data = fresh;
+    render();
+    if (fresh) summary.focus();
+    return null;
+  };
+
   const setupSteps = [...setup.querySelectorAll('[data-setup-step]')];
   const setupProgress = document.querySelector('[data-setup-progress]');
   const setupFill = document.querySelector('[data-setup-progress-fill]');
@@ -259,7 +269,8 @@
       checkinStatus.textContent = 'Choose the operating state, define one next action and record its status.';
       return;
     }
-    const fresh = load() || data;
+    const fresh = loadOpenSprint();
+    if (!fresh) return;
     const day = sprintDay(fresh);
     const entry = {
       date: todayKey(),
@@ -310,7 +321,8 @@
       reviewStatus.textContent = 'Keep it short, but complete each line before saving the review.';
       return;
     }
-    const fresh = load() || data;
+    const fresh = loadOpenSprint();
+    if (!fresh) return;
     const week = Number(reviewForm.dataset.week) || reviewCheckpoint(sprintDay(fresh));
     const review = {
       week,
@@ -367,7 +379,8 @@
       controlSystemStatus.textContent = 'Complete each line. Short and operational is enough.';
       return;
     }
-    const fresh = load() || data;
+    const fresh = loadOpenSprint();
+    if (!fresh) return;
     const final = currentRating(fresh);
     fresh.controlSystem = {
       createdAt: todayKey(),
